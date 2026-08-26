@@ -5,7 +5,7 @@ Replaces the retired per-run shell scripts (dyn5/dyn5b/dyn5c/dyn7_launch.sh), wh
 their robot set and output directory -- every other knob (seed 42, 3 same-seed repeats, 10 record-trials,
 ``--steps 5000``, the single-cam checkpoint pin, the GPU set) was byte-identical.
 
-Run ONE instance per host, giving every instance the SAME --hosts topology (defaults to the ser15/ser16
+Run ONE instance per host, giving every instance the SAME --hosts topology (defaults to a two-host
 pair) and its own --this id:
     python dyn_sweep.py --this 15 --out dyn7 --robots g1,v2_fixed,v2,v2_single_fixed,v2_single
     python dyn_sweep.py --this 16 --out dyn7 --robots g1,v2_fixed,v2,v2_single_fixed,v2_single
@@ -50,17 +50,17 @@ VERIFY = os.path.join(os.path.dirname(__file__), "curobo_reach_verify.py")
 #
 # WHY pinning is not optional. Auto-resolution globs ``runs/<task>/*/model_*.pt`` and takes the newest,
 # which is a per-host, per-day answer. It has failed three distinct ways here:
-#   * HOSTS DISAGREED, silently, in a CITED sweep. `dyn8` ran ser15 on the dual-cam
-#     ``2026-07-28_18-10-03`` and ser16 on ``2026-07-29_07-31-01`` -- md5-distinct -- so its published
+#   * HOSTS DISAGREED, silently, in a CITED sweep. one sweep ran host A on the dual-cam
+#     ``2026-07-28_18-10-03`` and host B on ``2026-07-29_07-31-01`` -- md5-distinct -- so its published
 #     Fix2/Act2 columns pool two policies at an unrecorded ratio. Found only by md5-ing both hosts a day
 #     later.
 #   * "LATEST" MOVED ONTO A LIVE RUN. `v2_best` is an ALIAS; by 2026-08-03 it pointed at
-#     ``...GridGaitInitTurnInPlace``, still training. Hosts held different step counts, ser15 held none,
+#     ``...GridGaitInitTurnInPlace``, still training. Hosts held different step counts, one held none,
 #     and 14 cells died on launch with ``AssertionError: no checkpoint under runs/v2_best/*/model_*.pt``.
 #   * WRONG ARCHITECTURE. ``v2_best_single``'s chain walks past the single-cam parent onto a DUAL-cam
 #     ancestor, loading a 31-action net into a 29-action model (``size mismatch for action_scale``).
-# g1 was the last unpinned column and had the first shape latent: ser15 holds FOUR candidate run dirs for
-# its task (two only 4 minutes apart, ``14-50-43`` and ``14-54-46``), ser16 holds ONE. All 18 `dyn9` g1
+# g1 was the last unpinned column and had the first shape latent: one host held FOUR candidate run dirs for
+# its task (two only 4 minutes apart, ``14-50-43`` and ``14-54-46``), the other held ONE. All 18 g1
 # cells did land on ``14-54-46``, so those numbers are single-policy -- by luck, not construction.
 #
 # The pinned files live IN THE REPO under ``CKPT_DIR``, version-controlled, not under ``runs/`` (which is
@@ -99,8 +99,8 @@ LPT_RANK = {"left_right_far": 0, "front_back_far": 1, "bimanual_mixed_front_back
 REPEATS = (1, 2, 3)
 
 
-# Default topology: the ser15/ser16 pair. ser15 GPU 6 has an uncorrectable L2 SRAM ECC fault
-# (~/tmp/GPU6_FAULT_REPORT.md) and is dropped -- an auto-detect (nvidia-smi -L) could not know a present
+# Default topology: a two-host pair. One host's GPU 6 has an uncorrectable L2 SRAM ECC fault
+# and is dropped -- an auto-detect (nvidia-smi -L) could not know a present
 # device is faulty, so the usable set stays explicit. Override with --hosts for any other machine set.
 DEFAULT_HOSTS = "15=0-5,7;16=0-7"
 MANIFEST_PREFIX = "dyn_manifest_host"

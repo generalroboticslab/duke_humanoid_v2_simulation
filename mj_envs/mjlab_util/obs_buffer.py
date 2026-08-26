@@ -65,7 +65,7 @@ class HistoryBuffer:
         # Returns a VIEW into self.buffer (the persistent ring), not a copy. The ring is
         # overwritten in place by append(); callers that persist/carry this across steps
         # (e.g. an off-policy replay buffer) MUST clone or the data mutates underneath them.
-        # See ManagerBasedRlEnvWithFinalObs + memory/obs_rewrite_regression.md.
+        # See ManagerBasedRlEnvWithFinalObs.
         return self.buffer[:, self.pointer : self.pointer + self.max_len]
 
     def reset(self, env_ids: torch.Tensor | slice | None = None):

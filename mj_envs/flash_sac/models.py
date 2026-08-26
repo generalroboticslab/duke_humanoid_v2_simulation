@@ -1200,7 +1200,7 @@ class SequenceCritic(Critic):
     from the critic's input. A temporal encoder lets the critic implicitly system-ID those latents
     from the state response. The rejected v57 "critic-history" lever instead flat-concatenated the
     window into one MLP (no temporal inductive bias) and regressed; this class supplies the missing
-    encoder. See plan/glimmering-imagining-minsky.md.
+    encoder.
 
     seq_shape=(L_c, D_c) is required. The encoder (encoder_type/embed/latent) mirrors the actor.
 
@@ -1209,7 +1209,7 @@ class SequenceCritic(Critic):
     the raw 1-frame privileged obs (GT lin/ang vel + contacts) that the plain 1-frame critic feeds
     the Q-net directly — the encoder's mean-pool is a lossy bottleneck (latent 128 < frame 151), so
     latent-only made the critic STRICTLY WEAKER than the 1-frame baseline and the actor collapsed to
-    a near-standing policy (2026-07-09 single-seed regress, see memory/l2t_dead_levers.md). Concat of
+    a near-standing policy (measured, and it regressed to a near-standing policy). Concat of
     the newest frame makes the temporal critic strictly dominate the baseline (it can zero the latent
     to recover the 1-frame critic), so history can only add value.
     """

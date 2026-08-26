@@ -91,7 +91,7 @@ TARGET_TOLERANCE = 0.01                            # meters, "<~1 cm" success cr
 # Anchor pair below is the PUBLISHED one: dyn10 (commit c163845) and every mp4 in
 # media/two_target_videos_2k/ were measured at (0.01, 0.04). The 2026-08-10 "river" values
 # (GRASP_Z_ABOVE_M=0.005, GRASP_Z_FLOOR_BASE=-0.02, matching the deployed lev2_plan_server's deep
-# pinch) were tried locally on grl1 AFTER the paper measurement and reverted here -- they change
+# pinch) were tried locally AFTER the paper measurement and reverted here -- they change
 # grasp feasibility, so a sweep run under them is not comparable to Table IV. Re-apply the river
 # pair only for hardware-facing work, never for a paper re-baseline.
 GRASP_Z_FLOOR_BASE = 0.04                          # humanoid center-clamp grasp floor (base frame); below every table cube center (0.0445 base) so the clamp no longer overrides the unified center+GRASP_Z_ABOVE_M anchor -- only nets a cube genuinely below the bench. Was 0.06 (fired on all table cubes, defeating the +Z anchor).
@@ -105,8 +105,8 @@ DRIFT_REACH_Z = 0.08                               # drift-demo reach Z (pre-gra
 # corridor, so the fingers clip the cube on approach -- 18% of dyn3 trials nudged it >1 cm, 133 of 176 such
 # events during EXTEND. Re-planning the last visit from a FRESH base pose + cube belief collapses the drift
 # budget on the only span that touches the cube. 0.05 m = a standard pre-grasp standoff (and the value the
-# removed constant used); env-overridable so the A/B does not need a per-host edit (grl2_vicon/grl3 sshfs
-# grl1's one working tree).
+# removed constant used); env-overridable so the A/B does not need a per-host edit (the sweep hosts
+# share a single working tree).
 #
 # DEFAULT 0 == OFF, and the reason is measured, not cautionary. A/B on v2/left_right_close/seed 42: OFF took
 # 0 knocks, ON took one at t=3.46 s -- during STAGE A, whose goal is already 5 cm short of the cube. The
@@ -332,7 +332,7 @@ G1_CFG = RobotDescriptor(
     # Per-robot strafe cap. Headless rollouts / paper benchmarks: 0.3 m/s gives a bounded lateral step
     # toward an off-axis cube without committing the gait to full freedom. Cap is half humanoid's 0.6
     # because g1's fixed forward camera cannot compensate for sustained lateral body sway as cleanly as
-    # the gimbals do. Interacts with wave-19 anti-sway port: any widening needs a fresh §7.1 sweep.
+    # the gimbals do. Interacts with the anti-sway limits: any widening needs a fresh low-command sweep.
     walk_cruise_vy_max=0.3,
     dynamic_tracker_filter=False,
     dynamic_extend_settle_s=0.5,
@@ -493,10 +493,10 @@ HUMANOID_ACTUATED_SINGLE_CFG = dataclasses.replace(
     # 46/47/48, missions terminating instead of timing out. At full 180-trial sweep scale it did NOTHING:
     # P 158/180 -> 156/180 (inside the noise floor), and critically the retries=6 CONTROL already showed
     # mean APPROACH 7.3 s with ZERO livelocks (>40 s) and ZERO timeouts across 180 trials. The livelock is
-    # therefore NOT a property of this parameter -- it appears only under grl1's local
+    # therefore NOT a property of this parameter -- it appears only under a local
     # ``GRASP_Z_ABOVE_M=-0.01`` anchor, which makes grasp routes infeasible and drives the retry
     # escalation that produces the back-off oscillation. Kept at 6.
-    # See memory/v2_single_approach_livelock.md.
+    #
     extend_max_retries=6,
     # 2026-08-02: drop +-Y, restore +X/-X to match v2/v2_fixed/v2_single_fixed. The 2026-07-31
     # validation that picked +X/+-Y pre-supposed a single gimbal couldn't cover a backward walk -- but
@@ -505,7 +505,7 @@ HUMANOID_ACTUATED_SINGLE_CFG = dataclasses.replace(
     # +X drive dir for cells where the cube is in front of the robot; +X/-X covers those without the
     # +Y/-Y excursion.
     # 2026-08-10: removing ``needs_reface_override`` was TRIED and had NO measurable effect on the
-    # APPROACH livelock (seeds 46/47/48, grl1, solo headless: APPROACH 78.96/68.38/73.24 s before vs
+    # APPROACH livelock (seeds 46/47/48, solo headless: APPROACH 78.96/68.38/73.24 s before vs
     # 65.86/80.94/70.82 s after, all six timing out with ``mission_verdict: None``). Kept as-is.
     walk_drive_dirs=((1.0, 0.0), (-1.0, 0.0)),
     needs_reface_override=True,

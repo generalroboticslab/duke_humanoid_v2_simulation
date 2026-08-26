@@ -126,7 +126,7 @@ class MoverCfg:
     #   policy's low-yaw sluggishness). Off inside face_tol so want_wz -> 0 and the settle handoff still fires.
     #   Was 0.2; raised to 0.4 (2026-07-25 user request) to halve the no-crawl settle wall-time on g1's far
     #   scenarios where the square-up alone was eating 2-5s per visit, then to 0.6 (2026-08-02 user request,
-    #   all robots). Still well below wave-19 g1 anti-sway range; safe vs the 1.0 rad/s TURN cap.
+    #   all robots). Still well below the g1 anti-sway range; safe vs the 1.0 rad/s TURN cap.
     k_steer: float = 0.6
     k_lateral: float = 0.6           # proportional gain, target base-frame y -> want_vy (before the cruise_vy_max clamp)
     max_accel: float = 3.0           # m/s^2 and rad/s^2 per-channel ramp

@@ -1,6 +1,6 @@
 """Pick-place design-validation scenarios + scene injection.
 
-plan/ACTIVE_VISION_DESIGN_VALIDATION_PLAN.md (Step 1: scene). Each scenario places PHYSICAL
+Each scenario places PHYSICAL
 static props (stand-alone workbenches from ``workbench.py`` / a shelf) plus abstract TARGET
 points (objects to pick / pads to place / a human-hand point) for the heuristic controller
 wired in later steps.

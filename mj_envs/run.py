@@ -1,108 +1,66 @@
 #!/usr/bin/env python
-"""Train or play humanoid velocity tracking with PPO (or FlashSAC).
+"""Train or watch the whole-body locomotion policy.
 
-────────────────
- BASIC TRAINING / PLAY
-────────────────
-python mj_envs/run.py train                                # defaults (4096 envs, humanoid_velocity)
-python mj_envs/run.py train --num_envs 8192               # more envs
-python mj_envs/run.py train --checkpoint <path>            # resume training
-python mj_envs/run.py train --wandb_run_path <path>        # resume from W&B
+Two subcommands, `train` and `play`. Both take `--task <ClassName>`, naming an experiment
+class in `tasks/*/experiments.py`. The class carries the task, the environment build, the
+observation space and the MDP tuning, so `--task` is the only argument most runs need.
 
-python mj_envs/run.py play --checkpoint <path>             # visualize policy
-python mj_envs/run.py play --agent random                  # test with random actions
-python mj_envs/run.py play --export_policy                 # export TorchScript for deployment
-python mj_envs/run.py play --viewer viser                  # web viewer (no display needed)
-python mj_envs/run.py play --speed 8                       # run 8x wall clock (1/32 .. 8)
-python mj_envs/run.py play --vsync                         # cap draw at the monitor refresh
+    python mj_envs/run.py train --task list     # every variant, with its docstring
 
-# Known-good checkpoints:
-python mj_envs/run.py play --task HumanoidVelocityRMACNNShortEstimator --checkpoint runs/humanoid_velocity/humanoid_velocity_2026-03-03_00-12-58/model_14999.pt --export-policy --play-after-export
-python mj_envs/run.py play --task MjlabG1Flat --checkpoint runs/Mjlab-Velocity-Flat-Unitree-G1/Mjlab-Velocity-Flat-Unitree-G1_2026-02-27_10-56-45/model_3800.pt
+Watch a shipped policy
+----------------------
+    python mj_envs/run.py play --task HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4MixedArmsCam
 
-# to check
-python mj_envs/run.py play --task HumanoidLegsOnlyFixedArms --checkpoint runs/humanoid_legs_only/HumanoidLegsOnlyFixedArms_2026-03-05_02-53-50/model_14999.pt --export-policy --play-after-export
-python mj_envs/run.py play --task HumanoidLegsOnlyRandArmsFullObs --checkpoint runs/humanoid_legs_only/HumanoidLegsOnlyRandArmsFullObs_2026-03-09_01-20-32/model_14999.pt --export-policy --play-after-export
+No checkpoint argument needed. `play` resolves one in this order and prints its choice:
+`runs/<task>/` (latest >= 500 iters), then the committed export at
+`deploy/runs/<task>/seed0/policy_deployed.pt`, then the pinned weights shipped in
+`tasks/visual_manipulation/test/checkpoints/`. The three shipped policies are
+`...MixedArmsCam` (two actuated camera modules, the adopted design), `...SingleCam`, and
+`G1RmaVelEstArmFlashSacStudentOnlyg1bsk2`.
 
-# can stablize in 0 velocity, but walks not so stable, step hard.
-python mj_envs/run.py play --task HumanoidVelocityRMACNNShortEstimator --checkpoint runs/humanoid_velocity/humanoid_velocity_2026-03-06_01-18-31/model_14999.pt --verbose --export-policy --play-after-export
+Useful `play` flags:
 
+    --checkpoint <path>    a specific weight instead of the resolved one
+    --agent random|zero    drive the robot without a policy, to sanity-check the scene
+    --viewer viser         browser viewer, for a machine with no display
+    --speed 8              run faster than wall clock (1/32 .. 8)
+    --export_policy        write a deploy run directory, see below
 
-python mj_envs/run.py play --task HumanoidActorHistory3 --checkpoint runs/humanoid_velocity/HumanoidActorHistory3_2026-03-09_01-20-20/model_14999.pt --export-policy --play-after-export
-python mj_envs/deploy/test_deployment.py --task HumanoidActorHistory3
-# GOOD
-python mj_envs/run.py play --task HumanoidVelocityHighEnergyPenalty --checkpoint runs/HumanoidVelocityHighEnergyPenalty/HumanoidVelocityHighEnergyPenalty_2026-03-11_02-01-58/model_14999.pt --export-policy --play-after-export
-# BAD
-python mj_envs/run.py play --task HumanoidVelocityHighEnergyPenalty --checkpoint runs/HumanoidVelocityHighEnergyPenalty/HumanoidVelocityHighEnergyPenalty_2026-03-12_14-46-21/model_14999.pt
-python mj_envs/run.py play --task HumanoidVelocityHighEnergyPenalty --checkpoint runs/HumanoidVelocityHighEnergyPenalty/HumanoidVelocityHighEnergyPenalty_2026-03-13_01-15-17/model_14999.pt --export-policy --play-after-export
+Train
+-----
+    python mj_envs/run.py train --task HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4MixedArmsCam
 
-python mj_envs/run.py play --task HumanoidVelocityHighEnergyPenalty --export-policy --play-after-export
-python mj_envs/run.py play --task HumanoidRandArmsAdditiveCtrlTracking --export-policy --play-after-export
-python mj_envs/run.py play --task HumanoidVelocityPushAware --export-policy --play-after-export
-python mj_envs/run.py play --task HumanoidVelocityStanding --export-policy --play-after-export
-python mj_envs/run.py play --task HumanoidVelocityRMACNNShortEstimator --export-policy --play-after-export
+Defaults to 4096 environments; 15k iterations is what the shipped policies ran. Logs and
+checkpoints go to `runs/<task>/<timestamp>[_<run_name>]/`. Resume with `--checkpoint <path>`
+or `--wandb_run_path <path>`.
 
-python mj_envs/run.py play --task HumanoidVelocityRMACNN --checkpoint runs/humanoid_velocity/HumanoidVelocityRMACNN_2026-03-15_13-22-43/model_10400.pt --export-policy --play-after-export
-python mj_envs/run.py play --task HumanoidVelocityRMACNN_V2 --export-policy --play-after-export
-python mj_envs/deploy/test_deployment.py --task HumanoidVelocityRMACNN_V2
+Never train under an alias class name. An alias points at whatever the current best variant
+is, so a run started under one writes `runs/<alias>/` and goes stale the moment the alias is
+retargeted, silently loading a wrong-architecture checkpoint later. Use the concrete class.
 
-python mj_envs/run.py play --task HumanoidVelocityRMACNNShort --export-policy --play-after-export
-python mj_envs/deploy/test_deployment.py --task HumanoidVelocityRMACNNShort
+Export for the robot
+--------------------
+    python mj_envs/run.py play --task <ClassName> --export_policy --play_after_export
 
-python mj_envs/run.py play --task HumanoidVelocityRMACNNShortEstimator --export-policy --play-after-export  --checkpoint runs/HumanoidVelocityRMACNNShortEstimator/2026-03-25_02-46-27/model_14999.pt
-python mj_envs/deploy/test_deployment.py --task HumanoidVelocityRMACNNShortEstimator
+Writes `policy_deployed.pt` (TorchScript: observation normalizer and actor, fused) plus
+`env_config.yaml`, which records the observation term order and widths the exported policy
+expects. That file is the contract the deploy stack assembles its observation against.
 
-python mj_envs/run.py play --task HumanoidLocoArmFollow --checkpoint mj_envs/runs/HumanoidLocoArmFollow/2026-03-23_02-53-04/model_7300.pt
-python mj_envs/deploy/test_deployment.py --task HumanoidLocoArmFollow
+Add a variant
+-------------
+Subclass an existing experiment and change one thing:
 
-python mj_envs/run.py play --task HumanoidVelocityRMACNNShortEstimatorPhase --checkpoint mj_envs/runs/HumanoidVelocityRMACNNShortEstimatorPhase/2026-03-25_04-31-18/model_14999.pt --export-policy --play-after-export
-python mj_envs/deploy/test_deployment.py --task HumanoidVelocityRMACNNShortEstimatorPhase
+    class HumanoidRmaVelEstArmFlashSacMyVariant(HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4MixedArmsCam):
+        \"\"\"One sentence on what changed and why. Shown in --task list.\"\"\"
+        def configure(self, env, agent):
+            super().configure(env, agent)
+            env.rewards["track_angular_velocity"].params["std_min"] = 0.05
 
-python mj_envs/run.py play --task HumanoidVelocityRMACNNShortEstimatorPhaseEEDRv2  --export-policy --play-after-export
+Class attributes are structural and apply before the environment is built; `configure()`
+tunes the MDP after. The new class is immediately available as `--task`.
 
-python mj_envs/deploy/test_deployment.py --task HumanoidVelocityRMACNNShortEstimatorPhaseEEDR --use-ik
-
-python mj_envs/run.py play --task HumanoidVelocityRMACNNShortEstimatorPhaseEEDRv7  --export-policy --play-after-export
-python mj_envs/deploy/test_deployment.py --task HumanoidVelocityRMACNNShortEstimatorPhaseEEDRv7 --use-ik
-
-python mj_envs/run.py play --task HumanoidVelocityRMACNNShortEstimatorPhaseEEDRv9  --export-policy --play-after-export
-python mj_envs/deploy/test_deployment.py --task HumanoidVelocityRMACNNShortEstimatorPhaseEEDRv9 --use-ik
-
-────────────────
- EXPERIMENTS  (--task)
-────────────────
-Experiments are Python classes in tasks/*/experiments.py that subclass
-BaseExperiment. They configure both the task structure (obs space, arm mode)
-and MDP tuning (rewards, terrain, commands).
-
---task accepts experiment names only (e.g. HumanoidVelocityRMACNN); bare task names are
-no longer an entry point. Each experiment carries its task + env build (build_env_cfg).
-Logs go to runs/<task>/<timestamp>[_<run_name>]/.
-
-# List all available experiments:
-python mj_envs/run.py train --task list
-
-# Train with an experiment via --task (experiment sets the underlying task):
-python mj_envs/run.py train --task HumanoidLegsOnly                    # default: rand arms + COM obs
-python mj_envs/run.py train --task HumanoidLegsOnlyFixedArms         # fixed arms + COM obs
-python mj_envs/run.py train --task HumanoidLegsOnlyFixedArmsFullObs # fixed arms + full joints, no COM
-python mj_envs/run.py train --task HumanoidLegsOnlyRandArmsFullObs  # rand arms + full joints, no COM
-python mj_envs/run.py train --task HumanoidLegsOnlyHighVel           # running speed
-
-# Play with an experiment:
-python mj_envs/run.py play --task HumanoidLegsOnlyFixedArms --checkpoint <path>
-python mj_envs/run.py play --task HumanoidLegsOnlyRandArmsFullObs --checkpoint <path>
-
-# ADD A NEW EXPERIMENT — just subclass in tasks/<task>/experiments.py:
-#
-#   class HumanoidLegsOnlyMyVariant(HumanoidLegsOnly):
-#       \"\"\"Shown in --task list.\"\"\"
-#       randomize_arms = False          # structural: applied before env build
-#       def configure(self, env, agent):
-#           env.commands[\"twist\"].ranges.lin_vel_x = (0.0, 1.5)
-#
-# → immediately available as --task HumanoidLegsOnlyMyVariant
-────────────────
+Background on what the policy observes, how it is trained and why it is built this way:
+`tasks/humanoid_velocity/README.md`.
 """
 
 import tasks.humanoid_velocity
@@ -523,7 +481,6 @@ def train_flash_sac(cfg: TrainConfig, env_cfg: ManagerBasedRlEnvCfg, log_dir: Pa
     # Active-vision camera stack: a high-level learner composed on a FROZEN base policy. The exp
     # marks `camera_learner` and names the frozen checkpoint; CameraLearnerEnv folds the frozen
     # policy into the transition (env.step receives only the 4D camera action). See
-    # plan/valiant-giggling-hoare.md.
     if getattr(exp, "camera_learner", False):
         from tasks.camera_learner_env import CameraLearnerEnv
         env = CameraLearnerEnv(cfg=env_cfg, device=cfg.device,

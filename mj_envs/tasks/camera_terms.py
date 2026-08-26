@@ -1,4 +1,4 @@
-"""A1 camera-task obs/reward terms (active vision, plan/valiant-giggling-hoare.md).
+"""Camera-task observation and reward terms for active vision.
 
 HIGH-LEVEL gaze policy on frozen v83: each opposed camera independently tracks its OWN
 known world point (left = front hemisphere, right = rear hemisphere; fixed pairing). These

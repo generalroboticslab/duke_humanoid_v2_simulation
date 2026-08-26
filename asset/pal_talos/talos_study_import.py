@@ -39,7 +39,7 @@ WHAT THIS SCRIPT DOES, AND WHY EACH STEP
 
 2. TOOL SITES. ``end_effector_{L,R}_site`` on ``arm_{left,right}_7_link`` — the last ARM
    link. Everything below it (``gripper_*``) carries a joint and therefore moves with the
-   gripper, which the SOP forbids as a planning endpoint. Position (0, 0, -0.11337) in the
+   gripper, which the study forbids as a planning endpoint. Position (0, 0, -0.11337) in the
    wrist frame is the palm centre: the vendor mounts a fixed, jointless palm housing mesh
    (``gripper_base_link``, both visual and collision variants) directly on ``arm_*_7_link``
    at the top of the gripper kinematic chain -- unlike every ``gripper_*`` body below it,
@@ -67,7 +67,7 @@ WHAT THIS SCRIPT DOES, AND WHY EACH STEP
    MuJoCo camera's view axis (-Z) point along world +X with image-up along +Z, which is that
    xacro's ``rpy=(-90, 0, -90)`` optical frame expressed in MuJoCo. See CAMERA CONTRACT.
 
-CAMERA CONTRACT (SOP section 3)
+CAMERA CONTRACT
 --------------------------------
 The head camera is an **Orbbec Astra Pro**, established by two independent primary sources:
 PAL's own robot description instantiates ``<xacro:orbbec_astra_pro name="rgbd" parent="head_2">``
@@ -421,7 +421,7 @@ def _add_rest_contact_excludes(tree: ET.ElementTree) -> int:
     Inscribed capsules on neighbouring links inevitably meet where the links meet: here the
     upper arm and forearm graze across the elbow by 4.1 mm, and the two ankles graze by
     2.0 mm at the stance width. Both are structural -- present in every pose, carrying no
-    information about self-collision -- and the SOP provides for ignoring exactly this class
+    information about self-collision -- and the study's convention provides for ignoring exactly this class
     by name, which also keeps ``data.ncon == 0`` a valid test for the safe-pose sampler.
 
     Excluding the elbow pair costs NOTHING here, and that was verified rather than assumed:

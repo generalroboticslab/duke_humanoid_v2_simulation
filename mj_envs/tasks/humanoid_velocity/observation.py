@@ -1222,7 +1222,7 @@ class ee_gate:
 
     Params:
         command_name: Velocity command key in env.command_manager.
-        sigma_sq:     Gate scale (default 0.04 = σ=0.2 m/s from §5.2).
+        sigma_sq:     Gate scale (default 0.04 = σ=0.2 m/s).
     """
 
     def __init__(self, cfg, env: ManagerBasedRlEnv):

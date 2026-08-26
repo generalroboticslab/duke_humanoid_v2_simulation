@@ -1,6 +1,6 @@
-"""Supervise deterministic cuRobo reachability shards on ser10 or ser16.
+"""Supervise deterministic cuRobo reachability shards on a multi-GPU host.
 
-Run this program on the remote host after SOP rsync. It preclaims only its own GPU-guard locks,
+Run this program on the remote host once the tree is in place. It preclaims only its own GPU-guard locks,
 waits for sentinel release, launches one independent grid slice per ``GPU:CHUNK`` pair, retains
 per-chunk PID/log files, and removes only locks it created after its worker exits. Workers rebuild
 the same global grid × SO(3) list, so no target bundle is shared between GPUs.
@@ -116,7 +116,8 @@ def main() -> None:
         return
 
     for gpu, _ in args.pairs:
-        # Guard is named ser16 on both ser10 and ser16; never remove a pre-existing owner lock.
+        # The guard file name is a fixed convention shared by every host, not the local hostname;
+        # never remove a pre-existing owner lock.
         lock = Path("/tmp") / f"ser16_user_gpu_{gpu}.lock"
         if not lock.exists():
             lock.touch()

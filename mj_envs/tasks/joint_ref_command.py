@@ -184,7 +184,7 @@ class ArmGraphRefCommandTermCfg(CommandTermCfg):
     # holding still" in-distribution.
     frozen_at_graph_node: float = 0.0
     # Env-control-steps before frozen_at_graph_node switches on (0 = on from step 0, legacy).
-    # A held far pose deepens the low-command standing optimum (memory/grid_low_command_deadzone.md):
+    # A held far pose deepens the low-command standing optimum:
     # a policy that cannot yet walk stands, trips velocity_tracking_failure, and the grid curriculum
     # never cascades (cells frozen at 64/148 vs bursting 64 -> 402). Delay past locomotion
     # acquisition and both survive. Callers write ``<iters> * self.num_steps_per_env`` (the
@@ -483,7 +483,7 @@ class CommandGatedArmGraphRefCommandTermCfg(ArmGraphRefCommandTermCfg):
         per edge. When stand_min_steps <= 0 (default), stationary regime uses full-speed
         traversal (steps_per_edge). Set stand_min_steps > 0 to slow the arm at zero base cmd.
 
-    Training-time vs deploy note (Wave-19, 2026-07-25): stand_min_steps is a TRAINING-TIME
+    Training-time vs deploy note (measured): stand_min_steps is a TRAINING-TIME
     lever, NOT a deploy-side slowdown. The v2ybsk keeper is trained with stand_min_steps=80
     and reverted to the default 0 at deploy. Same-policy probe (sway_probe with
     --stand-min-steps 0/80/120 override) confirmed the v2ybsk ckpt is invariant to deploy
@@ -795,7 +795,7 @@ class GazeRefCommandTerm(CommandTerm):
 
 @dataclass(kw_only=True)
 class PassiveGazeCommandTermCfg(CommandTermCfg):
-    """Externally-set gaze joint reference (active-vision A1+, plan/valiant-giggling-hoare.md).
+    """Externally-set gaze joint reference.
 
     Drop-in replacement for GazeRefCommandTermCfg on the ``camera_ref`` command when a
     HIGH-LEVEL learner (not a random walk) sources the gaze setpoint. The term is a passive
@@ -880,7 +880,7 @@ class PassiveGazeCommandTerm(CommandTerm):
 
 @dataclass(kw_only=True)
 class PassiveArmRefCommandTermCfg(CommandTermCfg):
-    """Externally-set arm joint reference (pick-place reach, plan/ACTIVE_VISION_DESIGN_VALIDATION_PLAN.md).
+    """Externally-set arm joint reference.
 
     Drop-in replacement for (Command)ArmGraphRefCommandTermCfg on the ``arm_ref`` command when a
     scripted controller (or a future learner) sources the arm setpoint instead of the collision

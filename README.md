@@ -143,6 +143,7 @@ browsing rather than by grepping:
 | [`asset/duke_v2/`](asset/duke_v2/) | This robot: body, head-camera gimbals, end effectors, and how to view them. |
 | [`mj_envs/asset_zoo/reachability_study/`](mj_envs/asset_zoo/reachability_study/) | The visible-reachable workspace computation and both workspace figures. |
 | [`mj_envs/tasks/visual_manipulation/`](mj_envs/tasks/visual_manipulation/) | The two-target benchmark, its scenarios, and the mission flags. |
+| [`mj_envs/tasks/humanoid_velocity/`](mj_envs/tasks/humanoid_velocity/) | The locomotion policy: what it observes, how it is trained, and why it is built that way. |
 
 The rest:
 
@@ -154,8 +155,8 @@ The rest:
   robot that exercises the coupled-neck branch of `gpu_visibility` (`_apply_coupling`, -1/0.909
   gear).
 - `mj_envs/asset_zoo/` has robot constants, scene objects, and the reachability study.
-- `mj_envs/tasks/humanoid_velocity/` has the locomotion task, rewards, observations, experiments.
-- `mj_envs/flash_sac/` and `mj_envs/ppo/` are the RL training stacks.
+- `mj_envs/flash_sac/` and `mj_envs/ppo/` are the RL training stacks. `flash_sac` is a
+  distributional SAC and is what every shipped policy was trained with.
 - `mj_envs/tasks/visual_manipulation/test/checkpoints/` has the pinned policy weights, with the
   md5 and training command for each.
 

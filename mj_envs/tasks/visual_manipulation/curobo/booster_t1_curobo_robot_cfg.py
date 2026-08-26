@@ -5,12 +5,12 @@ per side (Shoulder_Pitch, Shoulder_Roll, Elbow_Pitch, Elbow_Yaw). The hand link 
 sub-joints/fingers, so there is no sibling drive branch and no source-motor equality
 writeback — the planner c-space is the four source revolute coordinates directly.
 
-Floating root is `base_link` (renamed from upstream `Trunk` to match the SOP root-frame gate;
+Floating root is `base_link` (renamed from upstream `Trunk` to match the root-frame convention used here;
 all child bodies retain their source-relative poses). Standing planning origin = (0, 0, 0.665)
 matching the home keyframe; cuRobo seeds the IK solver from this pose, not the body's
 default Z=0.7. Two fixed tool sites at the hand terminal: ``end_effector_{L,R}_site``. Head
 ``H2`` carries a co-located ``head_cam`` + ``head_cam_site`` for the dynamic-actuated visibility
-scoring path (T1 RealSense version = Intel RealSense D455; SOP §3 envelope disclosure — not
+scoring path (T1 RealSense version = Intel RealSense D455; a declared envelope — not
 calibrated).
 
 Collision spheres built from source group 3: trunk box, H2 sphere, elbow/hand cylinders,

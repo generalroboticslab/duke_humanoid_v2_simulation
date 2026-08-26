@@ -1,6 +1,6 @@
 """Load a FROZEN, deployable FlashSAC policy (e.g. v83) for in-env composition.
 
-Used by the active-vision camera stack (plan/ACTIVE_VISION_PICK_PLACE_PLAN.md):
+Used by the active-vision camera stack:
 the camera learner runs ON TOP of a frozen loco+arm policy. The frozen policy
 must act on the CAMERA env's live observation each step, so we cannot just step a
 separate env — we need the frozen net itself, applied to our obs.

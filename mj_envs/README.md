@@ -26,7 +26,7 @@ loads a wrong-architecture checkpoint. Train under the concrete class.
 |---|---|
 | [`asset_zoo/reachability_study/`](asset_zoo/reachability_study/) | The visible-reachable workspace computation and both workspace figures. Has its own README. |
 | [`tasks/visual_manipulation/`](tasks/visual_manipulation/) | The two-target benchmark: scenarios, cuRobo planning, trackers, mission state machine. Has its own README. |
-| `tasks/humanoid_velocity/` | The locomotion task: rewards, observations, terrain, and the experiment classes `--task` names. |
+| [`tasks/humanoid_velocity/`](tasks/humanoid_velocity/) | The locomotion policy: what it observes, how it is trained, and the variants `--task` names. Has its own README. |
 | `tasks/g1_velocity/` | The same for the Unitree G1 baseline. |
 | `flash_sac/`, `ppo/` | The two RL training stacks. `flash_sac` is what the shipped policies were trained with. |
 | `asset_zoo/` | Robot constants and scene objects: the code that grafts cameras and grippers onto a bare body. |

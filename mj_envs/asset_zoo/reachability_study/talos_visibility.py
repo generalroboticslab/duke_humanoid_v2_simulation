@@ -1,4 +1,4 @@
-"""Dynamic head-camera visibility for the PAL Robotics TALOS, per SOP section 5.
+"""Dynamic head-camera visibility for the PAL Robotics TALOS.
 
 TALOS carries a 2-DOF actuated head (``head_1_joint`` = TILT about +Y, -12..+45 deg;
 ``head_2_joint`` = PAN about +Z, +-75 deg) with a head-mounted RGB-D camera, so visibility is

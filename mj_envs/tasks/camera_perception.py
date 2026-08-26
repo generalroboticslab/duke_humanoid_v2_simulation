@@ -1,7 +1,6 @@
 """Camera perception primitives for the active-vision pick-and-place stack.
 
-Pure-tensor geometry + belief state shared across all phases of
-plan/ACTIVE_VISION_PICK_PLACE_PLAN.md. Kept free of mjlab/env imports so the
+Pure-tensor geometry + belief state shared across the active-vision stack. Kept free of mjlab/env imports so the
 geometry and belief math are unit-testable in isolation (run this file directly).
 
 Conventions (verified against asset/duke_v2/head_cam/head_camera_dual.xml +

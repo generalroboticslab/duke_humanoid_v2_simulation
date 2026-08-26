@@ -79,7 +79,7 @@ _EARTH_AMBIENT = np.array([0.090, 0.110, 0.150])
 # Path/Forward hazecam midday sky at tau~1. AgX desaturates low-magnitude colours so hard that
 # source (0.35, 0.25, 0.17) lands at (0.61, 0.54, 0.47) -- warm pink, not butterscotch. These are
 # the pre-compensated source values that produce the intended output under EEVEE AgX +
-# EXPOSURE_STOPS=0.3, measured on grl1 (Blender 5.2 LTS):
+# EXPOSURE_STOPS=0.3, measured with Blender 5.2 LTS:
 # (0.160, 0.115, 0.070) -> post-AgX (0.478, 0.404, 0.314), within 13% of target on all channels.
 _MOON_SKY = np.array([0.0, 0.0, 0.0])
 _MARS_SKY = np.array([0.160, 0.115, 0.070])

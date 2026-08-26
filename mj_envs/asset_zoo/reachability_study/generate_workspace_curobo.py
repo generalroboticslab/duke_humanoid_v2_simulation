@@ -26,35 +26,34 @@ Multi-GPU data-parallel (used for the paper's 40^3 x 32 = 2.048M-solve grid)
 ---------------------------------------------------------------------------
 Split the target rows across GPUs with native `--target-start` / `--limit`, one
 process per GPU pinned by `CUDA_VISIBLE_DEVICES`, then `merge_workspace_curobo.py`.
-ser16 recipe (8x L40S 46GB, user bx35, rsync-only, no sshfs):
-  1. Provision cuRobo: it is pure-Python + warp JIT (no compiled .so), so `rsync` the
-     curobo tree over; then `pip install qpsolvers cuda-core cuda-bindings
-     cuda-pathfinder` (the only non-rsyncable deps). warp JIT-compiles kernels on
-     first run (~90s).
-  2. Ensure the target GPUs are free.
-  3. Launch 8 chunks: TOTAL/8 rows each, per-GPU `CUDA_VISIBLE_DEVICES=$g` +
-     `--target-start $((g*CHUNK)) --limit CHUNK`, `--batch-size 512 --num-seeds 32`.
-     Do NOT use `set -e`: the post-save teardown segfault (exit 139) is a benign
-     cuRobo/torch exit crash AFTER the file is written; gate success on file
-     existence, not exit code. 2.048M solves finished in ~4 min (14.6k solves/s
-     aggregate) vs ~8 h single-GPU sequential.
-  4. `merge_workspace_curobo.py` the 8 sidecars into one payload, pull to grl1 cache,
-     clean remote scratch.
+Recipe, on a host with N GPUs:
+  1. Provision cuRobo. It is pure Python plus a warp JIT with no compiled extension, so the
+     tree can simply be copied; `qpsolvers`, `cuda-core`, `cuda-bindings` and
+     `cuda-pathfinder` still come from pip. warp compiles its kernels on first run, ~90 s.
+  2. Check the GPUs are actually free.
+  3. Launch N chunks of TOTAL/N rows, one per GPU, pinned with `CUDA_VISIBLE_DEVICES=$g` and
+     `--target-start $((g*CHUNK)) --limit CHUNK --batch-size 512 --num-seeds 32`.
+     Do not use `set -e`. cuRobo segfaults on teardown (exit 139) *after* the output file is
+     written, so gate success on the file existing rather than on the exit code.
+     The paper's 2.048M-solve grid took about 4 minutes on 8 GPUs, against roughly 8 hours
+     for one GPU running sequentially.
+  4. Merge the sidecars with `merge_workspace_curobo.py`, then clean up the scratch files.
 
-Two-host 16-GPU extension (ser10 + ser16, G1 fine 0.02 production, 2026-07-11):
-  Same as above but 16 chunks over both hosts. G1 `--pad 0.15` -> 63x75x62 = 292950 voxels;
-  `CHUNK = ceil(292950/16)=18310 voxels x64 = 1171840 rows`; global shard `G=0..15` (ser10
-  G=0..7, ser16 G=8..15), `--target-start G*CHUNK`. 18.75M solves in ~10 min wall. Gotchas:
-    - GRID MUST ENCLOSE the full reachable set. legacy-symmetric bounds = seed-cache EE cloud
-      + `--pad`; too-tight pad caps the low-D fringe flat (G1 needed 0.15, not 0.05). After
-      the solve, bin `success` into `n_grid_per_axis` and confirm every one of the 6 faces has
-      0 reachable voxels; if not, raise `--pad` and re-solve.
-    - cache/ is EXCLUDED from the rsync push -> push `safe_arm_poses_unitree_g1.pt` (the
-      seed cache) EXPLICITLY, else the solve has no seed pool.
-    - ser10 launch MUST export `LD_LIBRARY_PATH=$CONDA_PREFIX/lib` (CXXABI_1.3.15).
-    - Pull with the remote glob QUOTED (`"$H:.../shard_${H}_*.pt"`) or zsh expands it
-      locally and skips the rsync.
-  Full copy-paste recipe: reachability_study/readme_reachability.md ("Reproduce the fine 0.02 figure").
+The same split works across two hosts; the paper's fine 0.02 G1 grid used 16 GPUs for 18.75M
+solves in about 10 minutes of wall time. Three things bite when scaling it up:
+
+  - The grid must enclose the whole reachable set. Bounds come from the seed cache's
+    end-effector cloud plus `--pad`, and too small a pad shears the low-dexterity fringe off
+    flat -- the G1 needed 0.15, not 0.05. After a solve, bin `success` by `n_grid_per_axis`
+    and confirm all six faces of the grid hold zero reachable voxels. If one does not, raise
+    `--pad` and solve again.
+  - `cache/` is normally excluded when copying the tree, so the safe-arm-pose file has to be
+    sent explicitly. Without it the solve has no seed pool.
+  - Quote any remote glob when pulling results back, or the local shell expands it and the
+    copy silently does nothing.
+
+A full copy-paste version is in `readme_reachability.md`, under "Reproduce the fine 0.02
+figure".
 """
 
 from __future__ import annotations

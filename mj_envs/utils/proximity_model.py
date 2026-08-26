@@ -143,7 +143,6 @@ to absorb encoder-noise-induced position jitter (~3 mm from 0.01 rad encoder noi
 Filter the output, not the input — filtering joint angles would add lag to the distance
 signal, which is the opposite of what a safety margin needs.
 
-See also: plan/ARM_PROXIMITY_MODEL.md for full design rationale and SOTA context.
 """
 
 from __future__ import annotations

@@ -1,6 +1,6 @@
 """CameraLearnerEnv: high-level gaze policy composed on a FROZEN v83 (active-vision A1).
 
-plan/valiant-giggling-hoare.md. The learner is HIGH-LEVEL: env.step receives only the 4D gaze
+The learner is HIGH-LEVEL: env.step receives only the 4D gaze
 SETPOINT; it is written to the ``camera_ref`` command, then the frozen v83 policy runs on this
 env's live student obs and outputs the FULL 31D action (legs + arms + a camera-tracking residual
 on top of the setpoint). v83 is thus folded into the transition function — FlashSAC trains one

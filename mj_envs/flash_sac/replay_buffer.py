@@ -36,7 +36,7 @@ class SimpleReplayBuffer(nn.Module):
         (the deployable proprio obs, distinct from the privileged `observations`). Only
         the CURRENT student obs is stored (off-policy imitation regresses on it; no next).
 
-        frame_ring (plan/REPLAY_FRAME_RING_PLAN.md): when True, store ONE frame per timestep
+        frame_ring: when True, store ONE frame per timestep
         per history view (obs_seq/critic_seq/student_seq give the (L, D) split of n_obs /
         n_critic_obs / n_student_obs) and reconstruct the L-frame window at sample time, instead
         of storing the full overlapping window per transition (~L× less VRAM, lossless, same
@@ -69,7 +69,7 @@ class SimpleReplayBuffer(nn.Module):
         # Storage length. Frame-ring stores L_max-1 EXTRA frames beyond buffer_size so the oldest
         # sampleable transition's full window survives the ring write-frontier: transition T's
         # oldest frame (T-L+1) is evicted exactly when T leaves the sampleable window of the last
-        # buffer_size transitions (plan §13.7). Sampling still draws only those buffer_size
+        # buffer_size transitions. Sampling still draws only those buffer_size
         # transitions → unchanged capacity/distribution; ~ (L-1)/buffer_size extra memory (~2%).
         self._fr_student = frame_ring and n_student_obs > 0 and student_seq is not None
         # Student-own-critic (v64): store the NEXT student window too, for the student critic's
@@ -109,7 +109,7 @@ class SimpleReplayBuffer(nn.Module):
                 # (e.g. strided/multi-scale student history).
                 self.student_observations = torch.zeros((n_env, store_len, n_student_obs), device=device, dtype=torch.float16)
             # Per-transition frames-since-reset (capped at the largest view L), derived inside
-            # extend from this buffer's own `dones` ring (plan §13.1). Reconstruction clamps lags
+            # extend from this buffer's own `dones` ring. Reconstruction clamps lags
             # to push_count-1, reproducing CircularBuffer backfill (valid = min(key, num_pushes-1)).
             self.push_count = torch.zeros((n_env, store_len), device=device, dtype=torch.int16)
         else:

@@ -17,7 +17,7 @@ SOURCE
 ------
 ``Wiki-GRx-Models/GRX/GR3/gr3v2_1_1/mjcf/gr3v2_1_1_dummy_hand.xml`` (FFTAI / Fourier
 Intelligence). The ``_dummy_hand`` variant is used, not the bare-wrist one: the study's
-SOP requires a FIXED end-effector site at the tool centre and forbids planning to a moving
+The study requires a FIXED end-effector site at the tool centre and forbids planning to a moving
 finger link, and the rigid dummy hand is exactly such a fixed body (it also carries the
 hand's real 0.4686 kg and a collision box, both of which the bare-wrist file lacks).
 
@@ -56,7 +56,7 @@ TRANSFORMS APPLIED (each with its justification)
    co-located site per camera to serve as the occlusion-raycast origin, plus a group-4
    wireframe of the primary camera's frustum for visual inspection.
 
-CAMERA CONTRACT (SOP §3)
+CAMERA CONTRACT
 ------------------------
 Fourier publishes NO model number, resolution, intrinsics or depth range for the GR-3 head
 camera. What IS first-hand vendor data, from the official developer docs
@@ -395,7 +395,7 @@ def _add_rest_contact_excludes(tree: ET.ElementTree) -> int:
     chain overlap where they meet — the shoulder ball sits inside the torso shell, the three
     waist boxes nest, the two wrist capsules nest. These are STRUCTURAL: no arm motion can
     separate them, they are present in every pose, and they are not information about
-    self-collision. The SOP calls for exactly this ("intended static/adjacent contacts that
+    self-collision. The study's convention calls for exactly this ("intended static/adjacent contacts that
     safe-pose collision filtering must ignore by name"), and declaring them here keeps
     ``data.ncon == 0`` a valid safety test for the safe-pose sampler rather than forcing
     every consumer to carry its own whitelist. cuRobo separately reaches the same set through

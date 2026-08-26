@@ -90,7 +90,7 @@ GRASP_TOOL_FRAMES = ["left_hand_grasp", "right_hand_grasp"]
 # parity, MEMORY line 20); the only lever is this grasp tilt.
 #   Rejected (2026-07-10): a single-solve "prefer horizontal, allow tilt" (command beta=90, soften the
 #   tilt axis so the optimizer lands as-horizontal-as-reachable). Does NOT work with cuRobo -- see the
-#   plan/CUROBO_HANDOFF.md "prefer-horizontal" section. If a variable tilt is ever wanted, the correct
+# "prefer-horizontal" section. If a variable tilt is ever wanted, the correct
 #   shape is a DESCENDING-beta fallback (command 90, step down until IK feasible; ~+50 ms/grasp,
 #   one-shot), NOT the weight lever.
 G1_GRASP_TILT_DEG = 60.0

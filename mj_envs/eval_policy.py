@@ -1,54 +1,49 @@
 #!/usr/bin/env python3
 """Headless deterministic policy evaluation across fixed velocity commands.
 
-Runs N episodes per command without noise or DR, giving a weight-independent
-behavioral comparison across experiments. Complements training log analysis by
-catching issues that only appear in deterministic play (e.g., v8 oscillation
-invisible in training logs but visible at eval time).
+Runs N episodes per command with noise and domain randomization off, so two checkpoints can
+be compared on behaviour alone. Catches what training curves hide: a policy whose reward is
+fine but which oscillates, or which does not move at all below some command threshold.
 
-No training overhead — runs entirely post-hoc on saved checkpoints.
+Post-hoc only, on saved checkpoints. No training overhead.
 
 Usage:
-  DISPLAY="" python mj_envs/eval_policy.py \\
-      --task HumanoidVelocityRMACNNShortEstimatorPhaseEEDRv8 \\
-      --checkpoint runs/HumanoidVelocityRMACNNShortEstimatorPhaseEEDRv8/2026-03-31_02-04-39/model_14999.pt \\
+  DISPLAY="" python mj_envs/eval_policy.py \
+      --task HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4MixedArmsCam \
       --episodes 50
 
-  # Compare multiple checkpoints from the same run (curriculum progression):
-  DISPLAY="" python mj_envs/eval_policy.py \\
-      --task HumanoidVelocityRMACNNShortEstimatorPhaseEEDRv10 \\
-      --checkpoint runs/.../model_5000.pt runs/.../model_10000.pt runs/.../model_14999.pt
+  # Several checkpoints from one run, to see how behaviour moved during training:
+  DISPLAY="" python mj_envs/eval_policy.py --task <ClassName> \
+      --checkpoint runs/<task>/<run>/model_5000.pt runs/<task>/<run>/model_0015000.pt
 
-  # Custom command set:
-  DISPLAY="" python mj_envs/eval_policy.py \\
-      --task HumanoidVelocityRMACNNShortEstimatorPhaseEEDRv8 \\
-      --checkpoint runs/.../model_14999.pt \\
+  # A specific command set instead of the default grid:
+  DISPLAY="" python mj_envs/eval_policy.py --task <ClassName> \
       --cmds "0.5,0,0" "1.0,0,0" "0.8,0,0.5" "-0.3,0,0"
 
-  # Dead zone eval (§7.1 SOP):
-  DISPLAY="" python mj_envs/eval_policy.py \\
-      --task HumanoidRmaVelEstArmFlashSacv30 \\
-      --checkpoint runs/.../model_0015000.pt \\
-      --episodes 10 --max-steps 500 \\
-      --cmds "0.05,0,0" "0.10,0,0" "0.20,0,0" "0.30,0,0"
+Omit --checkpoint and the same resolution as `run.py play` applies, so this runs against the
+shipped weights on a fresh clone.
 
-Metrics reported (all weight-independent):
-  fell_over_rate   — fraction of episodes where `fell_over` termination fired
-  termination_rate — fraction of episodes ending in any non-timeout termination
-  ep_length        — mean steps per episode
-  displacement_m   — mean XY displacement from reset position (m); §7.1 gate metric
-  track_vx_err     — mean |cmd_x - actual_vx| (m/s)
-  track_vy_err     — mean |cmd_y - actual_vy| (m/s)
-  track_xy_err     — mean ||cmd_xy - actual_vxy||₂ (m/s)
-  track_ang_err    — mean |cmd_yaw - actual_wyaw| (rad/s)
-  action_rate      — mean ||a_t - a_{t-1}||² per step (smoothness)
-  arm_delta_l2     — mean arm action delta magnitude per step
+Dead-zone check. A policy that ignores small commands looks healthy on every tracking metric,
+because a command it refuses to act on contributes little error. Drive it at walking-pace-and-
+below and watch displacement instead:
 
-§7.1 dead zone thresholds (displacement in 10s / 500 steps at 50Hz):
-  cmd=0.05 m/s → displacement ≥ 0.10 m  (dead zone if < 0.10 m)
-  cmd=0.10 m/s → displacement ≥ 0.50 m  (dead zone if < 0.10 m)
-  cmd=0.20 m/s → displacement ≥ 1.50 m  (dead zone if < 0.50 m)
-  cmd=0.30 m/s → displacement ≥ 2.00 m  (dead zone if < 1.00 m)
+  DISPLAY="" python mj_envs/eval_policy.py --task <ClassName> \
+      --episodes 10 --max-steps 500 --cmds "0.05,0,0" "0.10,0,0" "0.20,0,0" "0.30,0,0"
+
+  In 10 s at 50 Hz, a policy without a dead zone covers roughly 0.10 / 0.50 / 1.50 / 2.00 m
+  at those four commands. Well under means it is standing still and being scored well for it.
+
+Metrics, none of which depend on the reward weights:
+  fell_over_rate   fraction of episodes where the `fell_over` termination fired
+  termination_rate fraction ending in any non-timeout termination
+  ep_length        mean steps per episode
+  displacement_m   mean XY displacement from the reset position (m)
+  track_vx_err     mean |cmd_x - actual_vx| (m/s)
+  track_vy_err     mean |cmd_y - actual_vy| (m/s)
+  track_xy_err     mean ||cmd_xy - actual_vxy||_2 (m/s)
+  track_ang_err    mean |cmd_yaw - actual_wyaw| (rad/s)
+  action_rate      mean ||a_t - a_{t-1}||^2 per step, i.e. how jittery the output is
+  arm_delta_l2     mean arm action delta magnitude per step
 """
 
 import sys

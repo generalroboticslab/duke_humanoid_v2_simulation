@@ -63,7 +63,7 @@ class FlashSACConfig:
     buffer_size: int = 1024  # Per environment
     batch_size: int = 8192  # Global batch size
     num_steps: int = 1  # N-step returns
-    # Frame-ring replay (plan/REPLAY_FRAME_RING_PLAN.md): store one frame per timestep per history
+    # Frame-ring replay: store one frame per timestep per history
     # view and reconstruct the L-frame window at sample time, instead of storing the full overlapping
     # window per transition. ~L× less replay VRAM, lossless, same sampling distribution. Default ON —
     # runner.py degenerates any flat/non-history obs group to a bit-exact 1-frame ring, so this is
@@ -170,7 +170,7 @@ class FlashSACConfig:
     # group (student_obs_group), is trained OFF-POLICY from the shared replay by
     # regressing its deterministic action onto the teacher's deterministic action on the
     # same transition (privileged_obs_t), and is the deployable. The teacher RL path is
-    # byte-identical when use_distilled_student=False. See plan/DEAD_ZONE_LOW_CMD_VEL_plan.md §7.
+    # byte-identical when use_distilled_student=False.
     use_distilled_student: bool = False
     student_obs_group: str = "student"          # env obs group the student consumes
     student_learning_rate: float = 3e-4
@@ -182,7 +182,7 @@ class FlashSACConfig:
     # commits to (small σ_t) — the recovery-critical components on the student's own near-fall states.
     # Same optimum (μ_s=μ_t) ⇒ dead-zone closure preserved; only the per-dim/state weighting changes.
     # Reverse (not forward) KL so the weight is the ungameable teacher σ_t, not the student's own σ_s.
-    # False ⇒ byte-identical to the prior MSE student loss. See plan/KL_IMITATION_DISTILL_PLAN.md.
+    # False ⇒ byte-identical to the prior MSE student loss.
     # REJECTED (v58L2T, 2026-06-15): falls REGRESSED 0.00143→0.00215 + dead zone regressed. The SAC
     # teacher σ_t is the EXPLORATION spread, large on balance/recovery dims, so 1/σ_t² down-weights
     # exactly the fall-critical components. Kept off by default; do not enable without a new premise.
@@ -245,7 +245,7 @@ class FlashSACConfig:
     # the ramp start at student_start_iters+warmup_iters so the ramp begins at end-of-Phase-2).
     # shape: "linear" (uniform), "ease_in" (p^2, convex — mild-start: slow first 30% of window,
     # fast last 70%), "ease_out" (p^0.5, concave — aggressive-start). 0 = current step-jump,
-    # byte-identical to v82/v83/v79. See plan/L2T_ALPHA_MIX_AND_FREEZE_EXPERIMENT_PLAN.md.
+    # byte-identical to v82/v83/v79.
     student_action_prob_stage3_ramp_iters: int = 0
     student_action_prob_stage3_ramp_shape: str = "linear"  # {"linear","ease_in","ease_out"}
     # --- v62 full-PG student (L2T_STUDENT_RL_REVISIT_PLAN.md Exp 1+2, unified) ---

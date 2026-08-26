@@ -138,7 +138,7 @@ class ChronologicalObservationManager(ObservationManager):
         overwritten IN PLACE on the next step. Any caller that PERSISTS or CARRIES obs across
         steps (e.g. an off-policy replay buffer) MUST clone first, or the stored obs silently
         mutate to a later state. ManagerBasedRlEnvWithFinalObs.step clones obs_buf at the env
-        boundary for exactly this reason — see its docstring + memory/obs_rewrite_regression.md.
+        boundary for exactly this reason — see its docstring.
 
         Freshness guard: the cached _obs_buffer is reused only while the sim state has NOT
         advanced since it was built (same episode_length_buf), mirroring compute_group.

@@ -1,4 +1,4 @@
-"""Dynamic head-camera visibility for the Fourier GR-3, per SOP section 5.
+"""Dynamic head-camera visibility for the Fourier GR-3.
 
 GR-3 carries a 2-DOF actuated head (``head_yaw_joint`` about +Z, +-80 deg;
 ``head_pitch_joint`` about +Y, -30..+8.5 deg) with a single head camera, so visibility is a

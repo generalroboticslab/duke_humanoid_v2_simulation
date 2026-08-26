@@ -223,7 +223,7 @@ class GaitKeyframeResetFast:
     """Reset event: put a fraction ``f`` of resetting envs into an ON-manifold WALKING state
     instead of the standing crouch, for deploy-safe reference-state-initialization (Exp2).
 
-    Motivation (memory/grid_low_command_deadzone.md, plan recursive-roaming-lemur). The grid policy
+    Motivation. The grid policy
     stands at low command because every training episode resets FROM standing — the critic never
     samples a low-cmd WALKING state, so it never grounds a high value there. This event injects a
     broad, on-manifold gait state at reset; a fraction of those draw a low command from the (unchanged,
@@ -357,7 +357,7 @@ class GaitBankResetFast:
                      injection whose drawn stratum is still empty, instead of leaving them at the
                      standing reset. Default False = unchanged behaviour.
 
-                     Motivated by measurement, not tidiness (plan/GAIT_STATE_BANK_PLAN.md 10.11).
+                     Motivated by measurement, not tidiness.
                      Under the REAL training command distribution the ring fills far slower than a
                      forced-slow probe suggests: at checkpoint 2500, 2048 envs, 3000 steps, bin
                      occupancy reaches only [81, 95, 148, 174, 215, 231] of depth 1024, and bin 0 --
@@ -383,7 +383,7 @@ class GaitBankResetFast:
                      they are a transient bootstrap, not the steady-state source, and their share
                      decays to zero as the ring fills.
 
-                     REJECTED as a design (plan/GAIT_STATE_BANK_PLAN.md 13). A hardcoded sinusoid
+                     REJECTED as a design. A hardcoded sinusoid
                      with hand-measured per-joint amplitudes IS a gait model, which is the thing this
                      class exists to remove; its numbers do not redeem it. Kept only so the 10.12 run
                      stays reproducible. Use ``sample_filled`` instead -- it closes the same cold-bank
@@ -435,7 +435,7 @@ class GaitBankResetFast:
                      against a single population mean. Requires priority. Default False = the
                      falsified global-mean form, kept only so BankPri stays reproducible.
 
-                     Why (plan/GAIT_STATE_BANK_PLAN.md 10.16, measured). The global-mean deficit was
+                     Why. The global-mean deficit was
                      predicted to concentrate replay on the slow band and instead concentrated it on
                      FAST states: drawable rows averaged root speed 0.423 against 0.406 for the whole
                      bank, and the arm posted the worst dead zone of the wave. The reason is that a

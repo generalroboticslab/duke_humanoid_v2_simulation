@@ -1,6 +1,5 @@
 # ToddlerBot
 
-![ToddlerBot](docs/_static/banner.png)
 
 |  | Paper | Website | Tweet |
 |:--|:-----:|:-------:|:-----:|
@@ -17,7 +16,7 @@ Built entirely in Python, it is **fully pip-installable** (python >= 3.10) for s
 
 ## News & Updates
 - **2026-01-08:** Locomotion Beyond Feet release - multi-skill whole-body locomotion system - [Paper](https://arxiv.org/abs/2601.03607) | [Website](https://locomotion-beyond-feet.github.io/) | [Tweet](https://x.com/taeyang___11/status/2009359173302276391)
-- **2025-08-25:** ToddlerBot 2.0 release - see [Changelog](CHANGELOG.md) for details
+- **2025-08-25:** ToddlerBot 2.0 release
 - **2025-02-03:** ToddlerBot initial release - [Paper](https://arxiv.org/abs/2502.00893) | [Website](https://toddlerbot.github.io/) | [Video](https://youtu.be/A43QxHSgLyM) | [Tweet](https://x.com/HaochenShi74/status/1886599720279400732)
 
 ## Locomotion Beyond Feet
@@ -68,7 +67,7 @@ python toddlerbot/policies/run_multiple_policy.py --skill-classifier <classifier
 
 Once the depth estimation server is ready after warm-up and `run_multiple_policy.py` has loaded all policy checkpoints and achieved the standing pose, depth estimates are continuously sent for skill classification, and the robot will perform the appropriate skills autonomously.
 
-## ToddlerBot 2.0 See [Changelog](CHANGELOG.md) for the list of new features and a migration guide from 1.0 to 2.0.
+## ToddlerBot 2.0
 
 ## Setup Refer to [this page](https://hshi74.github.io/toddlerbot/software/01_setup.html) for instructions to setup.
 

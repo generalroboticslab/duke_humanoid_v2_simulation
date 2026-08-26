@@ -9,7 +9,7 @@ grippers) of a target robot and serializes it as either:
   serialize. Value: a flattened, standalone-loadable snapshot of the exact variant
   the planner/sim uses, which today only exists by re-running the graft code.
 - ``--format urdf`` -- the **minimum-information-loss** conversion for cuRobo
-  collision-aware planning (see plan/MJCF_TO_URDF_MINIMUM_LOSS_PLAN.md). Emits two
+  collision-aware planning. Emits two
   artifacts (faithful floating-base ``_full.urdf`` + fixed-base ``_curobo.urdf``) and
   hard-gates them through yourdfpy scene-graph FK + cuRobo ``RobotBuilder`` (needs
   yourdfpy >= 0.0.60 under numpy>=2; ``_ensure_yourdfpy`` auto-upgrades for reproducibility).
@@ -67,7 +67,7 @@ from mj_envs.asset_zoo.fov_frustum import FOV_HULL_SUFFIX  # noqa: E402 (viewer 
 
 # First yourdfpy release whose _forward_kinematics_joint uses q.item() instead of float(q),
 # so scene-graph FK (and cuRobo's internal FK) survives numpy>=2. 0.0.58 crashes with
-# "only 0-dimensional arrays can be converted to Python scalars" (memory/yourdfpy_numpy2_fk_crash.md).
+# "only 0-dimensional arrays can be converted to Python scalars".
 _MIN_YOURDFPY = (0, 0, 60)
 
 # Snapshot = (nbody, njnt, ngeom, nmesh, nsite, nu). Per-robot verify gate captured

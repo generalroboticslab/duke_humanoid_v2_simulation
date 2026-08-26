@@ -1260,7 +1260,7 @@ class arm_proximity_reward:
     Args (via cfg.params): none required; "asset_cfg" uses robot by default.
 
     See utils/proximity_model.py for full geometry details and unit tests.
-    See plan/ARM_PROXIMITY_MODEL.md for design rationale.
+
 
     *** KNOWN BUGS — DO NOT ENABLE IN TRAINING UNTIL FIXED ***
 
@@ -1339,7 +1339,7 @@ class ee_tracking_coarse:
     suppresses the EE reward while the robot is walking (gate≈0.018 at 0.4 m/s),
     preventing the arm from fighting locomotion body motion, while still rewarding
     EE tracking when standing (gate=1.0 at v=0). Default gate_sigma_sq=0.04
-    matches the ee_gate observation term (blueprint §5.2).
+    matches the ee_gate observation term.
 
     Cache coupling: shares `_EEHFrameComputer` (stored at `env._ee_h_frame_{body_id}`)
     with `ee_current_pos_h` / `ee_error_h` obs terms. Horizontal frame computed at most
@@ -1348,10 +1348,10 @@ class ee_tracking_coarse:
 
     Params:
         ee_body_name:      MuJoCo body name of the end-effector.
-        std:               Gaussian σ in meters (default 0.05 = 5cm, from §6.3).
+        std:               Gaussian σ in meters (default 0.05 = 5cm,).
         gate_command_name: Velocity command key to derive gate from (optional).
                            When None (default), no gating is applied (M3 behaviour).
-        gate_sigma_sq:     Gate width σ² (default 0.04 = σ=0.2 m/s, from §5.2).
+        gate_sigma_sq:     Gate width σ² (default 0.04 = σ=0.2 m/s,).
     """
 
     def __init__(self, cfg, env: ManagerBasedRlEnv):
@@ -1659,7 +1659,7 @@ def track_linear_velocity_relative(
     vs cmd=1.0 → standing is locally optimal at low commands. Proportional std
     equalises gradient across all command magnitudes.
 
-    Why decouple (grid dead-zone fix, memory/grid_low_command_deadzone.md): the
+    Why decouple: the
     shared std forced std_min ≥ 0.3 ONLY to keep the ~0.2 m/s gait vz-bob from
     scoring exp(-0.04/0.09) ≈ 0.64 instead of a punishing ≈0.17 at std_min=0.15.
     (Precision on the "decoupling at the old floor is a no-op" claim: that holds
@@ -1674,7 +1674,7 @@ def track_linear_velocity_relative(
     on the XY axis and widen the walk-vs-stand linear gap past the yaw cancellation.
     Reward reads root_link_lin_vel_b (true sim velocity, not the noisy estimate),
     so sharpening the XY floor carries no noise-chasing risk. The earlier rejection
-    of std_min=0.1 (v2ybsk wave-20) was for the SHARED std, which the decoupling
+    of std_min=0.1 (an earlier variant) was for the SHARED std, which the decoupling
     dissolves — new premise, not a re-test. std_z is None reproduces the exact old
     formula for every legacy caller (v30 chain, g1); only opt-in callers decouple.
 

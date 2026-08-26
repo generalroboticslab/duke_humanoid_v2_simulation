@@ -28,7 +28,7 @@ class ManagerBasedRlEnvWithFinalObs(ManagerBasedRlEnv):
         immediately and never carry them) look perfectly fine. The legacy mjlab manager
         returned a freshly-cat'd tensor each step, so this invariant held implicitly; the obs
         rewrite (dfd9d9f) broke it. step() restores it by cloning obs_buf at the env boundary.
-        See memory/obs_rewrite_regression.md.
+
     """
 
     def __init__(self, *args, **kwargs):

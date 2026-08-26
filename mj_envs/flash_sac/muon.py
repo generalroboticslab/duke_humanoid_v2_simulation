@@ -37,7 +37,7 @@ Design decisions
 Performance
 -----------
 The naive spelling of this optimizer -- a Python loop calling a single-matrix Newton-Schulz per
-param -- cost **+17.8% wall-clock per training iteration**, and that is what the wave-2 runs
+param -- cost **+17.8% wall-clock per training iteration**, and that is what the measured runs
 paid. It was LAUNCH-bound, not flop-bound: 5 steps x 3 matmuls x 8 matrices = 120 serial matmul
 launches per step, on matrices whose largest is 384x768, reaching 4.84 TFLOP/s where the same GPU
 does 120 TFLOP/s on one 2048x2048 bf16 matmul (4% of achievable), with cost scaling 7.90x from 1
@@ -69,7 +69,7 @@ delta              +0.4%      +3.6%      **+1.2%**
 
 So Muon went from +17.8% to **+1.2%** per iteration -- within noise of the AdamW baseline.
 
-How often this runs is set by the EXPERIMENT, not by the defaults in ``config.py``: the wave-2
+How often this runs is set by the EXPERIMENT, not by the defaults in ``config.py``: the measured
 runs override ``num_updates`` to 3, giving ``num_collect_steps`` 4 x 3 = 12 critic steps per
 iteration and, via ``policy_frequency`` 2, 6 actor steps -- 18 total, confirmed against the saved
 optimizer step counters (179880 and 89940 over 15000 iterations). Read the run's own ``args``

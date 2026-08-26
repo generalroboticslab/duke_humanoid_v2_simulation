@@ -1,5 +1,4 @@
-"""Build a cuRobo ``RobotCfg`` dict for the full-body humanoid_v21 URDF (Phase 2 of
-plan/MJCF_TO_URDF_MINIMUM_LOSS_PLAN.md).
+"""Build a cuRobo ``RobotCfg`` dict for the full-body humanoid_v21 URDF.
 
 Collision spheres come directly from the resolved model's MuJoCo **collision** geoms
 (group 3 + group 5 primitives) via ``mj_collision_spheres.build_collision_spheres`` -- NOT from
@@ -457,8 +456,8 @@ def build_robot_cfg_dict_from_urdf(
     if robot == "humanoid_v21":
         return _humanoid_v21_cfg(load_dynamics, arm_joint_home, head_camera)
     raise NotImplementedError(
-        f"G1 cfg deferred -- plan/MJCF_TO_URDF_MINIMUM_LOSS_PLAN.md G1 scope; "
-        f"blocker is memory/g1_missing_grasp_site.md"
+        f"G1 cfg deferred -- G1 scope; "
+        f"blocker is"
     )
 
 
@@ -470,7 +469,7 @@ def build_robot_cfg_dict_from_urdf(
 # weight 0) is dropped: with a real grasp planner the candidate carries the exact desired yaw, and
 # a global per-axis yaw mask would discard it. "Tolerate some grasp error" is now a single uniform
 # angular slack (`_ORIENTATION_TOLERANCE`), not an axis-specific mask.
-# See plan/MJCF_TO_URDF_MINIMUM_LOSS_PLAN.md phase-change rationale.
+#
 # ---------------------------------------------------------------------------
 # Anchor on the INSTALLED curobo via `_src.__path__` (a namespace subpackage that always resolves to
 # the real install), not `curobo.__file__`: when an entrypoint's script dir puts this repo's local

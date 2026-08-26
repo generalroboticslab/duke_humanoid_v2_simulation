@@ -168,9 +168,9 @@ _EXTEND_DIVERGE_MAX_PROGRESS = 0.75
 # scored 8/10 for BOTH arms and failed the SAME two seeds (46, 47), so extra replans buy no P. They are not
 # free -- ``route_progress()`` resets to 0 on every replan, so each rescue re-traverses the whole route and
 # is charged to `Tbar_s`/`energy_J`. Repeated fires signal a chronic tracking deficit the replan rediscovers
-# rather than fixes. Env-overridable (same idiom as ``_EXTEND_MAX_RETRIES``) because grl2_vicon/grl3
-# sshfs-mount grl1's ONE working tree: an A/B on this bound cannot be run by editing the constant on each
-# host, they share the file.
+# rather than fixes. Env-overridable (same idiom as ``_EXTEND_MAX_RETRIES``) because the sweep hosts
+# share a single working tree: an A/B on this bound cannot be run by editing the constant on each
+# host, they all read the same file.
 _EXTEND_DIVERGE_REPLAN_MAX = int(os.environ.get("REACH_EXTEND_DIVERGE_REPLAN_MAX", "1") or 1)
 # TARGET-MOVED replan (see ``_handle_extend``). The cuRobo route is solved ONCE per commit, so a cube the arm
 # nudges leaves that route driving at where the cube WAS while the finger keeps pushing -- the measured
@@ -300,7 +300,7 @@ _REACH_FACE_TOL_RAD = np.radians(3.0)      # g1-only commit-time facing toleranc
 _REACH_STEER_K = 1.2                       # proportional steer gain, bearing (rad) -> wz (rad/s)
 _REACH_TURN_WZ_MIN = 0.6                   # clears the RL base's yaw deadzone (sub-floor command = no turn).
 #   Tracks HeuristicMovingPolicy.TURN_WZ_MIN, which was raised 0.4 -> 0.6 for ALL robots (2026-08-02); this
-#   SECOND floor was left behind at 0.2 -- the exact command `memory/yaw_deadzone_command_coverage.md`
+#   SECOND floor was left behind at 0.2 -- the exact command ``
 #   measures as freezing 51% of envs, and ``_square_up_wz`` is emitted as a PURE yaw twist `(0, 0, wz)`, the
 #   zero-companion-linear cell where that freeze is worst. Applies to the ``_needs_reface`` robots only
 #   (g1, v2_single, v2_single_fixed); v2/v2_fixed return 0.0 here regardless.
@@ -375,7 +375,7 @@ _EXTEND_MAX_RETRIES = int(os.environ.get("REACH_EXTEND_MAX_RETRIES", "2") or 2)
 # (contended-GPU) async solves flips would-be PASS into "unreachable" FAIL -- same seed/robot/scenario
 # reproduced both FAIL and PASS headless back-to-back with zero code change, only ambient GPU load
 # differed. One extra retry adds slack against solve-latency jitter without touching the async solve
-# architecture. See memory/internals.md (or MEMORY.md "Fixed regressions") for the diagnosis.
+# architecture.md "Fixed regressions") for the diagnosis.
 _RETRY_STANDOFF_STEP = 0.10     # extra standoff (m) added on radial retry so re-commit backs base off
 
 # BENCHMARK PROTOCOL, not a controller tunable: hold the body and arm for the first N control ticks while

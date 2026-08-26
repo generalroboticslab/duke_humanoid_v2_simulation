@@ -5,7 +5,7 @@ via Booster T1 Instruction Manual V1.0 + D455 datasheet). Source MJCF declares o
 ``<camera name="head_cam">`` at H2 forward (0.01, 0, 0.11) with fovy=65 matching the D455 RGB
 vertical FOV (90° h × 65° v RGB, 87° h × 59° v depth). The module uses the RGB envelope as the
 declared workspace visibility field; depth-frame scoring would require a separate, calibrated
-depth-camera intrinsic. Documented envelope approximation per SOP §3, NOT a calibrated claim.
+depth-camera intrinsic. Documented envelope approximation, NOT a calibrated claim.
 
 T1 has a single physical eye so per-target scoring is single-eye (no stereo OR). The head is
 actuated: ``AAHead_yaw`` (±1.57 rad z-axis) + ``Head_pitch`` (-0.35 to 1.22 rad y-axis). Both
@@ -41,7 +41,7 @@ def load_model() -> mujoco.MjModel:
 def _camera_intrinsics(model: mujoco.MjModel, camera_name: str) -> tuple[float, float, float, float, int, int]:
     """Resolve (fx, fy, cx, cy, width, height) for the D455 envelope.
 
-    T1 RealSense version uses a single Intel RealSense D455 module. Per SOP §3, the FOV envelope
+    T1 RealSense version uses a single Intel RealSense D455 module. As a declared envelope, the FOV
     is documented but NOT calibrated -- always derive from the declared vertical FOV and
     resolution. Pixel coords assume centered principal point.
     """

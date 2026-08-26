@@ -1,6 +1,6 @@
 """PickPlaceReachEnv: cuRobo arm reach composed on frozen humanoid policy through physics.
 
-plan/VISUAL_MANIPULATION_PLAN.md. The robot stands and ONE arm reaches a fixed world
+The robot stands and ONE arm reaches a fixed world
 target (a front OR rear pick cube; symmetric shoulder ROM makes the behind-the-back reach the same
 solve as the front one). A scripted POLICY (``policies.HeuristicReachPolicy``) writes the arm +
 camera setpoints each step; the frozen humanoid policy (loco + arm/camera tracking) then runs on this

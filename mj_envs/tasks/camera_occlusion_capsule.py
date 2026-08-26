@@ -1,4 +1,4 @@
-"""Analytic capsule occlusion for active-vision detection (A4+, plan/ACTIVE_VISION_PICK_PLACE_PLAN.md).
+"""Analytic capsule occlusion for active-vision detection.
 
 FAST replacement for the ``mujoco_warp.rays`` raycast (`camera_occlusion.py`). Tests each
 (camera, target) line of sight against a handful of CAPSULES that approximate the robot's own body

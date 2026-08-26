@@ -125,7 +125,7 @@ class FlashSACRunner:
             seq_S = seq_D = None
             norm_shape = actor_obs_dim
 
-        # --- Frame-ring replay per-view (L, D) splits (plan/REPLAY_FRAME_RING_PLAN.md) ---
+        # --- Frame-ring replay per-view (L, D) splits ---
         # When frame_ring_history is on, the buffer stores ONE frame per timestep per history view
         # and reconstructs the L-frame window at sample time (~L× less replay VRAM, lossless). It
         # needs each view's (L, D). Both actor and critic degenerate to a 1-frame ring
