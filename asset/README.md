@@ -3,12 +3,30 @@
 Robot models. One directory per platform, each holding its own MJCF, meshes and the cuRobo
 URDF exports the planner loads.
 
+![Visible-reachable volumes of six humanoid platforms](../media/vrw_platforms.webp)
+
+Every robot in this directory, scored the same way. Magenta to orange is visible-reachable,
+blue is reachable but the cameras cannot see it. The numbers under each name are that
+platform's row in the table below.
+
 ## This robot
 
 | Directory | What |
 |---|---|
 | [`duke_v2/`](duke_v2/) | **Duke Humanoid V2.** The body, the head-camera gimbals and the end effectors, each a separate component. Start here. |
 | [`create/`](create/) | The shared MJCF/URDF build tooling every component's creation script imports. |
+
+![Visible-reachable workspace, fixed versus actuated cameras](../media/vrw_fixed_vs_actuated.webp)
+
+This robot with its camera joints free, then welded. Same arms, same body; the blue volume is
+what the welded version cannot see. That gap is why `duke_v2/head_cam/` carries a gimbal
+instead of a bracket.
+
+To look at any of these models:
+
+```bash
+python asset/duke_v2/humanoid_v21/view_model.py
+```
 
 ## Comparison platforms
 

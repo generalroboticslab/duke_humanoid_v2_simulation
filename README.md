@@ -8,7 +8,8 @@ two-target reach-and-grasp benchmark, the robot assets, and the checkpoints behi
 **Paper** (preprint coming) &middot;
 **[Project entry point](https://github.com/generalroboticslab/duke_humanoid_v2)** &middot;
 **[Onboard control stack](https://github.com/generalroboticslab/duke_humanoid_v2_deploy)** &middot;
-**[Reproduce](#reproduce)**
+**[See it run](#see-it-run)** &middot;
+**[Reproduce the paper](REPRODUCE.md)**
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.12-blue.svg)
@@ -34,96 +35,59 @@ entry point for the project. This repository is one of its two submodules.
 This is a generated export of the research repository; the directory layout matches it, so
 import paths in the paper's scripts work unchanged.
 
-Everything needs an NVIDIA GPU. All figures below were regenerated on a single RTX 4090.
-
 ## Contents
 
-- [What reproduces from this repository](#what-reproduces-from-this-repository)
 - [Install](#install)
-- [Reproduce](#reproduce)
-  - [Locomotion policy (training)](#locomotion-policy-training)
-  - [Two-target reach-and-grasp benchmark (Table IV)](#two-target-reach-and-grasp-benchmark-table-iv)
-  - [Visible-reachable workspace (Fig. 2 and Fig. 5)](#visible-reachable-workspace-fig-2-and-fig-5)
-  - [Regression check](#regression-check)
-  - [Task keyframe figure (Fig. 6)](#task-keyframe-figure-fig-6)
+- [See it run](#see-it-run)
 - [What is in here](#what-is-in-here)
-- [Verified](#verified)
+- [Reproducing the paper](#reproducing-the-paper)
 - [Citation](#citation)
-
-## What reproduces from this repository
-
-| | regenerates in | command |
-| --- | --- | --- |
-| Fig. 2, cross-platform VRW comparison | seconds, from shipped caches | [`plot_workspace_curobo.py --reach-visible-compare`](#visible-reachable-workspace-fig-2-and-fig-5) |
-| Fig. 5, camera count x articulation | seconds, from shipped caches | [`camera_count_ablation.py`](#visible-reachable-workspace-fig-2-and-fig-5) |
-| Fig. 6, task keyframe grid | seconds, from shipped frames | [`make_keyframe_figure.py`](#task-keyframe-figure-fig-6) |
-| Table IV, 900-trial benchmark | hours, multi-GPU | [`dyn_sweep.py`](#two-target-reach-and-grasp-benchmark-table-iv) |
-| The locomotion policy | days | [`run.py train`](#locomotion-policy-training) |
-
-You do not need to train anything, or run a GPU sweep, to regenerate the three figures.
 
 ## Install
 
-External dependencies are not vendored:
+Needs an NVIDIA GPU and Python 3.12.
 
 ```bash
 pip install -r requirements.txt
-# nvidia-curobo: follow https://curobo.org/get_started/1_install_instructions.html
+# nvidia-curobo: only the benchmark needs it
+# https://curobo.org/get_started/1_install_instructions.html
 ```
 
 `requirements.txt` is deliberately unversioned. This study tracks current `mjlab` and
-`mujoco-warp`, and the numbers below come from the shipped caches and checkpoints rather than from
+`mujoco-warp`, and the numbers here come from the shipped caches and checkpoints rather than from
 a live solve, so a pin would go stale without protecting a result. Developed against Python 3.12,
-`mjlab` 1.6, `mujoco` 3.11, `warp-lang` 1.16, `torch` 2.10, CUDA 12.9.
+`mjlab` 1.6, `mujoco` 3.11, `warp-lang` 1.16, `torch` 2.10, CUDA 12.9, on Ubuntu 22.04.
 
 Headless machines need `MUJOCO_GL=egl` in front of any command that renders.
 
-## Reproduce
+## See it run
 
-### Locomotion policy (training)
+Three things you can watch, one command each. Every one of them reads weights or caches already
+in this checkout: no training, no sweep, no downloads.
 
-```bash
-python mj_envs/run.py train --task HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4MixedArmsCam
-python mj_envs/run.py play  --task HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4MixedArmsCam
-```
-
-The other task classes behind the reported numbers are
-`HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4SingleCam` and
-`G1RmaVelEstArmFlashSacStudentOnlyg1bsk2`.
-
-You do not need to train anything to reproduce the tables. The checkpoints they were computed
-from are in `mj_envs/tasks/visual_manipulation/test/checkpoints/`, and that directory's
-`README.md` lists the md5 and the training command for each one. Only the weights named in
-`dyn_sweep.PINS` are shipped. The same `README.md` describes the candidates that were evaluated
-and rejected, whose weights are not included.
-
-### Two-target reach-and-grasp benchmark (Table IV)
+**1. Watch the locomotion policy.** Opens a MuJoCo viewer with the whole-body policy driving the
+robot:
 
 ```bash
-python mj_envs/tasks/visual_manipulation/test/dyn_sweep.py \
-    --robots g1,v2_fixed,v2,v2_single_fixed,v2_single --out <run_name>
-python mj_envs/tasks/visual_manipulation/test/dyn_aggregate.py <run_dir>
+python mj_envs/run.py play --task HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4MixedArmsCam
 ```
 
-6 scenarios x 3 repeats x 10 seeded layouts = 900 trials. This runs multi-GPU, and `--hosts`
-sets the device topology. The GPU contact solver is not bit-reproducible, which is why each
-configuration is repeated 3 times.
+No checkpoint argument needed. A fresh clone has no `runs/`, so `play` falls back to the pinned
+weight in `mj_envs/tasks/visual_manipulation/test/checkpoints/` and prints which one it picked.
+The other two shipped policies are `...SingleCam` and `G1RmaVelEstArmFlashSacStudentOnlyg1bsk2`.
 
-`dyn_aggregate.py` prints per-cell and per-variant rows. The per-variant means are Table IV's
-bottom row, and are what a rerun should land near:
+**2. Watch the two-target task.** One robot, one scenario, the full mission the benchmark scores:
 
-| | Time T̄ (s) | Search (s) | Approach (s) | Manipulation (s) | Energy (J) |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| G1 | 27.5 | 3.8 | 3.8 | 19.9 | 494 |
-| Fix_2 | 17.0 | 0.2 | 3.2 | 13.6 | 425 |
-| **Act_2** | **14.1** | **0.1** | **2.1** | **11.9** | **346** |
-| Fix_1 | 20.5 | 3.3 | 3.3 | 13.9 | 595 |
-| Act_1 | 15.5 | 0.6 | 2.7 | 12.2 | 385 |
+```bash
+python mj_envs/tasks/visual_manipulation/test/curobo_reach_verify.py     --robot v2 --scenario bimanual_mixed_close --dynamic --mpc --walk --camera --view
+```
 
-Success-conditional means over 180 trials per variant. Success rate is 0.967 to 0.994 across
-all five and does not separate them. Do not expect a bit-exact match: the contact solver is
-nondeterministic and verdicts are not host-portable, so a rerun on different hardware moves
-individual cells. The published set was measured on one L40S pair.
+Needs cuRobo. This is the paper's comparison in one command: run it again with `--robot v2_fixed`
+to watch the same mission with the cameras welded instead of actuated. Scenarios are
+`left_right_close`, `left_right_far`, `front_back_close`, `front_back_far`,
+`bimanual_mixed_close`, `bimanual_mixed_front_back_close`. Drop `--view` to run headless and print
+only the verdict. What each flag changes is in
+[`mj_envs/tasks/visual_manipulation/`](mj_envs/tasks/visual_manipulation/).
 
 <table>
 <tr>
@@ -131,127 +95,26 @@ individual cells. The published set was measured on one L40S pair.
 <td width="50%"><img src="media/two_target_front_back_far.webp" width="100%" alt="Two targets front and back, benches far"></td>
 </tr>
 <tr>
-<td><b>left_right_close.</b> Both targets within reach. Only the actuated pair keeps both in view
-and reaches both.</td>
+<td><b>left_right_close.</b> Both targets within reach.</td>
 <td><b>front_back_far.</b> Benches at 0.8 m, so the robot locates the targets, then walks.</td>
 </tr>
 </table>
 
-Each panel is one `--robots` column: `v2_single_fixed`, `v2_single` on the top row,
-`v2_fixed`, `v2` on the bottom. The remaining four scenarios are on the
-[entry-point README](https://github.com/generalroboticslab/duke_humanoid_v2#two-target-reach-and-grasp-benchmark).
+Each panel above is one camera configuration: `v2_single_fixed`, `v2_single` on the top row,
+`v2_fixed`, `v2` on the bottom.
 
-The `--robots` order above is Table IV's column order. `dyn_aggregate.LABEL` holds the mapping:
-
-| `--robots` value | Table IV column |
-| --- | --- |
-| `g1` | G1 |
-| `v2_fixed` | Fix_2 |
-| `v2` | Act_2 |
-| `v2_single_fixed` | Fix_1 |
-| `v2_single` | Act_1 |
-
-`v2` and `v2_fixed` are the same robot and the same weights; they differ only in whether the head
-cameras are welded. Same for the `v2_single` pair. Three checkpoints therefore cover five columns,
-and `dyn_sweep.pin_report` prints the md5 each column will load.
-
-#### Running one mission
-
-`dyn_sweep.py` runs the whole table. To watch or debug a single cell, drive the same mission
-directly:
+**3. Regenerate the workspace figures.** Seconds, from the shipped caches, no GPU sweep:
 
 ```bash
-python mj_envs/tasks/visual_manipulation/test/curobo_reach_verify.py \
-    --robot v2 --scenario bimanual_mixed_close --dynamic --mpc --walk --camera --view
-```
-
-That is the full benchmark mission for one robot and one scenario. Each animation in the
-entry-point README is four such runs, one per camera setup, tiled by
-`media/blender_6scenario/build_v2_quadrants.sh`. Each flag changes what is being tested:
-
-| flag | what it does | leaving it off |
-| --- | --- | --- |
-| `--dynamic` | realizes the plan through the frozen RL policy and MuJoCo physics | idealized kinematic `mj_forward`, so a pass proves only that the plan was valid |
-| `--walk` | multi-cube mission, SEARCH to GO to REACH to PARK per visit; base drives until the cube is arm-reachable | one parked reach from the start stance |
-| `--camera` | reaches only cubes the head cameras actually see, so the arm count follows the visible-reachable set | privileged: reaches any cube whose ground-truth pose is reachable |
-| `--mpc` | per-tick reactive tracker, the only path with gravity compensation | a PD servo with no feedforward; the arm droops by `tau_gravity(q)/kp` on every grasp |
-| `--view` | live MuJoCo viewer; `--viewer blender` renders the same rollout through EEVEE | headless, verdict printed only |
-
-`--mpc` defaults on and every published evaluation passed it explicitly. `--camera` is the flag
-that makes the run test the paper's claim rather than the arm alone: without it, a blind but
-reachable cube still gets picked up, which is exactly the deficit VRW measures.
-
-Robots: `g1`, `v2`, `v2_fixed`, `v2_single`, `v2_single_fixed`, and `both` (runs g1, v2_fixed and
-v2 against one shared scene). Scenarios: `left_right_close`, `left_right_far`, `front_back_close`,
-`front_back_far`, `front_far_discover`, `bimanual_mixed_close`, `bimanual_mixed_front_back_close`,
-`shelf`, `shelf_pick_both`.
-
-Two cautions. A single verdict is not a benchmark: one run grades one seeded layout under one
-target jitter, and the GPU contact solver is not bit-reproducible, so the same command has been
-seen to both pass and fail on `g1 left_right_close`. Table IV comes from `dyn_sweep.py` for that
-reason. And g1 cannot reach `bimanual_mixed_close`'s far-lateral cube from a stationary stance;
-with `--walk` the base repositions per cube and it passes.
-
-### Visible-reachable workspace (Fig. 2 and Fig. 5)
-
-```bash
-# 1. generate per-robot workspace + visibility data (GPU, sharded)
-python mj_envs/asset_zoo/reachability_study/generate_workspace_curobo.py --robot v2
-# 2. main cross-platform comparison figure
-MUJOCO_GL=egl python mj_envs/asset_zoo/reachability_study/plot_workspace_curobo.py \
-    --reach-visible-compare
-# 3. camera count x articulation ablation
+MUJOCO_GL=egl python mj_envs/asset_zoo/reachability_study/plot_workspace_curobo.py --reach-visible-compare
 python mj_envs/asset_zoo/reachability_study/camera_count_ablation.py
-# 4. pairwise eta_2 across platforms
-python mj_envs/asset_zoo/reachability_study/test/run_eta2_platforms.py
 ```
 
 ![Visible-reachable workspace, fixed versus actuated cameras](media/vrw_fixed_vs_actuated.webp)
 
-The measure the figures report, as a volume: the same arms and the same body, differing only in
-whether the camera joints are free. The blue volume is what VRW exists to expose, space the arm
-can reach and the cameras cannot see. Rendered by `plot_workspace_curobo.py --vrw-video --robot
-v2` and `--robot v2_fixed`, which reads the same `aggregated_cache/` the figures do.
-
-Step 2 is Fig. 2 and step 3 is Fig. 5. Both run as shipped from `aggregated_cache/` and finish in
-seconds. Step 2 reads the per-column eta_2 for its titles out of `result/eta2_manifest.json`, which
-is also shipped. Step 4's figure is not in the paper; it is the separation-resolved view behind the
-scalar eta_2 that Fig. 2 prints in its titles.
-
-Step 1 recomputes from a platform's safe-arm-pose cache. The two shipped caches are `humanoid_v21`
-(the `--robot v2` shown above) and `unitree_g1`, so those two run as is; every other platform needs
-its cache regenerated first (see Precomputed data below). A full step 4 needs all of them, but
-`run_eta2_platforms.py --plot-only` replots every column from the shipped manifest without
-touching a GPU. Since the Fig. 2 titles read their eta_2 from that same manifest, the two always
-agree.
-
-### Regression check
-
-```bash
-python mj_envs/asset_zoo/reachability_study/test/regress_gpu_visibility.py
-```
-
-This rescores each raw workspace payload through `gpu_visibility.score_targets` and diffs the
-result against that robot's committed sidecar. Every figure reads `aggregated_cache/`, so a change
-to the visibility kernel cannot move them; this check is what catches one.
-
-The raw payloads are several GB each and are not distributed, so on a fresh clone every case skips
-and the script exits non-zero. Run step 1 for at least one robot first.
-
-### Task keyframe figure (Fig. 6)
-
-```bash
-python mj_envs/tasks/visual_manipulation/test/make_keyframe_figure.py \
-    --keyframe-dir mj_envs/tasks/visual_manipulation/media/keyframes_6scenario
-```
-
-This runs as shipped. `keyframes_6scenario/` holds the six run manifests and the frames the figure
-reads, one per stage per scenario. Add `--capture all` to re-shoot the frames rather than replot
-them; that reruns the six missions through `reach_policy.py` and needs a GPU.
-
-![Two-target reach-and-grasp benchmark](mj_envs/tasks/visual_manipulation/media/keyframes_6scenario/keyframe_figure.png)
-
-The six benchmark scenarios, one row each.
+The measure those figures report, as a volume: the same arms and the same body, differing only in
+whether the camera joints are free. Blue is what VRW exists to expose, space the arm can reach and
+the cameras cannot see. Rendered by `plot_workspace_curobo.py --vrw-video --robot v2`.
 
 ## What is in here
 
@@ -308,35 +171,22 @@ The original CAD (`*.step`), the high-resolution render meshes (`*_high_res.obj`
 separate projects or that no result uses: Argus, the ballbot, Berkeley Humanoid Lite, OpenArm.
 Scripts that reference those platforms still import; only those `--robot` values are unavailable.
 
-## Verified
+## Reproducing the paper
 
-Every command below was run from this directory on one RTX 4090:
+Every figure this package covers regenerates from data already in the repository. Only the
+benchmark needs a sweep.
 
-- `run.py train --algo flash_sac` trained 3 iterations and wrote a checkpoint.
-- `curobo_reach_verify.py --dynamic --robot v2 --scenario left_right_close` returned
-  `VERDICT: PASS` with `runs/` absent, which is the pinned-checkpoint path a fresh clone takes.
-- `plot_workspace_curobo.py --reach-visible-compare` regenerated the figure with the fractions in
-  the paper: ours actuated 96.8%, G1 15.5%, T1 67.1%, Apollo 75.8%, GR-3 69.7%, TALOS 47.8%.
-- `camera_count_ablation.py` regenerated the K=1/2/3 whole-body coverage and the fixed versus
-  actuated eta_2 curves from `aggregated_cache/` alone.
-- `run_eta2_platforms.py --plot-only` replotted all eight columns from the shipped manifest.
-- `make_keyframe_figure.py` rendered the 6x5 keyframe grid from the shipped manifests.
-- `generate_mjcf_safe_arm_poses.py --robot pal_talos` sampled a fresh cache from the shipped MJCF,
-  which is the regeneration path for the omitted caches above.
-- `regress_gpu_visibility.py` scored 4 of 5 cases with `diff=0` in the source tree, GR-3 skipping
-  for want of its payload. On this export it exits non-zero, since no raw payload is shipped.
+| | regenerates in | command |
+| --- | --- | --- |
+| Fig. 2, cross-platform VRW comparison | seconds, from shipped caches | `plot_workspace_curobo.py --reach-visible-compare` |
+| Fig. 5, camera count x articulation | seconds, from shipped caches | `camera_count_ablation.py` |
+| Fig. 6, task keyframe grid | seconds, from shipped frames | `make_keyframe_figure.py` |
+| Table IV, 900-trial benchmark | hours, multi-GPU | `dyn_sweep.py` |
+| The locomotion policy | days | `run.py train` |
 
-The three paper figures this package regenerates were rasterised at 100 dpi and compared pixel by
-pixel against the PDFs the submission was built from. Fig. 5 (`fig_camera_count.pdf`) and Fig. 6
-(`fig_sim_keyframes.pdf`) came back identical; Fig. 2 (`reach_visible_compare.pdf`) differed on 4
-pixels of 316,000 by one intensity level, which is font antialiasing. The paper's other figures are
-hardware photographs, the teaser, and a diagram whose generator lives with the manuscript, so
-nothing here regenerates them.
-
-The `curobo_reach_verify.py` line in that list is the parked form, without `--walk`: one reach
-under one unseeded jitter, which is a smoke test and the path a fresh clone takes. See Running one
-mission above for the full-mission flags and for why a single verdict, parked or walking, is not a
-regression signal.
+**[REPRODUCE.md](REPRODUCE.md)** has the full recipe for each: exact commands, the checkpoint
+provenance table, the expected benchmark numbers, the regression check, and a record of what was
+verified on which hardware.
 
 ## Citation
 

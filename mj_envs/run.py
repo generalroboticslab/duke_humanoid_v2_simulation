@@ -886,6 +886,9 @@ def _read_model_dims_from_checkpoint(resume_path: Path, sd: dict, actor_default=
 
 _MJ_ENVS_DIR = Path(__file__).resolve().parent
 REPO_ROOT = _MJ_ENVS_DIR.parent
+# The pinned benchmark weights, the only policies the public release ships. `play` falls back
+# here so `play --task <Class>` works on a fresh clone, which has no runs/ and no deploy/runs/.
+PINNED_CKPT_DIR = _MJ_ENVS_DIR / "tasks/visual_manipulation/test/checkpoints"
 
 # Two distinct "deploy/runs" trees, so neither anchor may be swapped for the other:
 #   REPO_ROOT/deploy/runs    committed, seed-scoped; the checkpoints a fresh clone gets
@@ -1176,10 +1179,22 @@ def play(cfg: PlayConfig):
                 # the documented `play --task <Class>` works straight out of a checkout.
                 # Detected as TorchScript below, which flips agent to "exported".
                 committed = REPO_ROOT / "deploy/runs" / run_label / "seed0" / "policy_deployed.pt"
-                if not committed.is_file():
-                    raise ValueError(f"No checkpoint >= 500 iters found in runs/{run_label}, "
-                                     f"and no committed export at {committed}")
-                cfg.checkpoint = str(committed)
+                if committed.is_file():
+                    cfg.checkpoint = str(committed)
+                else:
+                    # Third and last resort: the pinned benchmark weights. The public release
+                    # ships these but ships neither runs/ nor deploy/runs/, so without this
+                    # branch the documented `play --task <Class>` cannot work on a fresh clone
+                    # even though the policy it wants is sitting in the checkout. Their names
+                    # encode the task (`<tag>__<task>__<run>__<file>.pt`), which is what makes
+                    # them resolvable from run_label alone.
+                    pinned = sorted(PINNED_CKPT_DIR.glob(f"*__{run_label}__*.pt"))
+                    if not pinned:
+                        raise ValueError(
+                            f"No checkpoint >= 500 iters found in runs/{run_label}, no committed "
+                            f"export at {committed}, and no pinned weight matching "
+                            f"*__{run_label}__*.pt in {PINNED_CKPT_DIR}")
+                    cfg.checkpoint = str(pinned[-1])
             print(f"[INFO] Auto-selected: {cfg.checkpoint}")
 
     # Auto-detect TorchScript policy_deployed.pt -> use exported mode
