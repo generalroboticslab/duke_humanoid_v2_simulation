@@ -1,4 +1,4 @@
-# Duke Humanoid V2 — simulation and training
+# Duke Humanoid V2: simulation and training
 
 Policy training and the reproduction package for the visible-reachable workspace (VRW) paper:
 the workspace study, the two-target reach-and-grasp benchmark, the robot assets, and the
