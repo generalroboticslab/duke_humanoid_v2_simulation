@@ -31,7 +31,7 @@ Kinematics source = the exported ``g1_curobo.urdf`` (``export_mjspec_to_urdf.py 
 ``build_collision_spheres`` (same bypass-the-URDF-<collision> policy as the other two).
 
 Run (debug):
-    /home/grl/repo/micromamba/envs/py312/bin/python -c "from tasks.visual_manipulation.curobo.g1_curobo_robot_cfg \\
+    python -c "from tasks.visual_manipulation.curobo.g1_curobo_robot_cfg \\
         import build_robot_cfg_dict; cfg = build_robot_cfg_dict(); \\
         cs = cfg['robot_cfg']['kinematics']['collision_spheres']; \\
         print(len(cs), 'links', sum(len(v) for v in cs.values()), 'spheres')"

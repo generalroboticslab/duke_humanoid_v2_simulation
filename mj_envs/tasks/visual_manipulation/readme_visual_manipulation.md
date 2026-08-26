@@ -5,7 +5,7 @@ How to (re)build and inspect the cuRobo motion-planning model for the two bimanu
 Both follow the SAME 3-stage pipeline. Only the per-robot arguments and module names differ.
 
 ```
-Python: /home/grl/repo/micromamba/envs/py312/bin/python   (run everything with this)
+Python: python   (run everything with this)
 ```
 
 ---
@@ -48,7 +48,7 @@ All variants use `end_effector=actuated`, `hand=parallel_gripper`. The gripper r
 ## 1. Export the URDF
 
 ```bash
-PY=/home/grl/repo/micromamba/envs/py312/bin/python
+PY=python
 
 # humanoid_v21
 $PY asset/create/export_mjspec_to_urdf.py --robot humanoid_v21 --head-camera actuated --format both
@@ -75,7 +75,7 @@ grep -E "end_effector_L|end_effector_R"     asset/duke_v2/humanoid_v21/humanoid_
 cuRobo instead reads the fixed tool-frame links in its exported URDF. Therefore, after changing `GRASP_CENTER_IN_BASE`, regenerate both planner URDFs before any evaluation. A stale export makes cuRobo plan to the old TCP while MuJoCo closes the gripper at the new TCP.
 
 ```bash
-PY=/home/grl/repo/micromamba/envs/py312/bin/python
+PY=python
 $PY asset/create/export_mjspec_to_urdf.py --robot humanoid_v21 --head-camera actuated --end-effector actuated --hand parallel_gripper --format urdf
 $PY asset/create/export_mjspec_to_urdf.py --robot g1 --head-camera builtin --end-effector actuated --hand parallel_gripper --format urdf
 ```
@@ -117,7 +117,7 @@ Plans a standalone collision-free bimanual cube grasp (both hands, table + objec
 Run the physics evaluation path with frozen RL locomotion policy, camera visibility gate, dynamic Warp physics, and position gravity compensation:
 
 ```bash
-PY=/home/grl/repo/micromamba/envs/py312/bin/python
+PY=python
 $PY mj_envs/tasks/visual_manipulation/test/curobo_reach_verify.py \
     --robot <v2 | v2_fixed | g1> \
     --scenario <scenario_name> \
@@ -171,13 +171,13 @@ Two overrides are NOT defaults and silently produce wrong output if dropped (`dy
 Single-host workflow (grl1 only has Blender by default):
 
 ```bash
-PY=/home/grl/repo/micromamba/envs/py312/bin/python
+PY=python
 V=mj_envs/tasks/visual_manipulation/test/curobo_reach_verify.py
 OUT=mj_envs/tasks/visual_manipulation/media/blender_6scenario
 SINGLE_CKPT=runs/HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4SingleCam/grl2_s0/model_0015000.pt
 G1_CKPT=mj_envs/tasks/visual_manipulation/test/checkpoints/g1__G1RmaVelEstArmFlashSacStudentOnlyg1bsk2__2026-07-25_14-54-46__model_0015000.pt
 
-cd /home/grl/repo/legged_env_v2
+cd <repo root>
 for s in bimanual_mixed_close bimanual_mixed_front_back_close left_right_close front_back_close front_back_far left_right_far; do
   case "$s" in bimanual_*) yaw=215 ;; *) yaw=145 ;; esac
   for r in v2 v2_fixed v2_single v2_single_fixed g1; do
@@ -238,7 +238,7 @@ ffmpeg -i IN.mp4 -vf "scale=3840:2160:flags=lanczos" -c:v libx264 -crf 18 -prese
 `make_keyframe_figure.py` now drives the capture itself -- one command, not a shell loop followed by a second script. The six scenarios are independent processes, so it fans them out with `--jobs` concurrent workers (measured: 87 s wall vs 240 s serial at `--jobs 3` on one RTX 4090, 2.7x) instead of paying six cold starts back to back. `--capture missing` (default) skips any scenario that already has a `"pass": true` manifest in `--keyframe-dir`, so retuning the figure layout after a capture sweep costs zero simulation.
 
 ```bash
-PY=/home/grl/repo/micromamba/envs/py312/bin/python
+PY=python
 OUT=mj_envs/tasks/visual_manipulation/media/keyframes_6scenario
 
 # One shot: captures whatever's missing (parallel), then assembles the 6 x 5 figure.
@@ -277,7 +277,7 @@ The plan-0 reachability ladder keeps its legacy arm-target candidates, then rank
 Build the cached field once per embodiment before using this preference:
 
 ```bash
-PY=/home/grl/repo/micromamba/envs/py312/bin/python
+PY=python
 MUJOCO_GL=egl $PY mj_envs/asset_zoo/reachability_study/visible_reachable_curator.py --robot v2
 MUJOCO_GL=egl $PY mj_envs/asset_zoo/reachability_study/visible_reachable_curator.py --robot v2_fixed
 MUJOCO_GL=egl $PY mj_envs/asset_zoo/reachability_study/visible_reachable_curator.py --robot g1

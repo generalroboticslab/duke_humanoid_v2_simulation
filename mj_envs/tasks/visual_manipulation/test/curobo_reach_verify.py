@@ -28,7 +28,7 @@ Design (two plain config dataclasses, cleanly separated):
     kwargs, and the robot's cube-grasp callables.
 
 Run (bimanual, default scenario ``bimanual_mixed_close``):
-  /home/grl/repo/micromamba/envs/py312/bin/python \
+  python \
       mj_envs/tasks/visual_manipulation/test/curobo_reach_verify.py --robot v2 [--view]
   ... --robot g1 left_right_close            # g1 stands back; left_right_close is g1-reachable
   ... --robot both left_right_close          # same scene, g1 + v2_fixed + v2 summary (kinematic only)

@@ -24,7 +24,7 @@ Verification (forward-kinematics cross-check, reach replay, sphere viewers) live
 ``build_motion_planner_kwargs``.
 
 Run (debug):
-    /home/grl/repo/micromamba/envs/py312/bin/python -c "from tasks.visual_manipulation.curobo.ik_curobo_robot_cfg \\
+    python -c "from tasks.visual_manipulation.curobo.ik_curobo_robot_cfg \\
         import build_robot_cfg_dict_from_urdf; cfg = build_robot_cfg_dict_from_urdf(); \\
         cs = cfg['robot_cfg']['kinematics']['collision_spheres']; \\
         print(len(cs), 'links', sum(len(v) for v in cs.values()), 'spheres')"

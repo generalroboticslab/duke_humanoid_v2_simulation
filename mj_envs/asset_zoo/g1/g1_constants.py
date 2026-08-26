@@ -505,7 +505,7 @@ def get_action_scale(name: str, default: float = 1.0) -> float:
 # ═══════════════════════════════════════════════════════════
 #
 # Run (from repo root, project python):
-#   PY=/home/grl/repo/micromamba/envs/py312/bin/python
+#   PY=python
 #   $PY -m mj_envs.asset_zoo.g1.g1_constants                       # stock rubber hand (default)
 #   $PY -m mj_envs.asset_zoo.g1.g1_constants --hand none           # bare wrist
 #   $PY -m mj_envs.asset_zoo.g1.g1_constants --hand parallel_gripper

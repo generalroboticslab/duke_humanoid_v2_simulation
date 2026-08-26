@@ -1,10 +1,10 @@
 # Gripper Handoff Package — REPORT
 
-This module is a single self-contained MuJoCo gripper — a four-finger (two upper + two lower jaw), parallel-jaw, rack-and-pinion "mini" gripper — packaged for transplant onto a humanoid robot's wrist-roll flange. The gripper's root `base` body sits at the world origin at identity (`pos 0 0 0`, `quat 1 0 0 0`), so it is delivered as a clean subtree ready to be re-rooted under a wrist-roll output frame. The handoff folder (`/home/rivery/Documents/mini_gripper_old/gripper_handoff/`) contains the standalone MJCF (`gripper.xml`, a verbatim copy of the source), the `meshes/` directory holding the 10 visual OBJs and 278 referenced collision-piece OBJs under `meshes/collision_pieces/`, and two reference renders of the base mounting end (`base_views.png`, `base_Xend.png`). Everything below was verified against a fresh MuJoCo compile of the bundled file and against real trimesh loads of every referenced mesh.
+This module is a single self-contained MuJoCo gripper — a four-finger (two upper + two lower jaw), parallel-jaw, rack-and-pinion "mini" gripper — packaged for transplant onto a humanoid robot's wrist-roll flange. The gripper's root `base` body sits at the world origin at identity (`pos 0 0 0`, `quat 1 0 0 0`), so it is delivered as a clean subtree ready to be re-rooted under a wrist-roll output frame. The handoff folder (`<gripper source>/gripper_handoff/`) contains the standalone MJCF (`gripper.xml`, a verbatim copy of the source), the `meshes/` directory holding the 10 visual OBJs and 278 referenced collision-piece OBJs under `meshes/collision_pieces/`, and two reference renders of the base mounting end (`base_views.png`, `base_Xend.png`). Everything below was verified against a fresh MuJoCo compile of the bundled file and against real trimesh loads of every referenced mesh.
 
 ## 1. Locate & identify
 
-- **MJCF path(s):** `gripper.xml` is the single self-contained model file with **NO `<include>` elements** (0 includes, verified on compile). The bundled copy at `/home/rivery/Documents/mini_gripper_old/gripper_handoff/gripper.xml` recompiles standalone (`ngeom=289`). `meshdir="meshes"` (gripper.xml:3) resolves relative to the file, so the bundle is self-contained.
+- **MJCF path(s):** `gripper.xml` is the single self-contained model file with **NO `<include>` elements** (0 includes, verified on compile). The bundled copy at `<gripper source>/gripper_handoff/gripper.xml` recompiles standalone (`ngeom=289`). `meshdir="meshes"` (gripper.xml:3) resolves relative to the file, so the bundle is self-contained.
 - **BASE body that bolts to wrist: `base`.** This is the single root of the gripper subtree: `<body name="base" pos="0 0 0">` at **gripper.xml:325**, the one child of `<worldbody>` (gripper.xml:317) that is the gripper itself. Its compiled frame is `body_pos=[0,0,0]`, `body_quat=[1,0,0,0]` (identity), `parentid=0` (world). It holds the wrist-mating face (a circular flange at the `−X` end — see §3) and is the body all other gripper bodies descend from. The other worldbody entries (`floor`, lights `overhead`/`fill`) are scene furniture outside the `base` subtree.
 - **Single vs left+right: this is ONE gripper, not two.** The names "left"/"right" denote the **two jaws of a single gripper** within each pair. The gripper has an **upper jaw pair** (`left_up_*` + `right_up_*`) and a **lower jaw pair** (`left_down_*` + `right_down_*`), all four hanging off the one `base` root via `bridge`. The two jaws of each pair are coupled 1:1 by an equality constraint into a symmetric pinch driven by a single actuator. There is no second independent gripper.
 - **Compiler settings:** `angle="radian"`, `meshdir="meshes"`, `autolimits="true"`, and every mesh uses `scale="0.001 0.001 0.001"` (source OBJs authored in **millimeters**, scaled to meters at load). Cited at **gripper.xml:3** (compiler block) and the mesh asset declarations from gripper.xml:13 onward. Because `angle="radian"`, no degree→radian conversion is ever needed; and because every joint is a `slide` (prismatic), all `range`/`ctrl`/`qpos` are linear displacements in **meters**, not angles.
@@ -16,7 +16,7 @@ This module is a single self-contained MuJoCo gripper — a four-finger (two upp
 
 All data verified — MJCF `<inertial>` values match the compiled `model.body_*` arrays to the printed precision. ngeom = 289 (compiled) and 289 `<geom>` tags; the totals line below reports ngeom as the compiled value.
 
-**Totals (from compiled model, `mujoco.MjModel.from_xml_path("/home/rivery/Documents/mini_gripper_old/gripper.xml")`):** `nbody = 11` (1 world + 10 gripper bodies) · `nq = 9` · `nv = 9` · `nu = 7` · `<equality> constraints (neq) = 2` · `ngeom = 289` · **TOTAL body_mass (gripper subtree, excludes world) = 0.311601 kg** (`sum(model.body_mass[1:])`; world mass = 0).
+**Totals (from compiled model, `mujoco.MjModel.from_xml_path("<gripper source>/gripper.xml")`):** `nbody = 11` (1 world + 10 gripper bodies) · `nq = 9` · `nv = 9` · `nu = 7` · `<equality> constraints (neq) = 2` · `ngeom = 289` · **TOTAL body_mass (gripper subtree, excludes world) = 0.311601 kg** (`sum(model.body_mass[1:])`; world mass = 0).
 
 Notes that hold for **every** gripper body: in the MJCF each `<body>` is declared with `pos="0 0 0"` and no `quat` (so `body_quat` defaults to identity `1 0 0 0`). All articulation/geometry offset lives in the per-piece mesh/collision geoms and the `<inertial>` `pos`/`quat`, not in the body frame. The compiler is `angle="radian"`, so no degree→radian conversion is needed; all quaternions below are dimensionless wxyz and all `pos`/COM are in meters. Inertia is given as `diaginertia` (principal moments, kg·m²) + `iquat` (orientation of the principal axes wrt the body frame); no body uses `fullinertia`.
 
@@ -52,7 +52,7 @@ Verification: the compiled `model.body_mass`, `body_ipos`, `body_iquat`, and `bo
 
 All verified against a fresh compile. Joint `pos` is unset in XML (defaults to `0 0 0`, confirmed by compile). The two equality couplings drive only the upper and lower `_y` racks; the four `_finger_x` slides are independently actuated. Note: 7 actuators but the equality means only 1 of each `_y` pair is actuated (`left_up_y`, `left_down_y`), with the right side mirrored by the constraint.
 
-Compiled clean from a single self-contained MJCF (`/home/rivery/Documents/mini_gripper_old/gripper.xml`, `gripper.xml:3` → `compiler angle="radian" meshdir="meshes" autolimits="true"`). Fresh `mujoco.MjModel.from_xml_path` reports **`njnt = 9`, `neq = 2`, `nu = 7`** — matching the established ground truth.
+Compiled clean from a single self-contained MJCF (`<gripper source>/gripper.xml`, `gripper.xml:3` → `compiler angle="radian" meshdir="meshes" autolimits="true"`). Fresh `mujoco.MjModel.from_xml_path` reports **`njnt = 9`, `neq = 2`, `nu = 7`** — matching the established ground truth.
 
 **All 9 joints are `type="slide"` (prismatic / linear).** Their motion is a translation along an axis, so the unit of `range` is **METERS**, not an angle. "Convert to radians" is therefore **N/A** — slide ranges are linear displacements in meters and there is nothing to convert. This is a parallel-jaw, rack-and-pinion design: each `_y` slide is a rack driven by a pinion, and the equality constraints below tie the left/right racks of a pair together so a single pinion drives a symmetric pinch.
 
@@ -210,7 +210,7 @@ Each rigid link is represented for visualization by a **single high-poly mesh** 
 
 ### 2.5 Visual geometry & assets
 
-All geometry comes from a single self-contained MJCF, `/home/rivery/Documents/mini_gripper_old/gripper.xml` (no `<include>`). Compiled cleanly with MuJoCo (`mujoco.MjModel.from_xml_path(...)`): `nmesh=288`, `nmat=11`, `ntex=1`, `ngeom=289`, `njnt=9`, `nu=7`, `neq=2`. The compiler block declares `angle="radian"`, `meshdir="meshes"`, `autolimits="true"`; every mesh uses `scale="0.001 0.001 0.001"`, i.e. the source OBJ files are authored in **millimeters** and scaled to meters at load. (No `<geom>` in this model carries an explicit angle attribute; all rotations are quaternions, so the radian setting is moot for the geoms but stated for completeness.)
+All geometry comes from a single self-contained MJCF, `<gripper source>/gripper.xml` (no `<include>`). Compiled cleanly with MuJoCo (`mujoco.MjModel.from_xml_path(...)`): `nmesh=288`, `nmat=11`, `ntex=1`, `ngeom=289`, `njnt=9`, `nu=7`, `neq=2`. The compiler block declares `angle="radian"`, `meshdir="meshes"`, `autolimits="true"`; every mesh uses `scale="0.001 0.001 0.001"`, i.e. the source OBJ files are authored in **millimeters** and scaled to meters at load. (No `<geom>` in this model carries an explicit angle attribute; all rotations are quaternions, so the radian setting is moot for the geoms but stated for completeness.)
 
 #### Visual geoms (group=2)
 
@@ -235,7 +235,7 @@ Total visual triangle budget: **111,888 faces** across the 10 render meshes. All
 
 ##### (a) Meshes — 288 total = 10 visual + 278 collision
 
-All 288 `<mesh>` elements use `scale="0.001 0.001 0.001"`. Disk check: every referenced file resolves under `/home/rivery/Documents/mini_gripper_old/meshes/`. (Note: the directory holds far more OBJs than are referenced — 34 top-level and 823 in `collision_pieces/` — but only the 288 listed below are wired into the model. All are MODULE assets.)
+All 288 `<mesh>` elements use `scale="0.001 0.001 0.001"`. Disk check: every referenced file resolves under `<gripper source>/meshes/`. (Note: the directory holds far more OBJs than are referenced — 34 top-level and 823 in `collision_pieces/` — but only the 288 listed below are wired into the model. All are MODULE assets.)
 
 **10 visual meshes** (file · scale · faces), mesh-def line cited:
 
@@ -301,7 +301,7 @@ All 288 `<mesh>` elements use `scale="0.001 0.001 0.001"`. Disk check: every ref
 Now the jaw kinematics are fully characterized. At ctrl=0 (neutral): UP pair gap = 72.9mm, DOWN pair gap = 35.1mm — a **partially-open / mid-travel rest pose**. Positive y-ctrl closes (gap→~0 at max), negative y-ctrl opens wide (gap→~115mm at min). The finger_x joints at qpos=0 are fully retracted (range starts at 0).
 
 ### 3.1 Module root & sites
-- The model compiles cleanly: `mujoco.MjModel.from_xml_path("/home/rivery/Documents/mini_gripper_old/gripper.xml")` → `nbody=11, njnt=9, nu=7, neq=2, nmesh=288`, `nkey=0`.
+- The model compiles cleanly: `mujoco.MjModel.from_xml_path("<gripper source>/gripper.xml")` → `nbody=11, njnt=9, nu=7, neq=2, nmesh=288`, `nkey=0`.
 - The transplantable module root is `<body name="base" pos="0 0 0">` at **gripper.xml:325**, the single child of `<worldbody>` (gripper.xml:317) that is the gripper; the other worldbody entries (`floor` gripper.xml:318, lights `overhead`/`fill` gripper.xml:320‑322) are scene furniture, not part of the module.
 - Compiled base body frame: `body_pos = [0,0,0]`, `body_quat = [1,0,0,0]` (identity), `parentid = 0` (world). The **base body frame coincides with the world origin at identity.**
 - **There is NO mounting `<site>`.** Grep of the whole file: `<site>` count = **0**. No site of any kind exists; the integrator must author the mount pose from the geometry below.
@@ -321,7 +321,7 @@ Now the jaw kinematics are fully characterized. At ctrl=0 (neutral): UP pair gap
 
 **Identifying the wrist-mating face.** The grasp workspace points hard in **+X**: all four rack/finger subtrees span world/base X ≈ `0.002 → 0.113 m` (exact visual AABBs: racks `x∈[0.002, 0.1135]`, fingers `x∈[0.0317, 0.1134]`), finger workspace centroid ≈ `(0.0726, 0.0, 0.0261)`. Nothing of the gripper reaches more negative than the base's own `x = -0.0534`. Therefore the arm/wrist is on the **−X** side and the mating face is the **−X end** of the base.
 
-This is confirmed by a circular-flange signature, not just the AABB extreme. Looking down the X axis at the −X end (`x < -0.043`), the vertices form concentric rings centred at **YZ = (0.000, 0.0325)** with a central bore (inner radius ≈ 6 mm) and outer register ≈ 15.5–20 mm — i.e. a round wrist-roll **pilot/spigot boss with a bolt circle**. The competing flat faces are NOT circular: the −Z face is a plain rectangular plate (45 × 100 mm) and ±Y faces are small side walls. Only the −X end is a circular flange. (Renders saved at `/home/rivery/Documents/mini_gripper_old/gripper_handoff/base_views.png` and `/home/rivery/Documents/mini_gripper_old/gripper_handoff/base_Xend.png`.)
+This is confirmed by a circular-flange signature, not just the AABB extreme. Looking down the X axis at the −X end (`x < -0.043`), the vertices form concentric rings centred at **YZ = (0.000, 0.0325)** with a central bore (inner radius ≈ 6 mm) and outer register ≈ 15.5–20 mm — i.e. a round wrist-roll **pilot/spigot boss with a bolt circle**. The competing flat faces are NOT circular: the −Z face is a plain rectangular plate (45 × 100 mm) and ±Y faces are small side walls. Only the −X end is a circular flange. (Renders saved at `<gripper source>/gripper_handoff/base_views.png` and `<gripper source>/gripper_handoff/base_Xend.png`.)
 
 Note the −X end has **two** parallel planes: an outer raised boss at `x = -0.0534` (4.48 cm², the circular spigot that registers into the flange counterbore) and a larger flat plate ~9 mm behind it at `x ≈ -0.0445` (≈17 cm², the actual bolt-down face). I take the outermost contacting plane `x = -0.0534` as the nominal mating datum; if the real flange seats on the recessed plate, shift the X datum by +0.0089 m (see flags).
 
@@ -364,7 +364,7 @@ Two `<equality>` joint couplings (`neq=2`): `right_up_y = left_up_y` and `right_
 
 All 278 collision pieces attributed across 10 bodies, totaling 1,042,289 bytes — matches the disk count. Everything verified.
 
-All paths under `/home/rivery/Documents/mini_gripper_old/gripper_handoff/`. Verified against a fresh read and a real MuJoCo compile (system `python3` + `mujoco`). Angle units are **radians** (`gripper.xml:3`, `compiler angle="radian" meshdir="meshes" autolimits="true"`); model is a single self-contained MJCF with **0 `<include>`** elements; all 288 meshes use `scale="0.001 0.001 0.001"` (mm to m).
+All paths under `<gripper source>/gripper_handoff/`. Verified against a fresh read and a real MuJoCo compile (system `python3` + `mujoco`). Angle units are **radians** (`gripper.xml:3`, `compiler angle="radian" meshdir="meshes" autolimits="true"`); model is a single self-contained MJCF with **0 `<include>`** elements; all 288 meshes use `scale="0.001 0.001 0.001"` (mm to m).
 
 ### Folder layout (tree)
 ```
@@ -426,9 +426,9 @@ gripper_handoff/
 | right_down_finger | 4 | 17,741 |
 | **Total** | **278** | **1,042,289** |
 
-### MISSING none — all 288 referenced mesh files resolved on disk under `/home/rivery/Documents/mini_gripper_old/meshes/` and were copied.
+### MISSING none — all 288 referenced mesh files resolved on disk under `<gripper source>/meshes/` and were copied.
 
-### Standalone recompile Loaded `/home/rivery/Documents/mini_gripper_old/gripper_handoff/gripper.xml` via `mujoco.MjModel.from_xml_path`; reports nmesh=288, njnt=9 (slide), nu=7 (position actuators), neq=2 (equality couplings) — consistent with the established ground truth.
+### Standalone recompile Loaded `<gripper source>/gripper_handoff/gripper.xml` via `mujoco.MjModel.from_xml_path`; reports nmesh=288, njnt=9 (slide), nu=7 (position actuators), neq=2 (equality couplings) — consistent with the established ground truth.
 
 Bundled gripper_handoff/gripper.xml recompiles standalone: OK, ngeom=289
 

@@ -144,7 +144,7 @@ def curobo_fk_state(model, data, build_robot_cfg_dict: Callable[[], dict], base_
     regions: (regex, rgba) list mapping link name -> color; first match wins, unmatched -> gray.
     Returns (kin, qpos_adr, colors, root_body_id) to feed ``add_curobo_fk_spheres``.
     """
-    for path in (str(_REPO_ROOT), str(_REPO_ROOT / "mj_envs"), "/home/grl/repo/curobo"):
+    for path in (str(_REPO_ROOT), str(_REPO_ROOT / "mj_envs")):
         if path not in sys.path:
             sys.path.insert(0, path)
     from curobo._src.robot.kinematics.kinematics import Kinematics

@@ -834,7 +834,7 @@ def _traj_diag(result) -> str:
 def plan_pose_graph_seeded(planner, goal_pose, start_state, max_attempts: int = 2):
     """Goalset ``plan_pose`` WITH roadmap seeding -- the branch cuRobo omits (see ``_GRAPH_FALLBACK``).
 
-    Reimplemented here rather than patched into cuRobo because ``/home/grl/repo/curobo`` is a pristine
+    Reimplemented here rather than patched into cuRobo because the cuRobo source checkout is a pristine
     upstream checkout: an edit there is invisible to this repo's git and dies on reinstall. Mirrors
     ``MotionPlanner._plan_pose_single`` (``motion_planner.py:233``) but keeps the GOALSET as the goal, which
     costs nothing -- ``_get_graph_seed_trajectories`` is pure joint-space (start config -> goal configs) and

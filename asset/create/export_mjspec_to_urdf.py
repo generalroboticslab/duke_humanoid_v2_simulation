@@ -41,7 +41,7 @@ it emits a fixed jointless link and no spheres. Guard is
 ``has_geom and not has_fit_geom`` -> fail; ``not has_geom`` -> skip.
 
 Run:
-    /home/grl/repo/micromamba/envs/py312/bin/python asset/create/export_mjspec_to_urdf.py \
+    python asset/create/export_mjspec_to_urdf.py \
         --robot humanoid_v21 --format mjcf
     python asset/create/export_mjspec_to_urdf.py --robot g1 --head-camera builtin
 """
@@ -648,6 +648,13 @@ def build_urdf(robot: RobotSpec, entity: Entity, live_model: mujoco.MjModel,
     cuRobo-loadable), ``<robot>_curobo.urdf`` = fixed base (base_link root), for cuRobo.
     Mesh refs point to source files with no copy: relative paths in the faithful full URDF
     for VSCode/RViz-style viewers, absolute paths in the cuRobo URDF for RobotBuilder.
+
+    Those absolute paths are MACHINE-LOCAL and deliberately stay that way. cuRobo is handed
+    ``asset_root_path="/"``, so one root cannot cover both this repo's meshes and g1's, which live
+    inside the installed ``mjlab`` package -- no relative form expresses both.
+    ``tasks/visual_manipulation/curobo/urdf_localize.py`` remaps every mesh onto the current tree at
+    LOAD time instead. Re-exporting on another machine rewrites these paths and is expected to; the
+    loader absorbs it, so the churn is not a regression.
 
     Gate (hard, all asserts): full yourdfpy scene-graph FK load of BOTH files (validates the
     link/joint graph, element schema, AND that FK closes) + per-joint limit/count asserts vs

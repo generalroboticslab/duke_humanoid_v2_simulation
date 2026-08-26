@@ -1163,7 +1163,7 @@ class G1RmaVelEstArmFlashSacStudentOnlyg1bsk2_armh(G1RmaVelEstArmFlashSacStudent
 class G1RmaVelEstArmFlashSacStudentOnlyg1bsk2_armh2(G1RmaVelEstArmFlashSacStudentOnlyg1bsk2):
     """g1bsk2 + user-specified 14-joint arm home pose (bent-elbow, raised-shoulder,
     neutral-wrist). User-specified values are ALL within g1.xml joint limits
-    (verified 2026-07-25 against /home/grl/repo/mujoco_menagerie/unitree_g1/g1.xml):
+    (verified 2026-07-25 against <mujoco_menagerie>/unitree_g1/g1.xml):
       elbow_joint range (-1.0472, 2.0944): -0.9863 OK (0.06 above lower bound)
       shoulder_pitch range (-3.0892, 2.6704): 1.1447 OK
       shoulder_roll range L(-1.5882, 2.2515) R(-2.2515, 1.5882): ±0.1185 OK

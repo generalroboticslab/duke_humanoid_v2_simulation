@@ -17,7 +17,7 @@ Pick the robot with ``--robot`` (resolves its canonical payload); add ``--view``
 
 .. code-block:: bash
 
-    PY=/home/grl/repo/micromamba/envs/py312/bin/python
+    PY=python
     # figure (PNG+PDF -> result/, PDF mirrored to paper):
     $PY mj_envs/asset_zoo/reachability_study/plot_workspace_curobo.py --robot g1
     # live interactive viewer (needs a display; --section is the Z cut, 2.0 = show all):

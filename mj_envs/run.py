@@ -1,4 +1,4 @@
-#!/home/grl/repo/micromamba/envs/py312/bin/python
+#!/usr/bin/env python
 """Train or play humanoid velocity tracking with PPO (or FlashSAC).
 
 ────────────────

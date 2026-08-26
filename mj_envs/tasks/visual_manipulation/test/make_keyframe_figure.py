@@ -16,7 +16,7 @@ makes the sweep GPU-bound instead. ``--capture missing`` (the default) REUSES an
 passing manifest, so re-running to retune the layout costs zero simulation.
 
 Run (one command -- captures fan out, then the figure assembles):
-  /home/grl/repo/micromamba/envs/py312/bin/python \
+  python \
       mj_envs/tasks/visual_manipulation/test/make_keyframe_figure.py \
       --keyframe-dir mj_envs/tasks/visual_manipulation/media/keyframes_6scenario
 Writes ``<keyframe-dir>/keyframe_figure.pdf`` (vector text over raster panels) and ``.png`` at 300 dpi.

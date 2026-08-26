@@ -121,8 +121,8 @@ HAND_MATING_FACE_POS_IN_BASE = np.array([-0.032, 0.006, -0.010])
 # site_pos(in flange frame) = mount_pos + R(mount_quat) @ GRASP_CENTER_IN_BASE  (see
 # place_ee_site_at_grasp_center()).
 # After changing this TCP, regenerate both static cuRobo tool-frame exports:
-# /home/grl/repo/micromamba/envs/py312/bin/python asset/create/export_mjspec_to_urdf.py --robot humanoid_v21 --head-camera actuated --end-effector actuated --hand parallel_gripper --format urdf
-# /home/grl/repo/micromamba/envs/py312/bin/python asset/create/export_mjspec_to_urdf.py --robot g1 --head-camera builtin --end-effector actuated --hand parallel_gripper --format urdf
+# python asset/create/export_mjspec_to_urdf.py --robot humanoid_v21 --head-camera actuated --end-effector actuated --hand parallel_gripper --format urdf
+# python asset/create/export_mjspec_to_urdf.py --robot g1 --head-camera builtin --end-effector actuated --hand parallel_gripper --format urdf
 # GRASP_CENTER_IN_BASE = np.array([0.08564, 0.00696, -0.01000]) # orginal
 GRASP_CENTER_IN_BASE = np.array([0.09, 0.00696, -0.01000]) # move slightly out
 

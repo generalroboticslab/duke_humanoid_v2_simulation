@@ -8,7 +8,7 @@ Two MJCF modules are generated here:
 Both come out of **one** script. Regenerate with:
 
 ```bash
-/home/grl/repo/micromamba/envs/py312/bin/python head_camera_creation.py
+python head_camera_creation.py
 ```
 
 Output is deterministic — re-running with no source change reproduces both XMLs byte for byte.

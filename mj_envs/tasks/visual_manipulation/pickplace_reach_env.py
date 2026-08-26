@@ -44,7 +44,7 @@ This module ALSO carries the ``--walk`` locomotion mission (formerly walk_to_rea
 twist channel is live and a mission state machine schedules the base motion + per-visit reach.
 
 Run (from repo root; args via tyro, ``--help`` for all):
-  /home/grl/repo/micromamba/envs/py312/bin/python mj_envs/tasks/visual_manipulation/pickplace_reach_env.py \
+  python mj_envs/tasks/visual_manipulation/pickplace_reach_env.py \
       --scenario NAME --steps N --envs N --side left|right --target front|rear [--render] [--view]
   scenario defaults to "front_back_close"; --target front = largest +x cube, rear = smallest -x cube.
   --view opens a live real-time mujoco viewer of env 0; --render writes an offscreen MP4.
