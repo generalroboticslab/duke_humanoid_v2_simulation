@@ -255,25 +255,30 @@ The six benchmark scenarios, one row each.
 
 ## What is in here
 
-Robots:
+The four directories worth opening first each have their own README, so you can navigate by
+browsing rather than by grepping:
 
-- `asset/duke_v2/` is the V2 humanoid: MJCF, meshes, head camera modules, parallel gripper.
-- `asset/<platform>/` holds the five comparison platforms in the VRW figures, in Fig. 2 column
-  order: `unitree_g1`, `booster_t1`, `apptronik_apollo`, `fourier_gr3`, `pal_talos`.
+| Directory | What it holds |
+| --- | --- |
+| [`asset/`](asset/) | Every robot model, with the upstream source and license of each comparison platform. |
+| [`asset/duke_v2/`](asset/duke_v2/) | This robot: body, head-camera gimbals, end effectors, and how to view them. |
+| [`mj_envs/asset_zoo/reachability_study/`](mj_envs/asset_zoo/reachability_study/) | The visible-reachable workspace computation and both workspace figures. |
+| [`mj_envs/tasks/visual_manipulation/`](mj_envs/tasks/visual_manipulation/) | The two-target benchmark, its scenarios, and the mission flags. |
+
+The rest:
+
+- `asset/create/` is the MJCF/URDF build tooling. The export command behind each shipped cuRobo
+  URDF is recorded in the corresponding `curobo/*_robot_cfg.py`.
 - `asset/toddlerbot_2xm_gripper/` is a sixth supported platform, included as a worked example
   though no paper figure reports it. `run_eta2_platforms.py` scores it as its own column, it is
   the smallest robot here and so the cheapest to regenerate a payload for, and it is the only
   robot that exercises the coupled-neck branch of `gpu_visibility` (`_apply_coupling`, -1/0.909
   gear).
-- `asset/create/` is the MJCF/URDF build tooling. The export command behind each shipped cuRobo
-  URDF is recorded in the corresponding `curobo/*_robot_cfg.py`.
-
-Code:
-
 - `mj_envs/asset_zoo/` has robot constants, scene objects, and the reachability study.
 - `mj_envs/tasks/humanoid_velocity/` has the locomotion task, rewards, observations, experiments.
 - `mj_envs/flash_sac/` and `mj_envs/ppo/` are the RL training stacks.
-- `mj_envs/tasks/visual_manipulation/` has the two-target benchmark, cuRobo planning, trackers.
+- `mj_envs/tasks/visual_manipulation/test/checkpoints/` has the pinned policy weights, with the
+  md5 and training command for each.
 
 Precomputed data:
 
