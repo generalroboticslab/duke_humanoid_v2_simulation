@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: If you use the simulation, the workspace study, the two-target benchmark, or any of the shipped policies, please cite the work below.
+title: "Duke Humanoid V2: simulation and training — the visible-reachable workspace study, the two-target reach-and-grasp benchmark, the robot assets, and the shipped locomotion policies"
+type: software
+date-released: 2026-08-26
+authors:
+  - family-names: Xia
+    given-names: Boxi
+  - family-names: Yang
+    given-names: Zijiang
+  - family-names: Shin
+    given-names: Ryan
+  - family-names: Li
+    given-names: Bokuan
+  - family-names: Lu
+    given-names: Eric
+  - family-names: Lee
+    given-names: Jacob
+  - family-names: Liu
+    given-names: Jiaxun
+  - family-names: Chen
+    given-names: Boyuan
+keywords:
+  - humanoid robotics
+  - workspace analysis
+  - simulation
+  - reinforcement learning
+  - flash sac
+license: Apache-2.0
+url: https://github.com/generalroboticslab/duke_humanoid_v2_simulation
+repository-code: https://github.com/generalroboticslab/duke_humanoid_v2_simulation
