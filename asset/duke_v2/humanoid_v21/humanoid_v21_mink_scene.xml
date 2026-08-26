@@ -1,0 +1,31 @@
+<mujoco model="duke_v2 mink scene">
+  <include file="humanoid_v21.xml"/>
+
+  <statistic center="0.2 0 0.8" extent="1.2" meansize="0.08"/>
+
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.1 0.1 0.1" specular="0 0 0"/>
+    <global azimuth="160" elevation="-20"/>
+  </visual>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2"
+      width="512" height="512" mark="cross" markrgb=".8 .8 .8"/>
+    <material name="grid" texture="grid" texrepeat="1 1" texuniform="true"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 4" directional="true"/>
+    <!-- <geom name="floor" size="0 0 0.05" type="plane" material="grid"/> -->
+
+    <!-- Left EE target: green box. Double-click to select, Ctrl+Right-drag to translate -->
+    <body name="left_target" pos="0.25 0.18 0.55" mocap="true">
+      <geom type="box" size=".04 .04 .04" contype="0" conaffinity="0" rgba=".3 .7 .3 .5"/>
+    </body>
+
+    <!-- Right EE target: blue box -->
+    <body name="right_target" pos="0.25 -0.18 0.55" mocap="true">
+      <geom type="box" size=".04 .04 .04" contype="0" conaffinity="0" rgba=".3 .3 .7 .5"/>
+    </body>
+  </worldbody>
+</mujoco>

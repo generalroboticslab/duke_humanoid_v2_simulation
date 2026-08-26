@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<mujoco model="parallel_gripper">
+  <compiler angle="radian" meshdir="meshes" autolimits="true"/>
+  <default>
+    <default class="parallel_gripper">
+      <default class="visual">
+        <geom group="2" type="mesh" contype="0" conaffinity="0" material="silver"/>
+      </default>
+      <default class="collision">
+        <geom group="3" contype="1" conaffinity="1"/>
+      </default>
+    </default>
+  </default>
+  <asset>
+    <material name="silver" rgba="0.75 0.75 0.75 1"/>
+    <material name="base_mat" rgba="0.38 0.38 0.38 1" specular="0.15" shininess="0.1"/>
+    <material name="left_rack_mat" rgba="0.3 0.31 0.34 1" specular="0.05" shininess="0.05"/>
+    <material name="right_rack_mat" rgba="0.33 0.3 0.34 1" specular="0.05" shininess="0.05"/>
+    <mesh name="base" file="base.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="left_rack" file="left_rack.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="right_rack" file="right_rack.obj" scale="0.001 0.001 0.001"/>
+  </asset>
+  <worldbody>
+    <body name="base" childclass="parallel_gripper">
+      <inertial mass="0.171609431065" pos="0.000733468 0.0119563 -0.00964551" diaginertia="4.99918e-05 0.000207737 0.000223325" quat="0.725257 0.023573 0.00705184 -0.688038"/>
+      <geom name="base_visual" type="mesh" mesh="base" pos="0 0 0" class="visual" material="base_mat"/>
+      <geom type="capsule" size="0.026 0.064" name="base_collision" pos="-0.0017 0.0075 -0.01" quat="0.707107 -0.707107 -0 0" class="collision"/>
+      <body name="left_rack" pos="0 0 0">
+        <inertial mass="0.07436563558" pos="0.0462025 -0.0220002 -0.00385734" diaginertia="4.74015e-05 0.00012138 0.000153873" quat="-0.0935321 0.426555 0.899548 0.0108181"/>
+        <joint name="left_rack_y" type="slide" pos="0 0 0" axis="0 1 0" range="-0.05 0.0347" damping="12.0" armature="0.02"/>
+        <geom name="left_rack_visual" type="mesh" mesh="left_rack" pos="0 0 0" class="visual" material="left_rack_mat"/>
+        <geom type="capsule" size="0.005 0.035800000000000005" name="left_rack_collision0" pos="0.0808 -0.033 -0.0249897" quat="0.707107 -0 0.707107 0" class="collision" conaffinity="0" friction="2 0.005 0.0001" solref="0.005 1"/>
+        <geom type="capsule" size="0.005 0.035800000000000005" name="left_rack_collision1" pos="0.0808 -0.033 -0.0149966" quat="0.707107 -0 0.707107 0" class="collision" conaffinity="0" friction="2 0.005 0.0001" solref="0.005 1"/>
+        <geom type="capsule" size="0.005 0.035800000000000005" name="left_rack_collision2" pos="0.0808 -0.033 -0.00500342" quat="0.707107 -0 0.707107 0" class="collision" conaffinity="0" friction="2 0.005 0.0001" solref="0.005 1"/>
+        <geom type="capsule" size="0.005 0.035800000000000005" name="left_rack_collision3" pos="0.0808 -0.033 0.00498975" quat="0.707107 -0 0.707107 0" class="collision" conaffinity="0" friction="2 0.005 0.0001" solref="0.005 1"/>
+        <geom type="capsule" size="0.021 0.022499999999999996" name="left_rack_collision4" pos="0.0675 -0.049 -0.01" quat="0.707107 -0 0.707107 0" class="collision" conaffinity="0" friction="2 0.005 0.0001" solref="0.005 1"/>
+        <geom name="left_rack_ikproxy" type="capsule" size="0.0226 0.0458" pos="0.0608 -0.0486 -0.01" quat="0.707107 -0 0.707107 0" class="collision" contype="0" conaffinity="0" group="5" friction="2 0.005 0.0001" solref="0.005 1"/>
+      </body>
+      <body name="right_rack" pos="0 0 0">
+        <inertial mass="0.07436563558" pos="0.0461618 0.0359459 -0.0161427" diaginertia="4.73679e-05 0.000121196 0.000153672" quat="-0.0107055 0.899312 0.427027 0.0936506"/>
+        <joint name="right_rack_y" type="slide" pos="0 0 0" axis="0 -1 0" range="-0.05 0.0347" damping="12.0" armature="0.02"/>
+        <geom name="right_rack_visual" type="mesh" mesh="right_rack" pos="0 0 0" class="visual" material="right_rack_mat"/>
+        <geom type="capsule" size="0.005 0.035800000000000005" name="right_rack_collision0" pos="0.0808 0.0469 -0.0249897" quat="0.707107 -0 0.707107 0" class="collision" conaffinity="0" friction="2 0.005 0.0001" solref="0.005 1"/>
+        <geom type="capsule" size="0.005 0.035800000000000005" name="right_rack_collision1" pos="0.0808 0.0469 -0.0149966" quat="0.707107 -0 0.707107 0" class="collision" conaffinity="0" friction="2 0.005 0.0001" solref="0.005 1"/>
+        <geom type="capsule" size="0.005 0.035800000000000005" name="right_rack_collision2" pos="0.0808 0.0469 -0.00500342" quat="0.707107 -0 0.707107 0" class="collision" conaffinity="0" friction="2 0.005 0.0001" solref="0.005 1"/>
+        <geom type="capsule" size="0.005 0.035800000000000005" name="right_rack_collision3" pos="0.0808 0.0469 0.00498975" quat="0.707107 -0 0.707107 0" class="collision" conaffinity="0" friction="2 0.005 0.0001" solref="0.005 1"/>
+        <geom type="capsule" size="0.021 0.022499999999999996" name="right_rack_collision4" pos="0.0675 0.0629 -0.01" quat="0.707107 -0 0.707107 0" class="collision" conaffinity="0" friction="2 0.005 0.0001" solref="0.005 1"/>
+        <geom name="right_rack_ikproxy" type="capsule" size="0.0226 0.0458" pos="0.0608 0.0625 -0.01" quat="0.707107 -0 0.707107 0" class="collision" contype="0" conaffinity="0" group="5" friction="2 0.005 0.0001" solref="0.005 1"/>
+      </body>
+    </body>
+  </worldbody>
+  <equality>
+    <joint joint1="right_rack_y" joint2="left_rack_y" polycoef="0 1 0 0 0" solref="0.005 1" solimp="0.95 0.99 0.001"/>
+  </equality>
+</mujoco>

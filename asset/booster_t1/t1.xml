@@ -1,0 +1,347 @@
+<mujoco model="T1">
+  <compiler angle="radian" meshdir="assets" autolimits="true"/>
+
+  <option integrator="implicitfast"/>
+
+  <asset>
+    <material name="light_gray" rgba="0.76 0.76 0.76 1"/>
+    <material name="medium_gray" rgba="0.4 0.4 0.4 1"/>
+
+    <mesh file="Trunk.stl"/>
+    <mesh file="H1.stl"/>
+    <mesh file="H2.stl"/>
+    <mesh file="AL1.stl"/>
+    <mesh file="AL2.stl"/>
+    <mesh file="AL3.stl"/>
+    <mesh file="AL4.stl"/>
+    <mesh file="AL5.stl"/>
+    <mesh file="AL6.stl"/>
+    <mesh file="left_hand_link.stl"/>
+    <mesh file="AR1.stl"/>
+    <mesh file="AR2.stl"/>
+    <mesh file="AR3.stl"/>
+    <mesh file="AR4.stl"/>
+    <mesh file="AR5.stl"/>
+    <mesh file="AR6.stl"/>
+    <mesh file="right_hand_link.stl"/>
+    <mesh file="Waist.stl"/>
+    <mesh file="Hip_Pitch_Left.stl"/>
+    <mesh file="Hip_Roll_Left.stl"/>
+    <mesh file="Hip_Yaw_Left.stl"/>
+    <mesh file="Shank_Left.stl"/>
+    <mesh file="Ankle_Cross_Left.stl"/>
+    <mesh file="left_foot_link.stl"/>
+    <mesh file="Hip_Pitch_Right.stl"/>
+    <mesh file="Hip_Roll_Right.stl"/>
+    <mesh file="Hip_Yaw_Right.stl"/>
+    <mesh file="Shank_Right.stl"/>
+    <mesh file="Ankle_Cross_Right.stl"/>
+    <mesh file="right_foot_link.stl"/>
+  </asset>
+
+  <default>
+    <default class="t1">
+      <geom material="medium_gray"/>
+      <site rgba="1 0 0 1" size="0.01" group="5"/>
+      <joint frictionloss="0.1" armature="0.005"/>
+      <position inheritrange="1" kp="75" kv="5"/>
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+      </default>
+      <default class="collision">
+        <geom group="3"/>
+      </default>
+    </default>
+  </default>
+
+  <worldbody>
+    <light pos="1 0 3.5" dir="0 0 -1" directional="true"/>
+    <body name="base_link" pos="0 0 .7" childclass="t1">
+      <freejoint/>
+      <inertial pos="0.0551365 -1.42058e-06 0.105062" quat="0.99996 1.40561e-05 -0.00899532 -1.39249e-05" mass="11.7"
+        diaginertia="0.0915404 0.0767787 0.0556055"/>
+      <site name="imu"/>
+      <geom class="visual" material="light_gray" mesh="Trunk"/>
+      <geom class="collision" size="0.075 0.1 0.15" pos="0.06 0 0.12" type="box"/>
+      <body name="H1" pos="0.0625 0 0.243">
+        <inertial pos="-0.000508 -0.001403 0.057432" quat="0.763881 -0.0132172 0.00173419 0.645219" mass="0.44391"
+          diaginertia="0.000241549 0.00022351 0.000149941"/>
+        <joint name="AAHead_yaw" axis="0 0 1" range="-1.57 1.57" actuatorfrcrange="-7 7"/>
+        <geom class="visual" mesh="H1"/>
+        <body name="H2" pos="0 0 0.06185">
+          <inertial pos="0.007802 0.001262 0.098631" quat="0.988453 0.106172 -0.0745686 -0.0782786" mass="0.631019"
+            diaginertia="0.00203553 0.00192467 0.00172381"/>
+          <joint name="Head_pitch" axis="0 1 0" range="-0.35 1.22" actuatorfrcrange="-7 7"/>
+          <geom class="visual" mesh="H2"/>
+          <geom class="collision" size="0.08" pos="0.01 0 0.11"/>
+          <!-- D455 RGB head camera: 90° h × 65° v FOV (T1 RealSense version).
+               Mount flush on H2 head-sphere front surface (sphere center (0.01,0,0.11),
+               radius 0.08 -> front surface x=0.09, 10mm recessed) as the camera lens.
+               Source-of-truth: Booster T1 Instruction Manual V1.0 + Intel D455 datasheet.
+               T1 D455 sits at the front of the head looking FORWARD (+X in base_link),
+               landscape-mounted (90° wide horizontal, 65° narrow vertical in world; no
+               roll about the optical axis). MuJoCo cameras look along local -Z, so
+               quat = -π/2 about Y maps camera forward (-Z) onto world +X. Site shares
+               the same quat, kept colinear with the camera for raycast origin/FOV checks. -->
+          <camera name="head_cam" pos="0.080 0 0.12" quat="0.7071 0 -0.7071 0" fovy="65" resolution="1280 800" />
+          <site name="head_cam_site" pos="0.080 0 0.12" quat="0.7071 0 -0.7071 0" size="0.005" rgba="0 0 1 0.5" />
+          <!-- Frame axes drawn in OpenCV image convention (X=right, Y=down, Z=forward):
+               rotated 90° about the optical (Z) axis relative to MJCF's raw camera-local
+               frame (raw local X=vertical, Y=horizontal). Labeling only — does not affect
+               the camera's actual (unrotated) optical quat or the FOV cone below. -->
+          <geom name="cam_axis_x"   type="capsule" size="0.008" fromto="0.080 0 0.12 0.080 0.10 0.12" rgba="0.84 0.15 0.16 1" contype="0" conaffinity="0" mass="0" group="4"/>
+          <geom name="cam_axis_y"   type="capsule" size="0.008" fromto="0.080 0 0.12 0.080 0 0.02"  rgba="0.13 0.59 0.27 1" contype="0" conaffinity="0" mass="0" group="4"/>
+          <geom name="cam_axis_z"   type="capsule" size="0.010" fromto="0.080 0 0.12 0.280 0 0.12"  rgba="0.12 0.40 0.85 1" contype="0" conaffinity="0" mass="0" group="4"/>
+          <!-- FOV cone, landscape. H2-frame corner = offset (0.080,0,0.12) + (depth in +X,
+               ±horiz in Y, ±vert in Z). Near (dist 0.05): vert half=0.0319 -> z 0.088..0.152;
+               horiz half=0.05 -> y ±0.05. Far (dist 0.60): vert half=0.3827 -> z -0.263..0.503;
+               horiz half=0.6 -> y ±0.6. -->
+          <!-- Near rect: y=±0.05, z=0.088..0.152 -->
+          <geom name="cam_fov_near_top"    type="capsule" size="0.005" fromto="0.130 -0.05 0.152 0.130  0.05 0.152" rgba="1.0 0.55 0.10 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+          <geom name="cam_fov_near_right"  type="capsule" size="0.005" fromto="0.130  0.05 0.152 0.130  0.05 0.088" rgba="1.0 0.55 0.10 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+          <geom name="cam_fov_near_bot"    type="capsule" size="0.005" fromto="0.130  0.05 0.088 0.130 -0.05 0.088" rgba="1.0 0.55 0.10 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+          <geom name="cam_fov_near_left"   type="capsule" size="0.005" fromto="0.130 -0.05 0.088 0.130 -0.05 0.152" rgba="1.0 0.55 0.10 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+          <!-- Far rect: y=±0.6, z=-0.263..0.503 (1.20 m wide) -->
+          <geom name="cam_fov_far_top"     type="capsule" size="0.005" fromto="0.680 -0.6 0.503 0.680  0.6 0.503" rgba="1.0 0.55 0.10 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+          <geom name="cam_fov_far_right"   type="capsule" size="0.005" fromto="0.680  0.6 0.503 0.680  0.6 -0.263" rgba="1.0 0.55 0.10 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+          <geom name="cam_fov_far_bot"     type="capsule" size="0.005" fromto="0.680  0.6 -0.263 0.680 -0.6 -0.263" rgba="1.0 0.55 0.10 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+          <geom name="cam_fov_far_left"    type="capsule" size="0.005" fromto="0.680 -0.6 -0.263 0.680 -0.6 0.503" rgba="1.0 0.55 0.10 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+          <!-- 4 struts from lens (0.080, 0, 0.12) to each far corner -->
+          <geom name="cam_fov_strut_tr"    type="capsule" size="0.005" fromto="0.080 0 0.12 0.680  0.6 0.503" rgba="1.0 0.55 0.10 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+          <geom name="cam_fov_strut_tl"    type="capsule" size="0.005" fromto="0.080 0 0.12 0.680 -0.6 0.503" rgba="1.0 0.55 0.10 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+          <geom name="cam_fov_strut_br"    type="capsule" size="0.005" fromto="0.080 0 0.12 0.680  0.6 -0.263" rgba="1.0 0.55 0.10 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+          <geom name="cam_fov_strut_bl"    type="capsule" size="0.005" fromto="0.080 0 0.12 0.680 -0.6 -0.263" rgba="1.0 0.55 0.10 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+          <!-- Optical-axis ray: 2 m forward (along +Z direction = world +X) -->
+          <geom name="cam_fov_axis" type="capsule" size="0.010" fromto="0.080 0 0.12 2.080 0 0.12" rgba="1.0 1.0 0.0 0.95" contype="0" conaffinity="0" mass="0" group="4"/>
+        </body>
+      </body>
+      <body name="AL1" pos="0.0575 0.1063 0.219" quat="1 0 0.000440565 0">
+        <inertial pos="-0.000677 0.044974 0" quat="0.50423 0.495734 -0.50423 0.495734" mass="0.53"
+          diaginertia="0.001367 0.00129329 0.000292711"/>
+        <joint name="Left_Shoulder_Pitch" axis="0 1 0" range="-3.31 1.22" actuatorfrcrange="-18 18"/>
+        <geom class="visual" material="light_gray" mesh="AL1"/>
+        <body name="AL2" pos="0 0.047 0">
+          <inertial pos="0.003862 0.037976 0" quat="0.487991 0.511727 -0.487991 0.511727" mass="0.16"
+            diaginertia="0.000401 0.00034538 0.00017662"/>
+          <joint name="Left_Shoulder_Roll" axis="1 0 0" range="-1.74 1.57" actuatorfrcrange="-18 18"/>
+          <geom class="visual" mesh="AL2"/>
+          <geom class="collision" size="0.0320 0.0390" pos="0.0002 0 0" quat="0.707107 0 0.707107 0" type="cylinder"/>
+          <body name="AL3" pos="0.00025 0.0605 0">
+            <inertial pos="0 0.085353 -9.9e-05" quat="0.70641 0.707803 0 0" mass="1.02"
+              diaginertia="0.012869 0.012798 0.000620953"/>
+            <joint name="Left_Elbow_Pitch" axis="0 1 0" range="-2.27 2.27" actuatorfrcrange="-18 18"/>
+            <geom class="visual" mesh="AL3"/>
+            <geom class="collision" size="0.0392 0.0620" pos="0 0.0620 0" quat="0.707107 -0.707107 0 0" type="cylinder"/>
+            <body name="AL4" pos="0 0.1471 0">
+              <inertial pos="-0.00046851 0.062372 0.0015178" mass="0.5570"
+                fullinertia="0.001673 0.000214 0.001608 -1.2e-05 0 4e-06"/>
+              <joint name="Left_Elbow_Yaw" axis="0 0 1" range="-2.44 0" actuatorfrcrange="-18 18"/>
+              <geom class="visual" mesh="AL4"/>
+              <geom class="collision" size="0.0320 0.0370" pos="0 0 0" type="cylinder"/>
+              <body name="AL5" pos="0 0.105 0.00025">
+                <inertial pos="-3.8402e-05 0.036076 0.0056711" mass="0.43402"
+                  fullinertia="0.000823 0.000216 0.000785 0 0 9.8e-05"/>
+                <joint name="Left_Wrist_Pitch" axis="0 1 0" range="-2.5821 2.5821" actuatorfrcrange="-7 7"/>
+                <geom class="visual" mesh="AL5"/>
+                <geom class="collision" size="0.0350 0.0380" pos="0 -0.0300 0" quat="0.707107 -0.707107 0 0" type="cylinder"/>
+                <body name="AL6" pos="0 0.042 0">
+                  <inertial pos="-0.00072939 0.056578 -0.0056257" mass="0.47922"
+                    fullinertia="0.001171 0.000166 0.001138 -1.5e-05 -1e-06 -1.5e-05"/>
+                  <joint name="Left_Wrist_Yaw" axis="0 0 1" range="-1.8185 1.4261" actuatorfrcrange="-18 18"/>
+                  <geom class="visual" mesh="AL6"/>
+                  <geom class="collision" size="0.0310 0.0350" pos="0 0 0" type="cylinder"/>
+                  <body name="left_hand_link" pos="0.00475 0.07 0.0015">
+                    <inertial pos="-0.0067917 0.06373 0.011867" mass="0.30603"
+                      fullinertia="0.002302 0.000307 0.002439 0.000002 0 -0.000108"/>
+                    <joint name="Left_Hand_Roll" axis="1 0 0" range="-0.758 1.4285" actuatorfrcrange="-7 7"/>
+                    <geom class="visual" mesh="left_hand_link"/>
+                    <geom class="collision" size="0.0410 0.0530" pos="-0.0055 0.0930 0.0070" quat="0.707107 0.707107 0 0" type="cylinder"/>
+                    <geom class="collision" size="0.0320 0.0330" pos="-0.0060 0 0" quat="0.707107 0 -0.707107 0" type="cylinder"/>
+                    <site name="end_effector_L_site" pos="0 0.15 0" quat="0.707105 0.707108 0 0"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="AR1" pos="0.0575 -0.1063 0.219" quat="1 0 0.000440565 0">
+        <inertial pos="-0.000677 -0.044974 0" quat="0.50423 0.495734 -0.50423 0.495734" mass="0.53"
+          diaginertia="0.001367 0.00129329 0.000292711"/>
+        <joint name="Right_Shoulder_Pitch" axis="0 1 0" range="-3.31 1.22" actuatorfrcrange="-18 18"/>
+        <geom class="visual" material="light_gray" mesh="AR1"/>
+        <body name="AR2" pos="0 -0.047 0">
+          <inertial pos="0.003862 -0.037976 0" quat="0.511727 0.487991 -0.511727 0.487991" mass="0.16"
+            diaginertia="0.000401 0.00034538 0.00017662"/>
+          <joint name="Right_Shoulder_Roll" axis="1 0 0" range="-1.57 1.74" actuatorfrcrange="-18 18"/>
+          <geom class="visual" mesh="AR2"/>
+          <geom class="collision" size="0.0320 0.0390" pos="0.0002 0 0" quat="0.707107 0 0.707107 0" type="cylinder"/>
+          <body name="AR3" pos="0.00025 -0.0605 0">
+            <inertial pos="0 -0.085353 -9.9e-05" quat="0.707803 0.70641 0 0" mass="1.02"
+              diaginertia="0.012869 0.012798 0.000620953"/>
+            <joint name="Right_Elbow_Pitch" axis="0 1 0" range="-2.27 2.27" actuatorfrcrange="-18 18"/>
+            <geom class="visual" mesh="AR3"/>
+            <geom class="collision" size="0.0392 0.0620" pos="0 -0.0620 0" quat="0.707107 -0.707107 0 0" type="cylinder"/>
+            <body name="AR4" pos="0 -0.1471 0">
+              <inertial pos="-0.0004573 -0.067734 0.0017465" mass="0.5570"
+                fullinertia="0.002292 0.000234 0.002223 1.4e-05 0 -5e-06"/>
+              <joint name="Right_Elbow_Yaw" axis="0 0 1" range="0 2.44" actuatorfrcrange="-18 18"/>
+              <geom class="visual" mesh="AR4"/>
+              <geom class="collision" size="0.0320 0.0370" pos="0 0 0" type="cylinder"/>
+              <body name="AR5" pos="0 -0.105 0.00025">
+                <inertial pos="3.7355e-05 -0.035638 0.0053147" mass="0.43402"
+                  fullinertia="0.000836 0.00022 0.000797 0 0 -9.5e-05"/>
+                <joint name="Right_Wrist_Pitch" axis="0 1 0" range="-2.5821 2.5821" actuatorfrcrange="-7 7"/>
+                <geom class="visual" mesh="AR5"/>
+                <geom class="collision" size="0.0350 0.0380" pos="0 0.0300 0" quat="0.707107 -0.707107 0 0" type="cylinder"/>
+                <body name="AR6" pos="0 -0.042 0">
+                  <inertial pos="-0.0011437 -0.056205 -0.0056621" mass="0.47922"
+                    fullinertia="0.001238 0.000182 0.00121 2.4e-05 -1e-06 1.4e-05"/>
+                  <joint name="Right_Wrist_Yaw" axis="0 0 1" range="-1.4261 1.8185" actuatorfrcrange="-18 18"/>
+                  <geom class="visual" mesh="AR6"/>
+                  <geom class="collision" size="0.0310 0.0350" pos="0 0 0" type="cylinder"/>
+                  <body name="right_hand_link" pos="0.00475 -0.07 0.0015">
+                    <inertial pos="-0.0047758 -0.064411 0.011992" mass="0.30603"
+                      fullinertia="0.002287 0.000292 0.002418 -0.000002 0 -0.000102"/>
+                    <joint name="Right_Hand_Roll" axis="1 0 0" range="-1.4285 0.758" actuatorfrcrange="-7 7"/>
+                    <geom class="visual" mesh="right_hand_link"/>
+                    <geom class="collision" size="0.0410 0.0530" pos="-0.0055 -0.0930 0.0070" quat="0.707107 0.707107 0 0" type="cylinder"/>
+                    <geom class="collision" size="0.0320 0.0330" pos="-0.0060 0 0" quat="0.707107 0 -0.707107 0" type="cylinder"/>
+                    <site name="end_effector_R_site" pos="0 -0.15 0" quat="0.707105 0.707108 0 0"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="Waist" pos="0.0625 0 -0.1155">
+        <inertial pos="0.002284 3e-06 0.007301" quat="0.983649 0.000360386 -0.180076 0.00269791" mass="2.581"
+          diaginertia="0.00536742 0.005299 0.00474258"/>
+        <joint name="Waist" axis="0 0 1" range="-1.57 1.57" actuatorfrcrange="-30 30"/>
+        <geom class="visual" mesh="Waist"/>
+        <body name="Hip_Pitch_Left" pos="0 0.106 0">
+          <inertial pos="0.000534 -0.007296 -0.018083" quat="0.975141 0.2211 0.0145808 0.0017406" mass="1.021"
+            diaginertia="0.00180547 0.00145926 0.00125327"/>
+          <joint name="Left_Hip_Pitch" axis="0 1 0" range="-1.8 1.57" actuatorfrcrange="-45 45"/>
+          <geom class="visual" material="light_gray" mesh="Hip_Pitch_Left"/>
+          <body name="Hip_Roll_Left" pos="0 0 -0.02">
+            <inertial pos="0.001101 2.4e-05 -0.05375" quat="0.707081 -0.00599604 -0.00599604 0.707081" mass="0.385"
+              diaginertia="0.001743 0.00151729 0.000514712"/>
+            <joint name="Left_Hip_Roll" axis="1 0 0" range="-0.2 1.57" actuatorfrcrange="-30 30"/>
+            <geom class="visual" mesh="Hip_Roll_Left"/>
+            <body name="Hip_Yaw_Left" pos="0 0 -0.081854">
+              <inertial pos="-0.007233 0.000206 -0.089184" quat="0.696808 -0.033953 -0.0315708 0.715758" mass="2.166"
+                diaginertia="0.0257334 0.0253024 0.00259215"/>
+              <joint name="Left_Hip_Yaw" axis="0 0 1" range="-1 1" actuatorfrcrange="-30 30"/>
+              <geom class="visual" mesh="Hip_Yaw_Left"/>
+              <geom class="collision" size="0.05 0.08" type="cylinder"/>
+              <body name="Shank_Left" pos="-0.014 0 -0.134">
+                <inertial pos="-0.006012 0.000259 -0.124318" quat="0.997573 0.00144024 -0.023949 0.0653706" mass="1.73"
+                  diaginertia="0.0346951 0.0345375 0.00185844"/>
+                <joint name="Left_Knee_Pitch" axis="0 1 0" range="0 2.34" actuatorfrcrange="-60 60"/>
+                <geom class="visual" mesh="Shank_Left"/>
+                <geom class="collision" size="0.05 0.075" pos="0 0 -0.12" type="cylinder"/>
+                <body name="Ankle_Cross_Left" pos="0 0 -0.28">
+                  <inertial pos="-0.003722 0 -0.007981" quat="0.443136 0.551027 0.551027 0.443136" mass="0.073"
+                    diaginertia="2.9e-05 2.56589e-05 1.13411e-05"/>
+                  <joint name="Left_Ankle_Pitch" axis="0 1 0" range="-0.87 0.35" actuatorfrcrange="-20 20"/>
+                  <geom class="visual" mesh="Ankle_Cross_Left"/>
+                  <body name="left_foot_link" pos="0 0.00025 -0.012">
+                    <inertial pos="-0.000249 0 -0.00914" quat="0 0.620755 0 0.784005" mass="0.685"
+                      diaginertia="0.00269786 0.002385 0.00218714"/>
+                    <joint name="Left_Ankle_Roll" axis="1 0 0" range="-0.44 0.44" actuatorfrcrange="-15 15"/>
+                    <geom class="visual" mesh="left_foot_link"/>
+                    <geom class="collision" size="0.1115 0.05 0.015" pos="0.01 0 -0.015" type="box"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+        <body name="Hip_Pitch_Right" pos="0 -0.106 0">
+          <inertial pos="0.000534 0.007514 -0.018082" quat="0.973446 -0.228403 0.0147148 -0.00419349" mass="1.021"
+            diaginertia="0.00180552 0.0014632 0.00124928"/>
+          <joint name="Right_Hip_Pitch" axis="0 1 0" range="-1.8 1.57" actuatorfrcrange="-45 45"/>
+          <geom class="visual" material="light_gray" mesh="Hip_Pitch_Right"/>
+          <body name="Hip_Roll_Right" pos="0 0 -0.02">
+            <inertial pos="0.001099 2.4e-05 -0.053748" quat="0.707081 -0.00599604 -0.00599604 0.707081" mass="0.385"
+              diaginertia="0.001743 0.00151729 0.000514712"/>
+            <joint name="Right_Hip_Roll" axis="1 0 0" range="-1.57 0.2" actuatorfrcrange="-30 30"/>
+            <geom class="visual" mesh="Hip_Roll_Right"/>
+            <body name="Hip_Yaw_Right" pos="0 0 -0.081854">
+              <inertial pos="-0.007191 -0.000149 -0.08922" quat="0.714468 -0.0315638 -0.0336391 0.698146" mass="2.17"
+                diaginertia="0.0257623 0.0253298 0.00259389"/>
+              <joint name="Right_Hip_Yaw" axis="0 0 1" range="-1 1" actuatorfrcrange="-30 30"/>
+              <geom class="visual" mesh="Hip_Yaw_Right"/>
+              <geom class="collision" size="0.05 0.08" type="cylinder"/>
+              <body name="Shank_Right" pos="-0.014 0 -0.134">
+                <inertial pos="-0.005741 -0.000541 -0.122602" quat="0.99926 -0.000580963 -0.023461 -0.0304754"
+                  mass="1.79" diaginertia="0.0351717 0.0349574 0.00196589"/>
+                <joint name="Right_Knee_Pitch" axis="0 1 0" range="0 2.34" actuatorfrcrange="-60 60"/>
+                <geom class="visual" mesh="Shank_Right"/>
+                <geom class="collision" size="0.05 0.075" pos="0 0 -0.12" type="cylinder"/>
+                <body name="Ankle_Cross_Right" pos="0 0 -0.28">
+                  <inertial pos="-0.003722 0 -0.007981" quat="0.443136 0.551027 0.551027 0.443136" mass="0.073"
+                    diaginertia="2.9e-05 2.56589e-05 1.13411e-05"/>
+                  <joint name="Right_Ankle_Pitch" axis="0 1 0" range="-0.87 0.35" actuatorfrcrange="-20 20"/>
+                  <geom class="visual" mesh="Ankle_Cross_Right"/>
+                  <body name="right_foot_link" pos="0 -0.00025 -0.012">
+                    <inertial pos="-0.000248 0 -0.00914" quat="0 0.620755 0 0.784005" mass="0.685"
+                      diaginertia="0.00269786 0.002385 0.00218714"/>
+                    <joint name="Right_Ankle_Roll" axis="1 0 0" range="-0.44 0.44" actuatorfrcrange="-15 15"/>
+                    <geom class="visual" mesh="right_foot_link"/>
+                    <geom class="collision" size="0.1115 0.05 0.015" pos="0.01 0 -0.015" type="box"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <sensor>
+    <gyro name="angular-velocity" site="imu"/>
+    <accelerometer name="linear-acceleration" site="imu"/>
+    <framequat name="orientation" objtype="site" objname="imu"/>
+  </sensor>
+
+  <actuator>
+    <position class="t1" name="AAHead_yaw" joint="AAHead_yaw"/>
+    <position class="t1" name="Head_pitch" joint="Head_pitch"/>
+    <position class="t1" name="Left_Shoulder_Pitch" joint="Left_Shoulder_Pitch"/>
+    <position class="t1" name="Left_Shoulder_Roll" joint="Left_Shoulder_Roll"/>
+    <position class="t1" name="Left_Elbow_Pitch" joint="Left_Elbow_Pitch"/>
+    <position class="t1" name="Left_Elbow_Yaw" joint="Left_Elbow_Yaw"/>
+    <position class="t1" name="Left_Wrist_Pitch" joint="Left_Wrist_Pitch"/>
+    <position class="t1" name="Left_Wrist_Yaw" joint="Left_Wrist_Yaw"/>
+    <position class="t1" name="Left_Hand_Roll" joint="Left_Hand_Roll"/>
+    <position class="t1" name="Right_Shoulder_Pitch" joint="Right_Shoulder_Pitch"/>
+    <position class="t1" name="Right_Shoulder_Roll" joint="Right_Shoulder_Roll"/>
+    <position class="t1" name="Right_Elbow_Pitch" joint="Right_Elbow_Pitch"/>
+    <position class="t1" name="Right_Elbow_Yaw" joint="Right_Elbow_Yaw"/>
+    <position class="t1" name="Right_Wrist_Pitch" joint="Right_Wrist_Pitch"/>
+    <position class="t1" name="Right_Wrist_Yaw" joint="Right_Wrist_Yaw"/>
+    <position class="t1" name="Right_Hand_Roll" joint="Right_Hand_Roll"/>
+    <position class="t1" name="Waist" joint="Waist"/>
+    <position class="t1" name="Left_Hip_Pitch" joint="Left_Hip_Pitch"/>
+    <position class="t1" name="Left_Hip_Roll" joint="Left_Hip_Roll"/>
+    <position class="t1" name="Left_Hip_Yaw" joint="Left_Hip_Yaw"/>
+    <position class="t1" name="Left_Knee_Pitch" joint="Left_Knee_Pitch"/>
+    <position class="t1" name="Left_Ankle_Pitch" joint="Left_Ankle_Pitch"/>
+    <position class="t1" name="Left_Ankle_Roll" joint="Left_Ankle_Roll"/>
+    <position class="t1" name="Right_Hip_Pitch" joint="Right_Hip_Pitch"/>
+    <position class="t1" name="Right_Hip_Roll" joint="Right_Hip_Roll"/>
+    <position class="t1" name="Right_Hip_Yaw" joint="Right_Hip_Yaw"/>
+    <position class="t1" name="Right_Knee_Pitch" joint="Right_Knee_Pitch"/>
+    <position class="t1" name="Right_Ankle_Pitch" joint="Right_Ankle_Pitch"/>
+    <position class="t1" name="Right_Ankle_Roll" joint="Right_Ankle_Roll"/>
+  </actuator>
+
+  <keyframe>
+    <key name="home" qpos="0 0 0.665 1 0 0 0 0 0 0 -1.4 0 -0.4 0 0 0 0 1.4 0 0.4 0 0 0 0 -0.2 0 0 0.4 -0.2 0 -0.2 0 0 0.4 -0.2 0"
+      ctrl="0 0 0 -1.4 0 -0.4 0 0 0 0 1.4 0 0.4 0 0 0 0 -0.2 0 0 0.4 -0.2 0 -0.2 0 0 0.4 -0.2 0"/>
+  </keyframe>
+</mujoco>

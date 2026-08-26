@@ -1,0 +1,31 @@
+# Reproduction dependencies for vrw_public. Unversioned on purpose: install current releases.
+#
+# NOT installable from here, follow its own instructions first:
+#   nvidia-curobo   https://curobo.org/get_started/1_install_instructions.html
+
+mjlab
+mujoco
+mujoco-warp
+warp-lang
+torch
+tensordict
+rsl-rl-lib
+gymnasium
+numpy
+scipy
+networkx
+matplotlib
+imageio
+pillow
+trimesh
+tyro
+PyYAML
+xxhash
+tqdm
+wandb
+glfw
+
+# Optional. Imported lazily or only by tools no documented command reaches; install if you use
+# the interactive workspace viewer (dearpygui), the mink IK backend (mink, qpsolvers), the
+# hardware deploy publisher (msgpack, orjson, pynng), the Newton bridge (newton, pyglet), or
+# multi-node training (torchrunx).

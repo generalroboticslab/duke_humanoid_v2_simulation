@@ -1,0 +1,15 @@
+runs/
+wandb/
+__pycache__/
+*.pyc
+/build/
+/cache/
+paper_writing_humanoid_v2/
+mj_envs/asset_zoo/cache/arm_collision_graph_*.pt
+mj_envs/asset_zoo/cache/safe_arm_poses_*.pt
+!mj_envs/asset_zoo/cache/*.slim.pt
+!mj_envs/asset_zoo/cache/safe_arm_poses_humanoid_v21.pt
+mj_envs/asset_zoo/cache/*.tmp
+mj_envs/asset_zoo/reachability_study/result/*.png
+mj_envs/asset_zoo/reachability_study/result/*.pdf
+mj_envs/asset_zoo/reachability_study/result/*.mp4

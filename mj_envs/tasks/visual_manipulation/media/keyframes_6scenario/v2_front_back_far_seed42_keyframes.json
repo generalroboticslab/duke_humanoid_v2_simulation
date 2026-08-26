@@ -1,0 +1,497 @@
+{
+  "scenario": "front_back_far",
+  "pass": true,
+  "verdict": [
+    "SUCCESS",
+    null
+  ],
+  "t_sim_s": 23.14,
+  "keyframes": [
+    {
+      "idx": 0,
+      "phase": "ACQUIRE",
+      "prev_phase": null,
+      "cube": null,
+      "t_s": 0.02,
+      "t_exec_s": 0.02,
+      "file": "v2_front_back_far_seed42_k00_ACQUIRE_t000.02.png"
+    },
+    {
+      "idx": 1,
+      "phase": "APPROACH",
+      "prev_phase": "ACQUIRE",
+      "cube": "cube_1",
+      "t_s": 0.04,
+      "t_exec_s": 0.04,
+      "file": "v2_front_back_far_seed42_k01_APPROACH_t000.04.png"
+    },
+    {
+      "idx": 2,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_1",
+      "t_s": 0.54,
+      "t_exec_s": 0.54,
+      "file": "v2_front_back_far_seed42_k02_APPROACH_t000.54.png"
+    },
+    {
+      "idx": 3,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_1",
+      "t_s": 1.04,
+      "t_exec_s": 1.04,
+      "file": "v2_front_back_far_seed42_k03_APPROACH_t001.04.png"
+    },
+    {
+      "idx": 4,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_1",
+      "t_s": 1.54,
+      "t_exec_s": 1.54,
+      "file": "v2_front_back_far_seed42_k04_APPROACH_t001.54.png"
+    },
+    {
+      "idx": 5,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_1",
+      "t_s": 2.04,
+      "t_exec_s": 2.04,
+      "file": "v2_front_back_far_seed42_k05_APPROACH_t002.04.png"
+    },
+    {
+      "idx": 6,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_1",
+      "t_s": 2.54,
+      "t_exec_s": 2.54,
+      "file": "v2_front_back_far_seed42_k06_APPROACH_t002.54.png"
+    },
+    {
+      "idx": 7,
+      "phase": "EXTEND",
+      "prev_phase": "APPROACH",
+      "cube": "cube_1",
+      "t_s": 2.88,
+      "t_exec_s": 2.88,
+      "file": "v2_front_back_far_seed42_k07_EXTEND_t002.88.png"
+    },
+    {
+      "idx": 8,
+      "phase": "EXTEND",
+      "prev_phase": "EXTEND",
+      "cube": "cube_1",
+      "t_s": 3.38,
+      "t_exec_s": 3.26,
+      "file": "v2_front_back_far_seed42_k08_EXTEND_t003.38.png"
+    },
+    {
+      "idx": 9,
+      "phase": "EXTEND",
+      "prev_phase": "EXTEND",
+      "cube": "cube_1",
+      "t_s": 3.88,
+      "t_exec_s": 3.76,
+      "file": "v2_front_back_far_seed42_k09_EXTEND_t003.88.png"
+    },
+    {
+      "idx": 10,
+      "phase": "EXTEND",
+      "prev_phase": "EXTEND",
+      "cube": "cube_1",
+      "t_s": 4.38,
+      "t_exec_s": 4.26,
+      "file": "v2_front_back_far_seed42_k10_EXTEND_t004.38.png"
+    },
+    {
+      "idx": 11,
+      "phase": "EXTEND",
+      "prev_phase": "EXTEND",
+      "cube": "cube_1",
+      "t_s": 4.88,
+      "t_exec_s": 4.76,
+      "file": "v2_front_back_far_seed42_k11_EXTEND_t004.88.png"
+    },
+    {
+      "idx": 12,
+      "phase": "EXTEND",
+      "prev_phase": "EXTEND",
+      "cube": "cube_1",
+      "t_s": 5.38,
+      "t_exec_s": 5.26,
+      "file": "v2_front_back_far_seed42_k12_EXTEND_t005.38.png"
+    },
+    {
+      "idx": 13,
+      "phase": "EXTEND",
+      "prev_phase": "EXTEND",
+      "cube": "cube_1",
+      "t_s": 5.88,
+      "t_exec_s": 5.76,
+      "file": "v2_front_back_far_seed42_k13_EXTEND_t005.88.png"
+    },
+    {
+      "idx": 14,
+      "phase": "GRASP",
+      "prev_phase": "EXTEND",
+      "cube": "cube_1",
+      "t_s": 6.2,
+      "t_exec_s": 6.08,
+      "file": "v2_front_back_far_seed42_k14_GRASP_t006.20.png"
+    },
+    {
+      "idx": 15,
+      "phase": "GRASP",
+      "prev_phase": "GRASP",
+      "cube": "cube_1",
+      "t_s": 6.7,
+      "t_exec_s": 6.58,
+      "file": "v2_front_back_far_seed42_k15_GRASP_t006.70.png"
+    },
+    {
+      "idx": 16,
+      "phase": "RETRACT_PLAN",
+      "prev_phase": "GRASP",
+      "cube": "cube_1",
+      "t_s": 6.96,
+      "t_exec_s": 6.82,
+      "file": "v2_front_back_far_seed42_k16_RETRACT_PLAN_t006.96.png"
+    },
+    {
+      "idx": 17,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT_PLAN",
+      "cube": "cube_1",
+      "t_s": 7.26,
+      "t_exec_s": 6.84,
+      "file": "v2_front_back_far_seed42_k17_RETRACT_t007.26.png"
+    },
+    {
+      "idx": 18,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT",
+      "cube": "cube_1",
+      "t_s": 7.76,
+      "t_exec_s": 7.34,
+      "file": "v2_front_back_far_seed42_k18_RETRACT_t007.76.png"
+    },
+    {
+      "idx": 19,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT",
+      "cube": "cube_1",
+      "t_s": 8.26,
+      "t_exec_s": 7.84,
+      "file": "v2_front_back_far_seed42_k19_RETRACT_t008.26.png"
+    },
+    {
+      "idx": 20,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT",
+      "cube": "cube_1",
+      "t_s": 8.76,
+      "t_exec_s": 8.34,
+      "file": "v2_front_back_far_seed42_k20_RETRACT_t008.76.png"
+    },
+    {
+      "idx": 21,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT",
+      "cube": "cube_1",
+      "t_s": 9.26,
+      "t_exec_s": 8.84,
+      "file": "v2_front_back_far_seed42_k21_RETRACT_t009.26.png"
+    },
+    {
+      "idx": 22,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT",
+      "cube": "cube_1",
+      "t_s": 9.76,
+      "t_exec_s": 9.34,
+      "file": "v2_front_back_far_seed42_k22_RETRACT_t009.76.png"
+    },
+    {
+      "idx": 23,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT",
+      "cube": "cube_1",
+      "t_s": 10.26,
+      "t_exec_s": 9.84,
+      "file": "v2_front_back_far_seed42_k23_RETRACT_t010.26.png"
+    },
+    {
+      "idx": 24,
+      "phase": "ACQUIRE",
+      "prev_phase": "RETRACT",
+      "cube": "cube_1",
+      "t_s": 10.52,
+      "t_exec_s": 10.1,
+      "file": "v2_front_back_far_seed42_k24_ACQUIRE_t010.52.png"
+    },
+    {
+      "idx": 25,
+      "phase": "APPROACH",
+      "prev_phase": "ACQUIRE",
+      "cube": "cube_0",
+      "t_s": 10.54,
+      "t_exec_s": 10.12,
+      "file": "v2_front_back_far_seed42_k25_APPROACH_t010.54.png"
+    },
+    {
+      "idx": 26,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_0",
+      "t_s": 11.04,
+      "t_exec_s": 10.62,
+      "file": "v2_front_back_far_seed42_k26_APPROACH_t011.04.png"
+    },
+    {
+      "idx": 27,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_0",
+      "t_s": 11.54,
+      "t_exec_s": 11.12,
+      "file": "v2_front_back_far_seed42_k27_APPROACH_t011.54.png"
+    },
+    {
+      "idx": 28,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_0",
+      "t_s": 12.04,
+      "t_exec_s": 11.62,
+      "file": "v2_front_back_far_seed42_k28_APPROACH_t012.04.png"
+    },
+    {
+      "idx": 29,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_0",
+      "t_s": 12.54,
+      "t_exec_s": 12.12,
+      "file": "v2_front_back_far_seed42_k29_APPROACH_t012.54.png"
+    },
+    {
+      "idx": 30,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_0",
+      "t_s": 13.04,
+      "t_exec_s": 12.62,
+      "file": "v2_front_back_far_seed42_k30_APPROACH_t013.04.png"
+    },
+    {
+      "idx": 31,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_0",
+      "t_s": 13.54,
+      "t_exec_s": 13.12,
+      "file": "v2_front_back_far_seed42_k31_APPROACH_t013.54.png"
+    },
+    {
+      "idx": 32,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_0",
+      "t_s": 14.04,
+      "t_exec_s": 13.62,
+      "file": "v2_front_back_far_seed42_k32_APPROACH_t014.04.png"
+    },
+    {
+      "idx": 33,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_0",
+      "t_s": 14.54,
+      "t_exec_s": 14.12,
+      "file": "v2_front_back_far_seed42_k33_APPROACH_t014.54.png"
+    },
+    {
+      "idx": 34,
+      "phase": "APPROACH",
+      "prev_phase": "APPROACH",
+      "cube": "cube_0",
+      "t_s": 15.04,
+      "t_exec_s": 14.62,
+      "file": "v2_front_back_far_seed42_k34_APPROACH_t015.04.png"
+    },
+    {
+      "idx": 35,
+      "phase": "EXTEND",
+      "prev_phase": "APPROACH",
+      "cube": "cube_0",
+      "t_s": 15.54,
+      "t_exec_s": 15.12,
+      "file": "v2_front_back_far_seed42_k35_EXTEND_t015.54.png"
+    },
+    {
+      "idx": 36,
+      "phase": "EXTEND",
+      "prev_phase": "EXTEND",
+      "cube": "cube_0",
+      "t_s": 16.06,
+      "t_exec_s": 15.54,
+      "file": "v2_front_back_far_seed42_k36_EXTEND_t016.06.png"
+    },
+    {
+      "idx": 37,
+      "phase": "EXTEND",
+      "prev_phase": "EXTEND",
+      "cube": "cube_0",
+      "t_s": 16.56,
+      "t_exec_s": 16.04,
+      "file": "v2_front_back_far_seed42_k37_EXTEND_t016.56.png"
+    },
+    {
+      "idx": 38,
+      "phase": "EXTEND",
+      "prev_phase": "EXTEND",
+      "cube": "cube_0",
+      "t_s": 17.06,
+      "t_exec_s": 16.54,
+      "file": "v2_front_back_far_seed42_k38_EXTEND_t017.06.png"
+    },
+    {
+      "idx": 39,
+      "phase": "EXTEND",
+      "prev_phase": "EXTEND",
+      "cube": "cube_0",
+      "t_s": 17.56,
+      "t_exec_s": 17.04,
+      "file": "v2_front_back_far_seed42_k39_EXTEND_t017.56.png"
+    },
+    {
+      "idx": 40,
+      "phase": "EXTEND",
+      "prev_phase": "EXTEND",
+      "cube": "cube_0",
+      "t_s": 18.06,
+      "t_exec_s": 17.54,
+      "file": "v2_front_back_far_seed42_k40_EXTEND_t018.06.png"
+    },
+    {
+      "idx": 41,
+      "phase": "EXTEND",
+      "prev_phase": "EXTEND",
+      "cube": "cube_0",
+      "t_s": 18.56,
+      "t_exec_s": 18.04,
+      "file": "v2_front_back_far_seed42_k41_EXTEND_t018.56.png"
+    },
+    {
+      "idx": 42,
+      "phase": "GRASP",
+      "prev_phase": "EXTEND",
+      "cube": "cube_0",
+      "t_s": 18.86,
+      "t_exec_s": 18.34,
+      "file": "v2_front_back_far_seed42_k42_GRASP_t018.86.png"
+    },
+    {
+      "idx": 43,
+      "phase": "GRASP",
+      "prev_phase": "GRASP",
+      "cube": "cube_0",
+      "t_s": 19.36,
+      "t_exec_s": 18.84,
+      "file": "v2_front_back_far_seed42_k43_GRASP_t019.36.png"
+    },
+    {
+      "idx": 44,
+      "phase": "RETRACT_PLAN",
+      "prev_phase": "GRASP",
+      "cube": "cube_0",
+      "t_s": 19.62,
+      "t_exec_s": 19.08,
+      "file": "v2_front_back_far_seed42_k44_RETRACT_PLAN_t019.62.png"
+    },
+    {
+      "idx": 45,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT_PLAN",
+      "cube": "cube_0",
+      "t_s": 19.64,
+      "t_exec_s": 19.1,
+      "file": "v2_front_back_far_seed42_k45_RETRACT_t019.64.png"
+    },
+    {
+      "idx": 46,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT",
+      "cube": "cube_0",
+      "t_s": 20.14,
+      "t_exec_s": 19.6,
+      "file": "v2_front_back_far_seed42_k46_RETRACT_t020.14.png"
+    },
+    {
+      "idx": 47,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT",
+      "cube": "cube_0",
+      "t_s": 20.64,
+      "t_exec_s": 20.1,
+      "file": "v2_front_back_far_seed42_k47_RETRACT_t020.64.png"
+    },
+    {
+      "idx": 48,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT",
+      "cube": "cube_0",
+      "t_s": 21.14,
+      "t_exec_s": 20.6,
+      "file": "v2_front_back_far_seed42_k48_RETRACT_t021.14.png"
+    },
+    {
+      "idx": 49,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT",
+      "cube": "cube_0",
+      "t_s": 21.64,
+      "t_exec_s": 21.1,
+      "file": "v2_front_back_far_seed42_k49_RETRACT_t021.64.png"
+    },
+    {
+      "idx": 50,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT",
+      "cube": "cube_0",
+      "t_s": 22.14,
+      "t_exec_s": 21.6,
+      "file": "v2_front_back_far_seed42_k50_RETRACT_t022.14.png"
+    },
+    {
+      "idx": 51,
+      "phase": "RETRACT",
+      "prev_phase": "RETRACT",
+      "cube": "cube_0",
+      "t_s": 22.64,
+      "t_exec_s": 22.1,
+      "file": "v2_front_back_far_seed42_k51_RETRACT_t022.64.png"
+    },
+    {
+      "idx": 52,
+      "phase": "ACQUIRE",
+      "prev_phase": "RETRACT",
+      "cube": "cube_0",
+      "t_s": 23.12,
+      "t_exec_s": 22.58,
+      "file": "v2_front_back_far_seed42_k52_ACQUIRE_t023.12.png"
+    },
+    {
+      "idx": 53,
+      "phase": "TERMINATE",
+      "prev_phase": "ACQUIRE",
+      "cube": "cube_0",
+      "t_s": 23.14,
+      "t_exec_s": 22.6,
+      "file": "v2_front_back_far_seed42_k53_TERMINATE_t023.14.png"
+    }
+  ]
+}

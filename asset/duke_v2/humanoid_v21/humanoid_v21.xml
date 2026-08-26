@@ -1,0 +1,252 @@
+<?xml version="1.0" ?>
+<mujoco model="humanoid_v2">
+  <compiler angle="radian" meshdir="meshes" autolimits="true"/>
+  <default>
+    <default class="humanoid_v2">
+      <default class="visual">
+        <geom group="2" type="mesh" contype="0" conaffinity="0" material="silver"/>
+      </default>
+      <default class="collision">
+        <geom group="3" contype="1" conaffinity="1"/>
+      </default>
+    </default>
+  </default>
+  <asset>
+    <material name="silver" rgba="0.75 0.75 0.75 1"/>
+    <material name="blue" rgba="0 0 0.8 1"/>
+    <material name="black" rgba="0 0 0 1"/>
+    <material name="purple" rgba="0.8 0 0.8 1"/>
+    <material name="white" rgba="1 1 1 1"/>
+    <material name="light_grey" rgba="0.19 0.2 0.22 1" specular="0.75" shininess="0.05"/>
+    <material name="dark_grey" rgba="0.11 0.115 0.125 1" specular="0.35" shininess="0.05"/>
+    <mesh name="base_link" file="base_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="waist_high_res" file="waist.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="hip_2_high_res_mirrorx" file="hip_2.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="hip_2_high_res" file="hip_2.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="hip_3_high_res_mirrorx" file="hip_3.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="hip_3_high_res" file="hip_3.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="knee_high_res_mirrorx" file="knee.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="knee_high_res" file="knee.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="shank_high_res_mirrorx" file="shank.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="shank_high_res" file="shank.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="ankle_1_high_res_mirrorx" file="ankle_1.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="ankle_1_high_res" file="ankle_1.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="ankle_2_high_res_mirrorx" file="ankle_2.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="ankle_2_high_res" file="ankle_2.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="shoulder_2_high_res_mirrorx" file="shoulder_2.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="shoulder_2_high_res" file="shoulder_2.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="shoulder_3_high_res_mirrorx" file="shoulder_3.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="shoulder_3_high_res" file="shoulder_3.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="elbow_high_res_mirrorx" file="elbow.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="elbow_high_res" file="elbow.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="wrist_1_high_res_mirrorx" file="wrist_1.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="wrist_1_high_res" file="wrist_1.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="wrist_2_high_res_mirrorx" file="wrist_2.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="wrist_2_high_res" file="wrist_2.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="wrist_3_new_high_res_mirrorx" file="wrist_3_new.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="wrist_3_new_high_res" file="wrist_3_new.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="end_effector_attachment_new_high_res_mirrorx" file="end_effector_attachment_new.obj" scale="-0.001 0.001 0.001"/>
+    <mesh name="end_effector_attachment_new_high_res" file="end_effector_attachment_new.obj" scale="0.001 0.001 0.001"/>
+  </asset>
+  <worldbody>
+    <body name="base_link" childclass="humanoid_v2">
+      <light pos="0 0 2" mode="trackcom"/>
+      <camera name="tracking" pos="1.5 -1.5 1" xyaxes="0.707 0.707 0 -0.3 0.3 0.9" mode="trackcom"/>
+      <freejoint name="floating_base_joint"/>
+      <inertial mass="9.302908449" pos="-0.00741636 4.16161e-05 0.186843" diaginertia="0.0347794 0.173949 0.189052" quat="8.35609e-05 0.718034 -0.000326247 0.696008"/>
+      <geom name="base_link_visual" type="mesh" mesh="base_link" pos="0 0 0" class="visual" material="dark_grey"/>
+      <geom type="capsule" size="0.08485378049544526 0.15514621950455473" name="base_link_collision0" pos="0 -0.0249986 0.2" class="collision"/>
+      <geom type="capsule" size="0.08485378049544526 0.15514621950455473" name="base_link_collision1" pos="0 0.0249986 0.2" class="collision"/>
+      <body name="waist" pos="0 0 -0.0361">
+        <inertial mass="2.319367147" pos="-0.00238207 4.63475e-07 -0.0704721" diaginertia="0.00376271 0.00529885 0.00558094" quat="-0.43413 0.558388 0.558062 -0.433936"/>
+        <joint name="waist_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.5707963267948966 1.5707963267948966"/>
+        <geom name="waist_visual" type="mesh" mesh="waist_high_res" pos="0 0 0" class="visual" material="dark_grey"/>
+        <body name="hip_2_L" pos="0 0.059946 -0.081628" quat="0.793353 0.608761 0 0">
+          <inertial mass="1.252698981" pos="0.000349087 2.18694e-05 -0.061261" diaginertia="0.00138225 0.00185815 0.00192888" quat="0.536837 0.540342 0.45664 -0.459691"/>
+          <joint name="left_hip_1_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.8325957145940461 1.8325957145940461"/>
+          <geom name="hip_2_L_visual" type="mesh" mesh="hip_2_high_res_mirrorx" pos="0 0 0" quat="6.12323e-17 0 0 1" class="visual" material="light_grey"/>
+          <geom name="hip_2_L_collision" type="capsule" size="0.06 0.005" pos="0.0006 0 -0.069" quat="0.092296 0.701057 -0.092296 -0.701057" class="collision"/>
+          <body name="hip_3_L" pos="0.0287 0 -0.0691" quat="0.701057 0.092296 -0.701057 -0.092296">
+            <inertial mass="1.297335685" pos="-2.07731e-05 -0.0770614 0.0307231" diaginertia="0.00175068 0.00229469 0.00271565" quat="0.51929 -0.479853 -0.519071 0.480255"/>
+            <joint name="left_hip_2_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.8325957145940461 0.5235987755982988"/>
+            <geom name="hip_3_L_visual" type="mesh" mesh="hip_3_high_res_mirrorx" pos="0 0 0" class="visual" material="dark_grey"/>
+            <geom name="hip_3_L_collision" type="capsule" size="0.053 0.021" pos="0 -0.0945 0.0287" quat="0.707107 -0.707107 -0 0" class="collision"/>
+            <body name="knee_L" pos="0 -0.1156 0.0287" quat="0.707107 -0.707107 0 0">
+              <inertial mass="1.842141671" pos="0.0014826 -8.41853e-05 -0.0736603" diaginertia="0.00190901 0.00264702 0.00341994" quat="-0.00022525 0.722024 0.00337258 -0.69186"/>
+              <joint name="left_hip_3_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.5707963267948966 1.5707963267948966"/>
+              <geom name="knee_L_visual" type="mesh" mesh="knee_high_res_mirrorx" pos="0 0 0" quat="6.12323e-17 0 0 1" class="visual" material="light_grey"/>
+              <geom name="knee_L_collision" type="capsule" size="0.06 0.005" pos="-0.00225 0 -0.0795" quat="0.5 -0.5 -0.5 0.5" class="collision"/>
+              <body name="shank_L" pos="0.0255 0 -0.0795" quat="0.5 -0.5 -0.5 0.5">
+                <inertial mass="0.753288544" pos="-8.59033e-07 0.0943751 0.0229906" diaginertia="0.00154563 0.00486086 0.00599117" quat="0.498696 0.501311 -0.498686 -0.5013"/>
+                <joint name="left_knee_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-2.2689280275926285 2.2689280275926285"/>
+                <geom name="shank_L_visual" type="mesh" mesh="shank_high_res_mirrorx" pos="0 0 0" class="visual" material="dark_grey"/>
+                <geom type="capsule" size="0.01 0.08" name="shank_L_collision0" pos="-0.02 0.1 -0.025" quat="0.707107 -0.707107 -0 0" class="collision"/>
+                <geom type="capsule" size="0.01 0.08" name="shank_L_collision1" pos="0 0.1 -0.025" quat="0.707107 -0.707107 -0 0" class="collision"/>
+                <geom type="capsule" size="0.01 0.08" name="shank_L_collision2" pos="0.02 0.1 -0.025" quat="0.707107 -0.707107 -0 0" class="collision"/>
+                <geom type="capsule" size="0.01 0.08" name="shank_L_collision3" pos="-0.02 0.1 0.075" quat="0.707107 -0.707107 -0 0" class="collision"/>
+                <geom type="capsule" size="0.01 0.08" name="shank_L_collision4" pos="0 0.1 0.075" quat="0.707107 -0.707107 -0 0" class="collision"/>
+                <geom type="capsule" size="0.01 0.08" name="shank_L_collision5" pos="0.02 0.1 0.075" quat="0.707107 -0.707107 -0 0" class="collision"/>
+                <body name="ankle_1_L" pos="0 0.195 0" quat="6.12323e-17 0 1 0">
+                  <inertial mass="1.801864964" pos="-0.0305888 1.59279e-05 -0.025774" diaginertia="0.00144542 0.00421361 0.00443807" quat="0.00120435 0.999999 0.000123663 -0.000389805"/>
+                  <joint name="left_ankle_1_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-0.8726646259971648 0.8726646259971648"/>
+                  <geom name="ankle_1_L_visual" type="mesh" mesh="ankle_1_high_res_mirrorx" pos="0 0 0" quat="6.12323e-17 0 0 1" class="visual" material="light_grey"/>
+                  <geom name="ankle_1_L_collision" type="capsule" size="0.044 0.0005" pos="-0.08275 0 -0.0255" quat="4.32978e-17 -0.707107 -4.32978e-17 -0.707107" class="collision"/>
+                  <body name="foot_L" pos="-0.1 0 -0.0255" quat="0.5 -0.5 0.5 -0.5">
+                    <inertial mass="0.506070711" pos="-0.0374774 -8.96073e-10 0.0957522" diaginertia="0.00061045 0.00341987 0.00361595" quat="0.489663 0.489663 -0.510128 0.510128"/>
+                    <joint name="left_ankle_2_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.0471975511965976 1.0471975511965976"/>
+                    <geom name="foot_L_visual" type="mesh" mesh="ankle_2_high_res_mirrorx" pos="0 0 0" quat="6.12323e-17 0 0 1" class="visual" material="dark_grey"/>
+                    <geom type="capsule" size="0.007 0.11049999999999999" name="foot_L_collision0" pos="-0.061 0.029 0.1" quat="6.12323e-17 0 0 1" class="collision"/>
+                    <geom type="capsule" size="0.007 0.11049999999999999" name="foot_L_collision1" pos="-0.061 0.0174 0.1" quat="6.12323e-17 0 0 1" class="collision"/>
+                    <geom type="capsule" size="0.007 0.11049999999999999" name="foot_L_collision2" pos="-0.061 0.0058 0.1" quat="6.12323e-17 0 0 1" class="collision"/>
+                    <geom type="capsule" size="0.007 0.11049999999999999" name="foot_L_collision3" pos="-0.061 -0.0058 0.1" quat="6.12323e-17 0 0 1" class="collision"/>
+                    <geom type="capsule" size="0.007 0.11049999999999999" name="foot_L_collision4" pos="-0.061 -0.0174 0.1" quat="6.12323e-17 0 0 1" class="collision"/>
+                    <geom type="capsule" size="0.007 0.11049999999999999" name="foot_L_collision5" pos="-0.061 -0.029 0.1" quat="6.12323e-17 0 0 1" class="collision"/>
+                    <site name="foot_L_contact" pos="-0.061 -5.78241e-19 0.1"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+        <body name="hip_2_R" pos="0 -0.059946 -0.081628" quat="0.793353 -0.608761 0 0">
+          <inertial mass="1.252698981" pos="0.000349087 -2.18694e-05 -0.061261" diaginertia="0.00138225 0.00185815 0.00192888" quat="-0.459691 0.45664 0.540342 0.536837"/>
+          <joint name="right_hip_1_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.8325957145940461 1.8325957145940461"/>
+          <geom name="hip_2_R_visual" type="mesh" mesh="hip_2_high_res" pos="0 0 0" class="visual" material="light_grey"/>
+          <geom name="hip_2_R_collision" type="capsule" size="0.06 0.005" pos="0.0006 0 -0.069" quat="0.701057 0.092296 -0.701057 -0.092296" class="collision"/>
+          <body name="hip_3_R" pos="0.0287 0 -0.0691" quat="0.092296 0.701057 -0.092296 -0.701057">
+            <inertial mass="1.297335685" pos="2.07731e-05 -0.0770614 0.0307231" diaginertia="0.00175068 0.00229469 0.00271565" quat="0.519071 -0.480255 -0.51929 0.479853"/>
+            <joint name="right_hip_2_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-0.5235987755982988 1.8325957145940461"/>
+            <geom name="hip_3_R_visual" type="mesh" mesh="hip_3_high_res" pos="0 0 0" class="visual" material="dark_grey"/>
+            <geom name="hip_3_R_collision" type="capsule" size="0.053 0.021" pos="0 -0.0945 0.0287" quat="0.707107 -0.707107 0 0" class="collision"/>
+            <body name="knee_R" pos="0 -0.1156 0.0287" quat="4.32978e-17 -4.32978e-17 0.707107 0.707107">
+              <inertial mass="1.842141671" pos="0.0014826 8.41853e-05 -0.0736603" diaginertia="0.00190901 0.00264702 0.00341994" quat="0.69186 -0.00337258 -0.722024 0.00022525"/>
+              <joint name="right_hip_3_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.5707963267948966 1.5707963267948966"/>
+              <geom name="knee_R_visual" type="mesh" mesh="knee_high_res" pos="0 0 0" class="visual" material="light_grey"/>
+              <geom name="knee_R_collision" type="capsule" size="0.06 0.005" pos="-0.00225 0 -0.0795" quat="0.5 -0.5 -0.5 0.5" class="collision"/>
+              <body name="shank_R" pos="0.0255 0 -0.0795" quat="0.5 -0.5 -0.5 0.5">
+                <inertial mass="0.753288544" pos="8.59033e-07 0.0943751 0.0229906" diaginertia="0.00154563 0.00486086 0.00599117" quat="-0.498686 -0.5013 0.498696 0.501311"/>
+                <joint name="right_knee_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-2.2689280275926285 2.2689280275926285"/>
+                <geom name="shank_R_visual" type="mesh" mesh="shank_high_res" pos="0 0 0" class="visual" material="dark_grey"/>
+                <geom type="capsule" size="0.01 0.08" name="shank_R_collision0" pos="-0.02 0.1 -0.025" quat="0.707107 -0.707107 -0 0" class="collision"/>
+                <geom type="capsule" size="0.01 0.08" name="shank_R_collision1" pos="0 0.1 -0.025" quat="0.707107 -0.707107 -0 0" class="collision"/>
+                <geom type="capsule" size="0.01 0.08" name="shank_R_collision2" pos="0.02 0.1 -0.025" quat="0.707107 -0.707107 -0 0" class="collision"/>
+                <geom type="capsule" size="0.01 0.08" name="shank_R_collision3" pos="-0.02 0.1 0.075" quat="0.707107 -0.707107 -0 0" class="collision"/>
+                <geom type="capsule" size="0.01 0.08" name="shank_R_collision4" pos="0 0.1 0.075" quat="0.707107 -0.707107 -0 0" class="collision"/>
+                <geom type="capsule" size="0.01 0.08" name="shank_R_collision5" pos="0.02 0.1 0.075" quat="0.707107 -0.707107 -0 0" class="collision"/>
+                <body name="ankle_1_R" pos="0 0.195 0" quat="3.7494e-33 -1 6.12323e-17 6.12323e-17">
+                  <inertial mass="1.801864964" pos="-0.0305888 -1.59279e-05 -0.025774" diaginertia="0.00144542 0.00421361 0.00443807" quat="0.999999 0.00120435 0.000389805 -0.000123663"/>
+                  <joint name="right_ankle_1_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-0.8726646259971648 0.8726646259971648"/>
+                  <geom name="ankle_1_R_visual" type="mesh" mesh="ankle_1_high_res" pos="0 0 0" class="visual" material="light_grey"/>
+                  <geom name="ankle_1_R_collision" type="capsule" size="0.044 0.0005" pos="-0.08275 0 -0.0255" quat="0.707107 0 0.707107 0" class="collision"/>
+                  <body name="foot_R" pos="-0.1 0 -0.0255" quat="0.5 0.5 0.5 0.5">
+                    <inertial mass="0.506070711" pos="-0.0374774 8.96073e-10 0.0957522" diaginertia="0.00061045 0.00341987 0.00361595" quat="0.489663 0.489663 -0.510128 0.510128"/>
+                    <joint name="right_ankle_2_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.0471975511965976 1.0471975511965976"/>
+                    <geom name="foot_R_visual" type="mesh" mesh="ankle_2_high_res" pos="0 0 0" class="visual" material="dark_grey"/>
+                    <geom type="capsule" size="0.007 0.11049999999999999" name="foot_R_collision0" pos="-0.061 -0.029 0.1" class="collision"/>
+                    <geom type="capsule" size="0.007 0.11049999999999999" name="foot_R_collision1" pos="-0.061 -0.0174 0.1" class="collision"/>
+                    <geom type="capsule" size="0.007 0.11049999999999999" name="foot_R_collision2" pos="-0.061 -0.0058 0.1" class="collision"/>
+                    <geom type="capsule" size="0.007 0.11049999999999999" name="foot_R_collision3" pos="-0.061 0.0058 0.1" class="collision"/>
+                    <geom type="capsule" size="0.007 0.11049999999999999" name="foot_R_collision4" pos="-0.061 0.0174 0.1" class="collision"/>
+                    <geom type="capsule" size="0.007 0.11049999999999999" name="foot_R_collision5" pos="-0.061 0.029 0.1" class="collision"/>
+                    <site name="foot_R_contact" pos="-0.061 5.78241e-19 0.1"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="shoulder_2_L" pos="0 0.083 0.3475" quat="0.707107 0.707107 0 0">
+        <inertial mass="0.903096525" pos="0.000787068 5.71455e-07 -0.0730081" diaginertia="0.000555624 0.00146696 0.00153275" quat="-4.15531e-05 0.677536 2.98517e-05 0.73549"/>
+        <joint name="left_shoulder_1_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-3.141592653589793 3.141592653589793"/>
+        <geom name="shoulder_2_L_visual" type="mesh" mesh="shoulder_2_high_res_mirrorx" pos="0 0 0" quat="6.12323e-17 0 0 1" class="visual" material="dark_grey"/>
+        <geom name="shoulder_2_L_collision" type="capsule" size="0.053 5e-05" pos="0 0 -0.09" quat="4.32978e-17 -0.707107 -4.32978e-17 -0.707107" class="collision"/>
+        <body name="shoulder_3_L" pos="0.02475 0 -0.09" quat="0.707107 0 -0.707107 0">
+          <inertial mass="0.716054399" pos="-0.000428244 -0.0657202 0.0269038" diaginertia="0.000675965 0.00100372 0.00122933" quat="-0.493187 0.508665 0.504716 -0.493242"/>
+          <joint name="left_shoulder_2_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-3.141592653589793 0.5235987755982988"/>
+          <geom name="shoulder_3_L_visual" type="mesh" mesh="shoulder_3_high_res_mirrorx" pos="0 0 0" class="visual" material="light_grey"/>
+          <geom name="shoulder_3_L_collision" type="capsule" size="0.042 0.01" pos="0 -0.093 0.02475" quat="0.707107 0.707107 0 0" class="collision"/>
+          <body name="elbow_L" pos="0 -0.096 0.02475" quat="4.32978e-17 -4.32978e-17 0.707107 0.707107">
+            <inertial mass="0.649565012" pos="0.00165016 -0.0024442 -0.0943709" diaginertia="0.000376826 0.000924704 0.00107426" quat="0.734796 0.086108 0.672778 -0.00554098"/>
+            <joint name="left_shoulder_3_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-3.141592653589793 3.141592653589793"/>
+            <geom name="elbow_L_visual" type="mesh" mesh="elbow_high_res_mirrorx" pos="0 0 0" quat="6.12323e-17 0 0 1" class="visual" material="dark_grey"/>
+            <geom name="elbow_L_collision" type="capsule" size="0.042 0.005" pos="0 0 -0.111" quat="4.32978e-17 -0.707107 -4.32978e-17 -0.707107" class="collision"/>
+            <body name="wrist_1_L" pos="0 0 -0.111" quat="0.5 0.5 -0.5 -0.5">
+              <inertial mass="0.745373662" pos="0.000186448 -0.0651533 0.00301697" diaginertia="0.000704132 0.00105686 0.00129828" quat="0.458603 0.539817 -0.475968 -0.521282"/>
+              <joint name="left_elbow_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-2.181661564992912 2.181661564992912"/>
+              <geom name="wrist_1_L_visual" type="mesh" mesh="wrist_1_high_res_mirrorx" pos="0 0 0" class="visual" material="light_grey"/>
+              <geom name="wrist_1_L_collision" type="capsule" size="0.042 5e-05" pos="0 -0.0885 0" quat="0.707107 0.707107 0 0" class="collision"/>
+              <body name="wrist_2_L" pos="0 -0.096 0" quat="0.5 -0.5 -0.5 -0.5">
+                <inertial mass="0.446371412" pos="-0.00845747 2.17826e-05 -0.0781628" diaginertia="0.000202786 0.000381248 0.000403138" quat="0.475646 0.475072 0.524297 -0.522667"/>
+                <joint name="left_wrist_1_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-3.141592653589793 3.141592653589793"/>
+                <geom name="wrist_2_L_visual" type="mesh" mesh="wrist_2_high_res_mirrorx" pos="0 0 0" quat="6.12323e-17 0 0 1" class="visual" material="dark_grey"/>
+                <geom name="wrist_2_L_collision" type="capsule" size="0.038 0.01" pos="0 0 -0.0855" quat="4.32978e-17 -0.707107 -4.32978e-17 -0.707107" class="collision"/>
+                <body name="wrist_3_L" pos="0 0 -0.0855" quat="6.12323e-17 0 0 1">
+                  <inertial mass="0.352354158" pos="-0.00698731 -0.00907562 -0.0474171" diaginertia="0.000125529 0.000440978 0.000444273" quat="0.817224 -0.0872787 0.56821 -0.0408068"/>
+                  <joint name="left_wrist_2_joint" type="hinge" pos="0 0 0" axis="-1 0 0" range="-1.6057029118347832 1.6057029118347832"/>
+                  <geom name="wrist_3_L_visual" type="mesh" mesh="wrist_3_new_high_res_mirrorx" pos="0 0 0" class="visual" material="light_grey"/>
+                  <geom name="wrist_3_L_collision" type="capsule" size="0.04 0.01" pos="0 0 -0.07" quat="0.707107 0.707107 0 0" class="collision"/>
+                  <body name="end_effector_L" pos="0 0 -0.064" quat="0.5 0.5 0.5 -0.5">
+                    <inertial mass="0.17299" pos="0.01513 2.418e-08 -0.01529" diaginertia="5.85506e-05 0.00014 0.000145109" quat="0.992481 -3.04069e-06 -0.122399 3.74997e-07"/>
+                    <joint name="left_wrist_3_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.5707963267948966 1.5707963267948966"/>
+                    <geom name="end_effector_L_visual" type="mesh" mesh="end_effector_attachment_new_high_res_mirrorx" pos="0 0 0" quat="6.12323e-17 0 0 1" class="visual" material="dark_grey"/>
+                    <site name="end_effector_L_site" pos="0.0325 0 0"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="shoulder_2_R" pos="0 -0.083 0.3475" quat="0.707107 -0.707107 0 0">
+        <inertial mass="0.903096525" pos="0.000787068 -5.71455e-07 -0.0730081" diaginertia="0.000555624 0.00146696 0.00153275" quat="0.677536 -4.15531e-05 -0.73549 -2.98517e-05"/>
+        <joint name="right_shoulder_1_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-3.141592653589793 3.141592653589793"/>
+        <geom name="shoulder_2_R_visual" type="mesh" mesh="shoulder_2_high_res" pos="0 0 0" class="visual" material="dark_grey"/>
+        <geom name="shoulder_2_R_collision" type="capsule" size="0.053 5e-05" pos="0 0 -0.09" quat="0.707107 0 0.707107 0" class="collision"/>
+        <body name="shoulder_3_R" pos="0.02475 0 -0.09" quat="4.32978e-17 0.707107 4.32978e-17 -0.707107">
+          <inertial mass="0.716054399" pos="0.000428244 -0.0657202 0.0269038" diaginertia="0.000675965 0.00100372 0.00122933" quat="0.504716 -0.493242 -0.493187 0.508665"/>
+          <joint name="right_shoulder_2_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-0.5235987755982988 3.141592653589793"/>
+          <geom name="shoulder_3_R_visual" type="mesh" mesh="shoulder_3_high_res" pos="0 0 0" class="visual" material="light_grey"/>
+          <geom name="shoulder_3_R_collision" type="capsule" size="0.042 0.01" pos="0 -0.093 0.02475" quat="0.707107 0.707107 0 0" class="collision"/>
+          <body name="elbow_R" pos="0 -0.096 0.02475" quat="0.707107 -0.707107 0 0">
+            <inertial mass="0.649565012" pos="0.00165016 0.0024442 -0.0943709" diaginertia="0.000376826 0.000924704 0.00107426" quat="0.086108 0.734796 0.00554098 -0.672778"/>
+            <joint name="right_shoulder_3_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-3.141592653589793 3.141592653589793"/>
+            <geom name="elbow_R_visual" type="mesh" mesh="elbow_high_res" pos="0 0 0" class="visual" material="dark_grey"/>
+            <geom name="elbow_R_collision" type="capsule" size="0.042 0.005" pos="0 0 -0.111" quat="0.707107 0 0.707107 0" class="collision"/>
+            <body name="wrist_1_R" pos="0 0 -0.111" quat="0.5 0.5 -0.5 -0.5">
+              <inertial mass="0.745373662" pos="-0.000186448 -0.0651533 0.00301697" diaginertia="0.000704132 0.00105686 0.00129828" quat="-0.475968 -0.521282 0.458603 0.539817"/>
+              <joint name="right_elbow_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-2.181661564992912 2.181661564992912"/>
+              <geom name="wrist_1_R_visual" type="mesh" mesh="wrist_1_high_res" pos="0 0 0" class="visual" material="light_grey"/>
+              <geom name="wrist_1_R_collision" type="capsule" size="0.042 5e-05" pos="0 -0.0885 0" quat="0.707107 0.707107 0 0" class="collision"/>
+              <body name="wrist_2_R" pos="0 -0.096 0" quat="0.5 -0.5 -0.5 -0.5">
+                <inertial mass="0.446371412" pos="-0.00845747 -2.17826e-05 -0.0781628" diaginertia="0.000202786 0.000381248 0.000403138" quat="0.522667 -0.524297 -0.475072 -0.475646"/>
+                <joint name="right_wrist_1_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-3.141592653589793 3.141592653589793"/>
+                <geom name="wrist_2_R_visual" type="mesh" mesh="wrist_2_high_res" pos="0 0 0" class="visual" material="dark_grey"/>
+                <geom name="wrist_2_R_collision" type="capsule" size="0.038 0.01" pos="0 0 -0.0855" quat="0.707107 0 0.707107 0" class="collision"/>
+                <body name="wrist_3_R" pos="0 0 -0.0855">
+                  <inertial mass="0.352354158" pos="0.00698731 -0.00907562 -0.0474171" diaginertia="0.000125529 0.000440978 0.000444273" quat="0.56821 -0.0408068 0.817224 -0.0872787"/>
+                  <joint name="right_wrist_2_joint" type="hinge" pos="0 0 0" axis="-1 0 0" range="-1.6057029118347832 1.6057029118347832"/>
+                  <geom name="wrist_3_R_visual" type="mesh" mesh="wrist_3_new_high_res" pos="0 0 0" class="visual" material="light_grey"/>
+                  <geom name="wrist_3_R_collision" type="capsule" size="0.04 0.01" pos="0 0 -0.07" quat="0.707107 0.707107 0 0" class="collision"/>
+                  <body name="end_effector_R" pos="0 0 -0.064" quat="0.5 0.5 0.5 -0.5">
+                    <inertial mass="0.17299" pos="0.01513 -2.418e-08 -0.01529" diaginertia="5.85506e-05 0.00014 0.000145109" quat="-3.04069e-06 0.992481 -3.74997e-07 0.122399"/>
+                    <joint name="right_wrist_3_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.5707963267948966 1.5707963267948966"/>
+                    <geom name="end_effector_R_visual" type="mesh" mesh="end_effector_attachment_new_high_res" pos="0 0 0" class="visual" material="dark_grey"/>
+                    <site name="end_effector_R_site" pos="0.0325 0 0"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <site name="imu_site" pos="0 0 0"/>
+    </body>
+  </worldbody>
+  <sensor>
+    <gyro name="imu_ang_vel" site="imu_site"/>
+    <velocimeter name="imu_lin_vel" site="imu_site"/>
+    <accelerometer name="imu_lin_acc" site="imu_site"/>
+    <subtreeangmom name="root_angmom" body="base_link"/>
+  </sensor>
+</mujoco>

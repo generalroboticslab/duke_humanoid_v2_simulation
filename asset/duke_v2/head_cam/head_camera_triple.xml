@@ -1,0 +1,93 @@
+<?xml version="1.0" ?>
+<mujoco model="head_camera_triple">
+  <compiler angle="radian" meshdir="meshes" autolimits="true"/>
+  <default>
+    <default class="head_camera_triple">
+      <default class="visual">
+        <geom group="2" type="mesh" contype="0" conaffinity="0" material="silver"/>
+      </default>
+      <default class="collision">
+        <geom group="3" contype="1" conaffinity="1"/>
+      </default>
+    </default>
+  </default>
+  <asset>
+    <material name="silver" rgba="0.75 0.75 0.75 1"/>
+    <material name="blue" rgba="0 0 0.8 1"/>
+    <material name="black" rgba="0 0 0 1"/>
+    <material name="purple" rgba="0.8 0 0.8 1"/>
+    <material name="white" rgba="1 1 1 1"/>
+    <material name="light_grey" rgba="0.19 0.2 0.22 1" specular="0.75" shininess="0.05"/>
+    <material name="dark_grey" rgba="0.11 0.115 0.125 1" specular="0.35" shininess="0.05"/>
+    <material name="d436" rgba="0.58 0.6 0.62 1" specular="0.75" shininess="0.2"/>
+    <mesh name="base_left" file="links/base_left.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="yaw_left" file="links/yaw_left.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="pitch_left_bracket" file="links/pitch_left_bracket.obj" scale="0.001 0.001 0.001"/>
+    <mesh name="pitch_left_d436" file="links/pitch_left_d436.obj" scale="0.001 0.001 0.001"/>
+  </asset>
+  <worldbody>
+    <body name="base" childclass="head_camera_triple">
+      <inertial mass="1e-09" pos="0 0 0" diaginertia="1.66667e-16 1.66667e-16 1.66667e-16" quat="1 0 0 0"/>
+      <body name="base_left" pos="0 0.13 0.52" quat="4.32978e-17 0.707107 -0.707107 -4.32978e-17">
+        <inertial mass="0.24605608981500002" pos="0.00121642 -4.60884e-06 0.0172367" diaginertia="7.303e-05 0.0002647 0.000268578" quat="0.670606 -0.00147388 0.74181 0.0016974"/>
+        <geom name="base_left_visual" type="mesh" mesh="base_left" pos="0.065 0 0.52" quat="4.32978e-17 0.707107 0.707107 4.32978e-17" class="visual" material="dark_grey"/>
+        <geom name="base_left_collision" type="capsule" size="0.035 0.05750000000000002" pos="0 0 0.0275" quat="3.7494e-33 6.12323e-17 1 6.12323e-17" class="collision" contype="1" conaffinity="1" group="3"/>
+        <body name="yaw_left_link" pos="0 0 0">
+          <inertial mass="0.233076471852" pos="0.00139063 -1.58592e-06 -0.0992899" diaginertia="6.39461e-05 0.00012451 0.000136" quat="-0.4968 0.496906 0.503551 0.502704"/>
+          <joint name="yaw_left" type="hinge" pos="0 0 0" axis="0 0 1" range="-4.7124 4.7124" damping="0.5"/>
+          <geom name="yaw_left_link_visual" type="mesh" mesh="yaw_left" pos="0.065 0 0.52" quat="4.32978e-17 0.707107 0.707107 4.32978e-17" class="visual" material="dark_grey"/>
+          <geom name="yaw_left_link_collision" type="capsule" size="0.023 0.020000000000000004" pos="0 0 -0.1054" quat="0.707107 -0 0.707107 0" class="collision" contype="1" conaffinity="1" group="3"/>
+          <body name="pitch_left_link" pos="0 0 -0.105442" quat="0.707107 0 -0.707107 0">
+            <inertial mass="0.10000002469800001" pos="-0.030783 -0.00783549 -0.00254843" diaginertia="2.97218e-05 7.28348e-05 8.77204e-05" quat="0.385609 0.569367 -0.444549 0.574023"/>
+            <joint name="pitch_left" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" damping="0.5"/>
+            <geom name="pitch_left_link_visual0" type="mesh" mesh="pitch_left_bracket" pos="0.625442 0 -0.065" quat="0.5 -0.5 -0.5 0.5" class="visual" material="dark_grey"/>
+            <geom name="pitch_left_link_visual1" type="mesh" mesh="pitch_left_d436" pos="0.625442 0 -0.065" quat="0.5 -0.5 -0.5 0.5" class="visual" material="d436"/>
+            <geom name="pitch_left_link_collision" type="capsule" size="0.016 0.029" pos="-0.036558 -0.012 0" quat="3.7494e-33 6.12323e-17 1 6.12323e-17" class="collision" contype="1" conaffinity="1" group="3"/>
+            <site name="left_cam_front_center" pos="-0.036558 -0.025 0" quat="0.5 0.5 0.5 -0.5"/>
+            <site name="left_rgb" pos="-0.0364349 -0.0206549 0.0322991" quat="0.5 0.5 0.5 -0.5"/>
+          </body>
+        </body>
+      </body>
+      <body name="base_center" pos="0 0 0.52" quat="4.32978e-17 0.707107 0.707107 4.32978e-17">
+        <inertial mass="0.24605608981500002" pos="0.00121642 -4.60884e-06 0.0172367" diaginertia="7.303e-05 0.0002647 0.000268578" quat="0.670606 -0.00147388 0.74181 0.0016974"/>
+        <geom name="base_center_visual" type="mesh" mesh="base_left" pos="0.065 0 0.52" quat="4.32978e-17 0.707107 0.707107 4.32978e-17" class="visual" material="dark_grey"/>
+        <geom name="base_center_collision" type="capsule" size="0.035 0.05750000000000002" pos="0 0 0.0275" quat="3.7494e-33 6.12323e-17 1 6.12323e-17" class="collision" contype="1" conaffinity="1" group="3"/>
+        <body name="yaw_center_link" pos="0 0 0">
+          <inertial mass="0.233076471852" pos="0.00139063 -1.58592e-06 -0.0992899" diaginertia="6.39461e-05 0.00012451 0.000136" quat="-0.4968 0.496906 0.503551 0.502704"/>
+          <joint name="yaw_center" type="hinge" pos="0 0 0" axis="0 0 1" range="-4.7124 4.7124" damping="0.5"/>
+          <geom name="yaw_center_link_visual" type="mesh" mesh="yaw_left" pos="0.065 0 0.52" quat="4.32978e-17 0.707107 0.707107 4.32978e-17" class="visual" material="dark_grey"/>
+          <geom name="yaw_center_link_collision" type="capsule" size="0.023 0.020000000000000004" pos="0 0 -0.1054" quat="0.707107 -0 0.707107 0" class="collision" contype="1" conaffinity="1" group="3"/>
+          <body name="pitch_center_link" pos="0 0 -0.105442" quat="0.707107 0 -0.707107 0">
+            <inertial mass="0.10000002469800001" pos="-0.030783 -0.00783549 -0.00254843" diaginertia="2.97218e-05 7.28348e-05 8.77204e-05" quat="0.385609 0.569367 -0.444549 0.574023"/>
+            <joint name="pitch_center" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" damping="0.5"/>
+            <geom name="pitch_center_link_visual0" type="mesh" mesh="pitch_left_bracket" pos="0.625442 0 -0.065" quat="0.5 -0.5 -0.5 0.5" class="visual" material="dark_grey"/>
+            <geom name="pitch_center_link_visual1" type="mesh" mesh="pitch_left_d436" pos="0.625442 0 -0.065" quat="0.5 -0.5 -0.5 0.5" class="visual" material="d436"/>
+            <geom name="pitch_center_link_collision" type="capsule" size="0.016 0.029" pos="-0.036558 -0.012 0" quat="3.7494e-33 6.12323e-17 1 6.12323e-17" class="collision" contype="1" conaffinity="1" group="3"/>
+            <site name="center_cam_front_center" pos="-0.036558 -0.025 0" quat="0.5 0.5 0.5 -0.5"/>
+            <site name="center_rgb" pos="-0.0364349 -0.0206549 0.0322991" quat="0.5 0.5 0.5 -0.5"/>
+          </body>
+        </body>
+      </body>
+      <body name="base_right" pos="0 -0.13 0.52" quat="4.32978e-17 0.707107 -0.707107 -4.32978e-17">
+        <inertial mass="0.24605608981500002" pos="0.00121642 -4.60884e-06 0.0172367" diaginertia="7.303e-05 0.0002647 0.000268578" quat="0.670606 -0.00147388 0.74181 0.0016974"/>
+        <geom name="base_right_visual" type="mesh" mesh="base_left" pos="0.065 0 0.52" quat="4.32978e-17 0.707107 0.707107 4.32978e-17" class="visual" material="dark_grey"/>
+        <geom name="base_right_collision" type="capsule" size="0.035 0.05750000000000002" pos="0 0 0.0275" quat="3.7494e-33 6.12323e-17 1 6.12323e-17" class="collision" contype="1" conaffinity="1" group="3"/>
+        <body name="yaw_right_link" pos="0 0 0">
+          <inertial mass="0.233076471852" pos="0.00139063 -1.58592e-06 -0.0992899" diaginertia="6.39461e-05 0.00012451 0.000136" quat="-0.4968 0.496906 0.503551 0.502704"/>
+          <joint name="yaw_right" type="hinge" pos="0 0 0" axis="0 0 1" range="-4.7124 4.7124" damping="0.5"/>
+          <geom name="yaw_right_link_visual" type="mesh" mesh="yaw_left" pos="0.065 0 0.52" quat="4.32978e-17 0.707107 0.707107 4.32978e-17" class="visual" material="dark_grey"/>
+          <geom name="yaw_right_link_collision" type="capsule" size="0.023 0.020000000000000004" pos="0 0 -0.1054" quat="0.707107 -0 0.707107 0" class="collision" contype="1" conaffinity="1" group="3"/>
+          <body name="pitch_right_link" pos="0 0 -0.105442" quat="0.707107 0 -0.707107 0">
+            <inertial mass="0.10000002469800001" pos="-0.030783 -0.00783549 -0.00254843" diaginertia="2.97218e-05 7.28348e-05 8.77204e-05" quat="0.385609 0.569367 -0.444549 0.574023"/>
+            <joint name="pitch_right" type="hinge" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" damping="0.5"/>
+            <geom name="pitch_right_link_visual0" type="mesh" mesh="pitch_left_bracket" pos="0.625442 0 -0.065" quat="0.5 -0.5 -0.5 0.5" class="visual" material="dark_grey"/>
+            <geom name="pitch_right_link_visual1" type="mesh" mesh="pitch_left_d436" pos="0.625442 0 -0.065" quat="0.5 -0.5 -0.5 0.5" class="visual" material="d436"/>
+            <geom name="pitch_right_link_collision" type="capsule" size="0.016 0.029" pos="-0.036558 -0.012 0" quat="3.7494e-33 6.12323e-17 1 6.12323e-17" class="collision" contype="1" conaffinity="1" group="3"/>
+            <site name="right_cam_front_center" pos="-0.036558 -0.025 0" quat="0.5 0.5 0.5 -0.5"/>
+            <site name="right_rgb" pos="-0.0364349 -0.0206549 0.0322991" quat="0.5 0.5 0.5 -0.5"/>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+</mujoco>
