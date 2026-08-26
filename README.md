@@ -84,6 +84,43 @@ The `--robots` order above is Table IV's column order. `dyn_aggregate.LABEL` hol
 cameras are welded. Same for the `v2_single` pair. Three checkpoints therefore cover five columns,
 and `dyn_sweep.pin_report` prints the md5 each column will load.
 
+#### Running one mission
+
+`dyn_sweep.py` runs the whole table. To watch or debug a single cell, drive the same mission
+directly:
+
+```bash
+python mj_envs/tasks/visual_manipulation/test/curobo_reach_verify.py \
+    --robot v2 --scenario bimanual_mixed_close --dynamic --mpc --walk --camera --view
+```
+
+That is the full benchmark mission for one robot and one scenario. The GIF in the entry-point
+README is four such runs, one per camera configuration, tiled by
+`media/blender_6scenario/build_v2_quadrants.sh`. Each flag changes what is being tested:
+
+| flag | what it does | leaving it off |
+| --- | --- | --- |
+| `--dynamic` | realizes the plan through the frozen RL policy and MuJoCo physics | idealized kinematic `mj_forward`, so a pass proves only that the plan was valid |
+| `--walk` | multi-cube mission, SEARCH to GO to REACH to PARK per visit; base drives until the cube is arm-reachable | one parked reach from the start stance |
+| `--camera` | reaches only cubes the head cameras actually see, so the arm count follows the visible-reachable set | privileged: reaches any cube whose ground-truth pose is reachable |
+| `--mpc` | per-tick reactive tracker, the only path with gravity compensation | a PD servo with no feedforward; the arm droops by `tau_gravity(q)/kp` on every grasp |
+| `--view` | live MuJoCo viewer; `--viewer blender` renders the same rollout through EEVEE | headless, verdict printed only |
+
+`--mpc` defaults on and every published evaluation passed it explicitly. `--camera` is the flag
+that makes the run test the paper's claim rather than the arm alone: without it, a blind but
+reachable cube still gets picked up, which is exactly the deficit VRW measures.
+
+Robots: `g1`, `v2`, `v2_fixed`, `v2_single`, `v2_single_fixed`, and `both` (runs g1, v2_fixed and
+v2 against one shared scene). Scenarios: `left_right_close`, `left_right_far`, `front_back_close`,
+`front_back_far`, `front_far_discover`, `bimanual_mixed_close`, `bimanual_mixed_front_back_close`,
+`shelf`, `shelf_pick_both`.
+
+Two cautions. A single verdict is not a benchmark: one run grades one seeded layout under one
+target jitter, and the GPU contact solver is not bit-reproducible, so the same command has been
+seen to both pass and fail on `g1 left_right_close`. Table IV comes from `dyn_sweep.py` for that
+reason. And g1 cannot reach `bimanual_mixed_close`'s far-lateral cube from a stationary stance;
+with `--walk` the base repositions per cube and it passes.
+
 ### Visible-reachable workspace (Fig. 2 and Fig. 5)
 
 ```bash
@@ -209,8 +246,7 @@ pixels of 316,000 by one intensity level, which is font antialiasing. The paper'
 hardware photographs, the teaser, and a diagram whose generator lives with the manuscript, so
 nothing here regenerates them.
 
-One caution about `curobo_reach_verify.py --dynamic`: it grades a single parked reach under one
-unseeded target jitter, so it is a smoke test rather than a benchmark. The same command has been
-seen to both pass and fail across runs on `g1 left_right_close`, so a single verdict does not
-indicate a regression. Table IV comes from `dyn_sweep.py`, which walks full missions over 10
-seeded layouts and 3 repeats.
+The `curobo_reach_verify.py` line in that list is the parked form, without `--walk`: one reach
+under one unseeded jitter, which is a smoke test and the path a fresh clone takes. See Running one
+mission above for the full-mission flags and for why a single verdict, parked or walking, is not a
+regression signal.
