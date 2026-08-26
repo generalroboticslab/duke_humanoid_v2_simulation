@@ -31,20 +31,14 @@ The robot, its hardware specifications, and the onboard control stack live at
 [**duke_humanoid_v2**](https://github.com/generalroboticslab/duke_humanoid_v2), which is the
 entry point for the project. This repository is one of its two submodules.
 
-## What reproduces from this repository
+This is a generated export of the research repository; the directory layout matches it, so
+import paths in the paper's scripts work unchanged.
 
-| | regenerates in | command |
-| --- | --- | --- |
-| Fig. 2, cross-platform VRW comparison | seconds, from shipped caches | [`plot_workspace_curobo.py --reach-visible-compare`](#visible-reachable-workspace-fig-2-and-fig-5) |
-| Fig. 5, camera count x articulation | seconds, from shipped caches | [`camera_count_ablation.py`](#visible-reachable-workspace-fig-2-and-fig-5) |
-| Fig. 6, task keyframe grid | seconds, from shipped frames | [`make_keyframe_figure.py`](#task-keyframe-figure-fig-6) |
-| Table IV, 900-trial benchmark | hours, multi-GPU | [`dyn_sweep.py`](#two-target-reach-and-grasp-benchmark-table-iv) |
-| The locomotion policy | days | [`run.py train`](#locomotion-policy-training) |
-
-You do not need to train anything, or run a GPU sweep, to regenerate the three figures.
+Everything needs an NVIDIA GPU. All figures below were regenerated on a single RTX 4090.
 
 ## Contents
 
+- [What reproduces from this repository](#what-reproduces-from-this-repository)
 - [Install](#install)
 - [Reproduce](#reproduce)
   - [Locomotion policy (training)](#locomotion-policy-training)
@@ -56,10 +50,17 @@ You do not need to train anything, or run a GPU sweep, to regenerate the three f
 - [Verified](#verified)
 - [Citation](#citation)
 
-This is a generated export of the research repository; the directory layout matches it, so
-import paths in the paper's scripts work unchanged.
+## What reproduces from this repository
 
-Everything needs an NVIDIA GPU. All figures below were regenerated on a single RTX 4090.
+| | regenerates in | command |
+| --- | --- | --- |
+| Fig. 2, cross-platform VRW comparison | seconds, from shipped caches | [`plot_workspace_curobo.py --reach-visible-compare`](#visible-reachable-workspace-fig-2-and-fig-5) |
+| Fig. 5, camera count x articulation | seconds, from shipped caches | [`camera_count_ablation.py`](#visible-reachable-workspace-fig-2-and-fig-5) |
+| Fig. 6, task keyframe grid | seconds, from shipped frames | [`make_keyframe_figure.py`](#task-keyframe-figure-fig-6) |
+| Table IV, 900-trial benchmark | hours, multi-GPU | [`dyn_sweep.py`](#two-target-reach-and-grasp-benchmark-table-iv) |
+| The locomotion policy | days | [`run.py train`](#locomotion-policy-training) |
+
+You do not need to train anything, or run a GPU sweep, to regenerate the three figures.
 
 ## Install
 
@@ -107,6 +108,22 @@ python mj_envs/tasks/visual_manipulation/test/dyn_aggregate.py <run_dir>
 6 scenarios x 3 repeats x 10 seeded layouts = 900 trials. This runs multi-GPU, and `--hosts`
 sets the device topology. The GPU contact solver is not bit-reproducible, which is why each
 configuration is repeated 3 times.
+
+`dyn_aggregate.py` prints per-cell and per-variant rows. The per-variant means are Table IV's
+bottom row, and are what a rerun should land near:
+
+| | Time T̄ (s) | Search (s) | Approach (s) | Manipulation (s) | Energy (J) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| G1 | 27.5 | 3.8 | 3.8 | 19.9 | 494 |
+| Fix_2 | 17.0 | 0.2 | 3.2 | 13.6 | 425 |
+| **Act_2** | **14.1** | **0.1** | **2.1** | **11.9** | **346** |
+| Fix_1 | 20.5 | 3.3 | 3.3 | 13.9 | 595 |
+| Act_1 | 15.5 | 0.6 | 2.7 | 12.2 | 385 |
+
+Success-conditional means over 180 trials per variant. Success rate is 0.967 to 0.994 across
+all five and does not separate them. Do not expect a bit-exact match: the contact solver is
+nondeterministic and verdicts are not host-portable, so a rerun on different hardware moves
+individual cells. The published set was measured on one L40S pair.
 
 <table>
 <tr>
