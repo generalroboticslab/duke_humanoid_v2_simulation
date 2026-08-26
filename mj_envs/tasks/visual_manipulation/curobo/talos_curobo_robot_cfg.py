@@ -39,6 +39,8 @@ from collections.abc import Mapping
 import mujoco
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parents[4]
+
+from tasks.visual_manipulation.curobo.urdf_localize import localize_urdf
 _MJ_ENVS = _REPO_ROOT / "mj_envs"
 for _path in (str(_REPO_ROOT), str(_MJ_ENVS)):
     if _path not in sys.path:
@@ -257,7 +259,7 @@ def build_robot_cfg_dict(
             "kinematics": {
                 "base_link": BASE_LINK,
                 "tool_frames": TOOL_FRAMES,
-                "urdf_path": TALOS_CUROBO_URDF,
+                "urdf_path": localize_urdf(TALOS_CUROBO_URDF),
                 "asset_root_path": "/",
                 "collision_link_names": list(spheres.keys()),
                 "collision_spheres": spheres,

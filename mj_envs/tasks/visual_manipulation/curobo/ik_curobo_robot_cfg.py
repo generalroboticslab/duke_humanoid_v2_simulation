@@ -47,6 +47,8 @@ import torch
 import yaml
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parents[4]
+
+from tasks.visual_manipulation.curobo.urdf_localize import localize_urdf
 _MJ_ENVS = _REPO_ROOT / "mj_envs"
 for _path in (str(_REPO_ROOT), str(_MJ_ENVS)):
     if _path not in sys.path:
@@ -425,7 +427,7 @@ def _humanoid_v21_cfg(
             "kinematics": {
                 "base_link": BASE_LINK,
                 "tool_frames": TOOL_FRAMES,
-                "urdf_path": _urdf_for_rig(head_camera),
+                "urdf_path": localize_urdf(_urdf_for_rig(head_camera)),
                 "asset_root_path": "/",
                 "collision_link_names": list(spheres.keys()),
                 "collision_spheres": spheres,
