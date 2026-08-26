@@ -94,7 +94,7 @@ python mj_envs/tasks/visual_manipulation/test/curobo_reach_verify.py \
     --robot v2 --scenario bimanual_mixed_close --dynamic --mpc --walk --camera --view
 ```
 
-That is the full benchmark mission for one robot and one scenario. The GIF in the entry-point
+That is the full benchmark mission for one robot and one scenario. Each GIF in the entry-point
 README is four such runs, one per camera configuration, tiled by
 `media/blender_6scenario/build_v2_quadrants.sh`. Each flag changes what is being tested:
 
