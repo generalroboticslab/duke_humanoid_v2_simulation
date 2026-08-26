@@ -4,6 +4,12 @@ Policy training and the reproduction package for the visible-reachable workspace
 the workspace study, the two-target reach-and-grasp benchmark, the robot assets, and the
 checkpoints behind the reported numbers.
 
+VRW asks where a robot can both reach and see. Take the reachable workspace, then keep only
+the targets that can also be observed from a configuration that reaches them. The joints spent
+realizing the reach do not count as gaze actuation, which is why a wrist camera on the reaching
+arm is not an independent view. Running that measure over eight platforms is what the code here
+does, and it is what chose this robot's camera count, mounting, and articulation.
+
 The robot, its hardware specifications, and the onboard control stack live at
 [**duke_humanoid_v2**](https://github.com/generalroboticslab/duke_humanoid_v2), which is the
 entry point for the project. This repository is one of its two submodules.
