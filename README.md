@@ -45,13 +45,29 @@ import paths in the paper's scripts work unchanged.
 
 ## Install
 
-Needs an NVIDIA GPU and Python 3.12.
+Needs an NVIDIA GPU and Python 3.12. From nothing on the machine:
 
 ```bash
-pip install -r requirements.txt
-# nvidia-curobo: only the benchmark needs it
-# https://curobo.org/get_started/1_install_instructions.html
+# 1. micromamba, if you have no Python 3.12 yet. Single static binary, no root.
+"${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+micromamba create -n vrw python=3.12 -y
+micromamba activate vrw
+
+# 2. uv, the installer used below
+micromamba install -c conda-forge uv -y
+
+# 3. dependencies, into the environment activated above
+uv pip install -r requirements.txt
 ```
+
+`uv pip` resolves the whole set at once instead of one package at a time, which is what keeps a
+`torch` + `warp` + `mjlab` install from taking a coffee break. It targets whatever environment is
+active, `micromamba` or `venv` alike; pass `--python "$(which python)"` if you want to be explicit.
+Plain `pip install -r requirements.txt` works too and installs the same versions.
+
+The benchmark additionally needs **nvidia-curobo**, which is not pip-installable from here.
+Follow [its own instructions](https://curobo.org/get_started/1_install_instructions.html) after the
+step above. Nothing else in this repository requires it.
 
 `requirements.txt` is deliberately unversioned. This study tracks current `mjlab` and
 `mujoco-warp`, and the numbers here come from the shipped caches and checkpoints rather than from

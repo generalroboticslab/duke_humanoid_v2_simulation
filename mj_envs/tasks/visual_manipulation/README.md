@@ -5,6 +5,43 @@ to its left/right or front/back, with the camera configuration as the variable u
 This is the task side of the paper's claim that visible-reachable coverage predicts task
 performance.
 
+## The six scenarios
+
+Every cell the benchmark scores, one clip each. Each panel is a 2x2 of camera configurations
+running the same layout and the same seed: `v2_single_fixed` and `v2_single` on the top row,
+`v2_fixed` and `v2` on the bottom. Watch the welded-camera halves stall on the target they
+cannot see.
+
+<table>
+<tr>
+<td width="50%"><img src="../../../media/two_target_left_right_close.webp" width="100%" alt="Targets left and right, benches close"></td>
+<td width="50%"><img src="../../../media/two_target_left_right_far.webp" width="100%" alt="Targets left and right, benches far"></td>
+</tr>
+<tr>
+<td><b><code>left_right_close</code></b><br>Both targets already within reach.</td>
+<td><b><code>left_right_far</code></b><br>Benches at 0.8 m, so the robot walks between grasps.</td>
+</tr>
+<tr>
+<td><img src="../../../media/two_target_front_back_close.webp" width="100%" alt="Targets front and back, benches close"></td>
+<td><img src="../../../media/two_target_front_back_far.webp" width="100%" alt="Targets front and back, benches far"></td>
+</tr>
+<tr>
+<td><b><code>front_back_close</code></b><br>The second target starts behind the robot.</td>
+<td><b><code>front_back_far</code></b><br>Behind and out of reach: locate, turn, walk, then grasp.</td>
+</tr>
+<tr>
+<td><img src="../../../media/two_target_handoff_left_right.webp" width="100%" alt="Bimanual handoff, targets left and right"></td>
+<td><img src="../../../media/two_target_handoff_front_back.webp" width="100%" alt="Bimanual handoff, targets front and back"></td>
+</tr>
+<tr>
+<td><b><code>bimanual_mixed_close</code></b><br>One target per hand, so neither arm serves both.</td>
+<td><b><code>bimanual_mixed_front_back_close</code></b><br>The same handoff, pair split front and back.</td>
+</tr>
+</table>
+
+Rebuild any of these with `media/blender_6scenario/build_v2_quadrants.sh`, then
+`scripts/make_benchmark_clips.sh`.
+
 ## Run one mission
 
 The smallest thing that shows the benchmark working. One robot, one scenario, live viewer:
@@ -18,9 +55,8 @@ Drop `--view` to run headless and print only the verdict.
 
 **Robots:** `v2` (actuated pair, the adopted design), `v2_fixed` (same robot, cameras welded),
 `v2_single`, `v2_single_fixed`, `g1`.
-**Scenarios:** `left_right_close`, `left_right_far`, `front_back_close`, `front_back_far`,
-`bimanual_mixed_close`, `bimanual_mixed_front_back_close`, plus `front_far_discover`, `shelf`
-and `shelf_pick_both`.
+**Scenarios:** the six above, plus `front_far_discover`, `shelf` and `shelf_pick_both`, which
+are defined and runnable but are not part of the scored table.
 
 A single verdict is not a benchmark. The GPU contact solver is not bit-reproducible, so the
 same command has been seen to both pass and fail on the same cell. Use `dyn_sweep.py` for any
