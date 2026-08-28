@@ -496,7 +496,6 @@ HUMANOID_ACTUATED_SINGLE_CFG = dataclasses.replace(
     # therefore NOT a property of this parameter -- it appears only under a local
     # ``GRASP_Z_ABOVE_M=-0.01`` anchor, which makes grasp routes infeasible and drives the retry
     # escalation that produces the back-off oscillation. Kept at 6.
-    #
     extend_max_retries=6,
     # 2026-08-02: drop +-Y, restore +X/-X to match v2/v2_fixed/v2_single_fixed. The 2026-07-31
     # validation that picked +X/+-Y pre-supposed a single gimbal couldn't cover a backward walk -- but

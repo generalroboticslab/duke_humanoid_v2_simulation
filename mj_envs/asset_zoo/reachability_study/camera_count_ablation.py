@@ -296,6 +296,9 @@ def main() -> None:
 
     import matplotlib
     matplotlib.use("Agg")
+    # TrueType, not matplotlib's default Type 3: this figure is mirrored into the manuscript and
+    # IEEE PDF eXpress rejects a submission carrying any Type 3 font.
+    matplotlib.rcParams["pdf.fonttype"] = 42
     from matplotlib.lines import Line2D
 
     centers = 0.5 * (_SEP_EDGES[:-1] + _SEP_EDGES[1:])

@@ -58,6 +58,9 @@ micromamba install -c conda-forge uv -y
 
 # 3. dependencies, into the environment activated above
 uv pip install -r requirements.txt
+
+# 4. check the GPU is actually visible; see below if this prints False
+python -c "import torch; print(torch.cuda.is_available())"
 ```
 
 `uv pip` resolves the whole set at once instead of one package at a time, which is what keeps a
@@ -65,16 +68,33 @@ uv pip install -r requirements.txt
 active, `micromamba` or `venv` alike; pass `--python "$(which python)"` if you want to be explicit.
 Plain `pip install -r requirements.txt` works too and installs the same versions.
 
-The benchmark additionally needs **nvidia-curobo**, which is not pip-installable from here.
-Follow [its own instructions](https://curobo.org/get_started/1_install_instructions.html) after the
-step above. Nothing else in this repository requires it.
+**If step 4 prints `False`**, the default `torch` wheel was built against a newer CUDA than your
+driver. Check yours with `nvidia-smi`, then reinstall `torch` from the matching index, for example
+on a CUDA 12.8 driver:
+
+```bash
+uv pip install --reinstall torch --index-url https://download.pytorch.org/whl/cu128
+```
+
+`--reinstall` is the part that matters: without it `uv` sees `torch` as already satisfied and the
+index is ignored. Nothing else needs reinstalling.
+
+The benchmark and `generate_workspace_curobo.py` additionally need **nvidia-curobo**, which is not
+pip-installable from here. Follow
+[its own instructions](https://curobo.org/get_started/1_install_instructions.html) after the step
+above. Everything else in this repository runs without it, including both workspace figures, which
+read the shipped caches.
 
 `requirements.txt` is deliberately unversioned. This study tracks current `mjlab` and
 `mujoco-warp`, and the numbers here come from the shipped caches and checkpoints rather than from
 a live solve, so a pin would go stale without protecting a result. Developed against Python 3.12,
-`mjlab` 1.6, `mujoco` 3.11, `warp-lang` 1.16, `torch` 2.10, CUDA 12.9, on Ubuntu 22.04.
+`mjlab` 1.6, `mujoco` 3.11, `warp-lang` 1.16, `torch` 2.10, CUDA 12.9, on Ubuntu 22.04. Verified on
+a fresh clone with `mjlab` 1.6, `mujoco` 3.11, `warp-lang` 1.16 and `torch` 2.11+cu128 on Ubuntu
+22.04.
 
-Headless machines need `MUJOCO_GL=egl` in front of any command that renders.
+Headless machines need `MUJOCO_GL=egl` in front of any command that renders. `play` is the one
+exception: it opens a native viewer and needs a real display, so on a headless box use
+`play --headless-eval 300` instead, which steps the policy and prints the reward breakdown.
 
 ## See it run
 
@@ -213,7 +233,7 @@ reference.
 ```bibtex
 @misc{duke_humanoid_v2,
   title  = {Visible-Reachable Workspace for Perception-Aware Humanoid Design},
-  author = {Boxi Xia and Zijiang Yang and Ryan Shin and Bokuan Li and Eric Lu and Jacob Lee and Jiaxun Liu and Boyuan Chen},
+  author = {General Robotics Lab, Duke University},
   year   = {2026},
   url    = {https://github.com/generalroboticslab/duke_humanoid_v2}
 }

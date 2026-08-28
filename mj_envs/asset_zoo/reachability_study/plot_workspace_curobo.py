@@ -180,14 +180,10 @@ def _mirror_to_paper(path_base: Path, paper_stem: str | None = None) -> None:
     `paper_stem` overrides the filename where the paper includes the figure under a different name
     (`fig_camera_count.pdf` vs `camera_count_ablation.pdf`).
 
-    A missing paper dir is tolerated (`paper_writing_humanoid_v2/` is untracked, so a fresh clone
-    has none) but must be LOUD: LaTeX errors on a missing graphic, never on a stale one, so a silent
-    skip leaves the old figure in a clean-building paper beside a table of the new numbers.
+    The manuscript directory is not part of this export, so the mirror is a no-op here.
     """
     dst = _PAPER_FIG_DIR / f"{paper_stem or path_base.name}.pdf"
     if not _PAPER_FIG_DIR.is_dir():
-        print(f"WARNING: {_PAPER_FIG_DIR} does not exist -- {dst.name} was NOT updated. Any paper "
-              f"build will silently reuse a stale copy of it.")
         return
     shutil.copy2(path_base.with_suffix(".pdf"), dst)
     print(f"copied {dst}")
@@ -230,6 +226,10 @@ from mj_envs.asset_zoo.reachability_study.view_common import add_segment  # noqa
 import matplotlib
 
 matplotlib.use("Agg")
+# Embed PDF text as TrueType, not matplotlib's default Type 3. The figures here are mirrored into
+# the manuscript, and IEEE PDF eXpress rejects a submission carrying any Type 3 font -- one such
+# font in one included figure taints the whole main.pdf.
+matplotlib.rcParams["pdf.fonttype"] = 42
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -3208,7 +3208,14 @@ def _plot_reach_visible_grid(cases: list[dict], path_base: Path, flat: bool = Fa
                     elif eta2_fixed is not None:
                         pair = f"\npairwise {100 * eta2_fixed:.0f}%→{100 * eta2:.0f}%"
                     else:
-                        pair = f"\npairwise {100 * eta2:.0f}%"
+                        # One decimal on THIS branch only. The two kernels above disagree by 0.0032
+                        # on the shipped rig (manifest 0.9572, `_pairwise_vrw` 0.9540), which at
+                        # `.0f` straddles 95.5 and prints 96% here against the camera-count figure's
+                        # 95% and the paper's 0.95 -- read as a contradiction rather than as two
+                        # scorers. At `.1f` they read 95.7 and 95.4, the same number at the precision
+                        # the text quotes. The arrow branch keeps `.0f`: its numbers are the ones
+                        # already published in the video and on the site.
+                        pair = f"\npairwise {100 * eta2:.1f}%"
                     if c.get("visible_static") is not None:
                         # Both coverage fractions, because the panel draws both categories and a
                         # single "(97%)" would leave the fixed region unlabelled. These are eta_fix

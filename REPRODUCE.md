@@ -8,9 +8,16 @@ things you can watch without any of this, are in [README.md](README.md).
 ### Locomotion policy (training)
 
 ```bash
+export WANDB_MODE=offline   # or `wandb login` first; training logs through W&B
 python mj_envs/run.py train --task HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4MixedArmsCam
 python mj_envs/run.py play  --task HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4MixedArmsCam
 ```
+
+Training logs to Weights & Biases and will stop at
+`UsageError: No API key configured` if it can find neither a login nor `WANDB_MODE`. Offline mode
+needs no account and still writes every metric under the run directory, so `wandb sync <dir>` can
+upload it later. Add `--max-iterations N` for a short smoke run; 3 iterations is enough to confirm
+the environment builds and a checkpoint gets written.
 
 The other task classes behind the reported numbers are
 `HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4SingleCam` and
@@ -120,8 +127,8 @@ with `--walk` the base repositions per cube and it passes.
 ### Visible-reachable workspace (Fig. 2 and Fig. 5)
 
 ```bash
-# 1. generate per-robot workspace + visibility data (GPU, sharded)
-python mj_envs/asset_zoo/reachability_study/generate_workspace_curobo.py --robot v2
+# 1. generate per-robot workspace + visibility data (GPU, sharded, needs cuRobo)
+python mj_envs/asset_zoo/reachability_study/generate_workspace_curobo.py --robot humanoid_v21
 # 2. main cross-platform comparison figure
 MUJOCO_GL=egl python mj_envs/asset_zoo/reachability_study/plot_workspace_curobo.py \
     --reach-visible-compare
@@ -144,8 +151,10 @@ is also shipped. Step 4's figure is not in the paper; it is the separation-resol
 scalar eta_2 that Fig. 2 prints in its titles.
 
 Step 1 recomputes from a platform's safe-arm-pose cache. The two shipped caches are `humanoid_v21`
-(the `--robot v2` shown above) and `unitree_g1`, so those two run as is; every other platform needs
-its cache regenerated first (see Precomputed data below). A full step 4 needs all of them, but
+(this robot, shown above) and `unitree_g1`, so those two run as is; every other platform needs
+its cache regenerated first (see Precomputed data below). Note that `generate_workspace_curobo.py`
+takes the model name, `humanoid_v21`, not the `v2` shorthand the benchmark scripts use for the same
+robot; `--help` lists the accepted values. A full step 4 needs all of them, but
 `run_eta2_platforms.py --plot-only` replots every column from the shipped manifest without
 touching a GPU. Since the Fig. 2 titles read their eta_2 from that same manifest, the two always
 agree.

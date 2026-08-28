@@ -1358,9 +1358,16 @@ def play(cfg: PlayConfig):
 
     keyboard_cb = make_keyboard_callback(env)
 
-    from utils.publisher import NNGSubscriber
-    _nav_recv = NNGSubscriber("tcp://localhost:9873")
-    _nav_recv.start()
+    # Optional: bridges an external gamepad or planner publishing nav_cmd on 9873. pynng and
+    # msgpack are optional dependencies, so play falls back to keyboard control alone rather
+    # than failing to start when they are absent.
+    try:
+        from utils.publisher import NNGSubscriber
+        _nav_recv = NNGSubscriber("tcp://localhost:9873")
+        _nav_recv.start()
+    except ImportError as exc:
+        _nav_recv = None
+        print(f"[INFO] Gamepad receiver disabled: {exc.name} not installed")
     _twist_terms = env.unwrapped.command_manager._terms
     _cmd_tensor = None
     _world_frame_cmd = False
@@ -1405,8 +1412,9 @@ def play(cfg: PlayConfig):
                         _cmd_tensor[:, 2] = float(nav[2])
             time.sleep(0.02)
     if cfg.traj is None:
-        threading.Thread(target=_gamepad_poll, daemon=True, name="gamepad").start()
-        print("[INFO] Gamepad receiver: tcp://localhost:9873")
+        if _nav_recv is not None:
+            threading.Thread(target=_gamepad_poll, daemon=True, name="gamepad").start()
+            print("[INFO] Gamepad receiver: tcp://localhost:9873")
     else:
         # A publisher left running on 9873 overwrites vel_command_w at 50 Hz, which silently
         # fights the path tracker for the same tensor (measured: a live gamepad tripled the

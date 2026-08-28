@@ -456,8 +456,7 @@ def build_robot_cfg_dict_from_urdf(
     if robot == "humanoid_v21":
         return _humanoid_v21_cfg(load_dynamics, arm_joint_home, head_camera)
     raise NotImplementedError(
-        f"G1 cfg deferred -- G1 scope; "
-        f"blocker is"
+        "G1 cfg deferred: the G1 MJCF has no grasp site to export against"
     )
 
 
@@ -469,7 +468,6 @@ def build_robot_cfg_dict_from_urdf(
 # weight 0) is dropped: with a real grasp planner the candidate carries the exact desired yaw, and
 # a global per-axis yaw mask would discard it. "Tolerate some grasp error" is now a single uniform
 # angular slack (`_ORIENTATION_TOLERANCE`), not an axis-specific mask.
-#
 # ---------------------------------------------------------------------------
 # Anchor on the INSTALLED curobo via `_src.__path__` (a namespace subpackage that always resolves to
 # the real install), not `curobo.__file__`: when an entrypoint's script dir puts this repo's local
