@@ -1,0 +1,75 @@
+{
+  "_comment": "Stage-3 kinematics for gripper.xml. base = world-fixed root. All bodies stay at pos 0 0 0 (meshes carry world coords), so joints at q=0 reproduce the rest pose. Ranges are PLACEHOLDERS to visualize motion; refine from CAD. Axes in world frame (chain is identity-oriented). slide ranges in meters. Actuator gains tuned for stable, visible motion, not fidelity.",
+
+  "_ranges_note": "Ranges set 2026-05-28 from the user's interactive testing in the MuJoCo viewer (supersede earlier collision/placeholder values). Per-DOF ranges are in the joints block above (up pair != down pair, per user tuning); q=0 = CAD rest pose. Sign: +q on a rack = closing (toward center), -q = opening; +q on a finger = extend (+X). Self-collision is OFF, so the viewer permits closing past mesh contact; these limits are the user's visual judgement, re-verify vs CAD for exact mechanical end-stops.",
+
+  "options": {"timestep": 0.0005, "integrator": "implicitfast", "iterations": 100},
+
+  "tree": {
+    "base":              {"parent": "world"},
+    "bridge":            {"parent": "base"},
+    "left_up_rack":      {"parent": "bridge"},
+    "left_up_finger":    {"parent": "left_up_rack"},
+    "right_up_rack":     {"parent": "bridge"},
+    "right_up_finger":   {"parent": "right_up_rack"},
+    "left_down_rack":    {"parent": "base"},
+    "left_down_finger":  {"parent": "left_down_rack"},
+    "right_down_rack":   {"parent": "base"},
+    "right_down_finger": {"parent": "right_down_rack"}
+  },
+
+  "joints": {
+    "bridge_z":            {"body": "bridge",            "type": "slide", "axis": [0, 0, 1],  "range": [-0.027, 0.03],  "damping": 40,  "armature": 0.05},
+
+    "left_up_y":           {"body": "left_up_rack",      "type": "slide", "axis": [0, 1, 0],  "range": [-0.02, 0.035], "damping": 12,  "armature": 0.02},
+    "right_up_y":          {"body": "right_up_rack",     "type": "slide", "axis": [0, -1, 0], "range": [-0.02, 0.035], "damping": 12,  "armature": 0.02},
+    "left_down_y":         {"body": "left_down_rack",    "type": "slide", "axis": [0, 1, 0],  "range": [-0.04, 0.017], "damping": 12,  "armature": 0.02},
+    "right_down_y":        {"body": "right_down_rack",   "type": "slide", "axis": [0, -1, 0], "range": [-0.04, 0.017], "damping": 12,  "armature": 0.02},
+
+    "left_up_finger_x":    {"body": "left_up_finger",    "type": "slide", "axis": [1, 0, 0],  "range": [0, 0.055],   "damping": 2.5, "armature": 0.01},
+    "right_up_finger_x":   {"body": "right_up_finger",   "type": "slide", "axis": [1, 0, 0],  "range": [0, 0.055],   "damping": 2.5, "armature": 0.01},
+    "left_down_finger_x":  {"body": "left_down_finger",  "type": "slide", "axis": [1, 0, 0],  "range": [0, 0.055],   "damping": 2.5, "armature": 0.01},
+    "right_down_finger_x": {"body": "right_down_finger", "type": "slide", "axis": [1, 0, 0],  "range": [0, 0.055],   "damping": 2.5, "armature": 0.01}
+  },
+
+  "couplings": [
+    {"joint1": "right_up_y",   "joint2": "left_up_y",   "polycoef": [0, 1, 0, 0, 0]},
+    {"joint1": "right_down_y", "joint2": "left_down_y", "polycoef": [0, 1, 0, 0, 0]}
+  ],
+
+  "actuators": {
+    "m_bridge_z":          {"joint": "bridge_z",            "kp": 3000, "kv": 15},
+    "m_up_pair":           {"joint": "left_up_y",           "kp": 800,  "kv": 8},
+    "m_down_pair":         {"joint": "left_down_y",         "kp": 800,  "kv": 8},
+    "m_left_up_finger":    {"joint": "left_up_finger_x",    "kp": 150,  "kv": 1},
+    "m_right_up_finger":   {"joint": "right_up_finger_x",   "kp": 150,  "kv": 1},
+    "m_left_down_finger":  {"joint": "left_down_finger_x",  "kp": 150,  "kv": 1},
+    "m_right_down_finger": {"joint": "right_down_finger_x", "kp": 150,  "kv": 1}
+  },
+
+  "servo": {
+    "model": "FEETECH HLS3915M-C001 (a.k.a. HL-3915-C001)",
+    "voltage": "12V nominal (4-14V input range)",
+    "stall_torque_Nm": 1.39254,
+    "no_load_speed": "0.1 s/60deg = 100 RPM = 10.47 rad/s @ 12V",
+    "control": "TTL half-duplex serial bus, STS-style; 12-bit (0.088 deg/pulse), 360 deg single-turn; weight 35.8 g",
+    "datasheet": "https://www.feetechrc.com/Data/feetechrc/upload/file/20250425/6388117565131576254693381.pdf",
+    "_note": "Specs verified vs official FEETECH datasheet + reference/mini_gripper.xml. We actuate SLIDE joints directly, so forcerange is a LINEAR-FORCE placeholder = stall_torque / assumed pinion radius 9mm ~= 155 N (rounded to 150). Refine with CAD pinion pitch radius + verified travel, then re-tune kp/kv/damping. No-load speed is a runtime slew limit, not an MJCF field."
+  },
+
+  "actuator_defaults": {
+    "type": "position",
+    "forcerange": [-150, 150]
+  },
+
+  "collision": {
+    "_comment": "Collision geometry matches the visual meshes via CoACD convex decomposition (scripts/decompose_collision.py -> meshes/collision_pieces/), mimicking reference/pads/build_pads.py. MuJoCo collides a raw mesh as its convex hull, so the decomposition is what makes collision faithful to the non-convex visual shape. conaffinity=0 means the robot does NOT self-collide (the CAD guarantees no interference; convex-hull bloat would create false contacts) but its geoms ARE collidable with external objects/floor — same policy as the reference, which excluded every internal pair. To enable self-collision set conaffinity=1; build_mjcf then auto-excludes parent-child pairs and you can add more to exclude_pairs.",
+    "enabled": true,
+    "contype": 1,
+    "conaffinity": 0,
+    "friction": "0.5 0.005 0.0001",
+    "condim": 3,
+    "solref": "0.005 1",
+    "exclude_pairs": []
+  }
+}

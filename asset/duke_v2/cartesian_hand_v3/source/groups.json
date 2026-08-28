@@ -1,0 +1,48 @@
+{
+  "left_down_rack": {
+    "include": ["BASE_GRIPPER:1/P_RACK:1"],
+    "exclude": ["BASE_GRIPPER:1/P_RACK:1/L_RACK"]
+  },
+  "left_down_finger": {
+    "include": ["BASE_GRIPPER:1/P_RACK:1/L_RACK"]
+  },
+  "right_down_rack": {
+    "include": ["BASE_GRIPPER:1/P_RACK:2"],
+    "exclude": ["BASE_GRIPPER:1/P_RACK:2/L_RACK"]
+  },
+  "right_down_finger": {
+    "include": ["BASE_GRIPPER:1/P_RACK:2/L_RACK"]
+  },
+  "left_up_rack": {
+    "include": ["AUX_GRIPPER:1/P_RACK:3"],
+    "exclude": ["AUX_GRIPPER:1/P_RACK:3/L_RACK"]
+  },
+  "left_up_finger": {
+    "include": ["AUX_GRIPPER:1/P_RACK:3/L_RACK"]
+  },
+  "right_up_rack": {
+    "include": ["AUX_GRIPPER:1/P_RACK:4"],
+    "exclude": ["AUX_GRIPPER:1/P_RACK:4/L_RACK"]
+  },
+  "right_up_finger": {
+    "include": ["AUX_GRIPPER:1/P_RACK:4/L_RACK"]
+  },
+  "base": {
+    "include": [
+      "BASE_GRIPPER:1",
+      "CNC_arm13_x2_RS05_shaft_coupler v5:1",
+      "wareshare_st_servo_controller v7:1"
+    ],
+    "exclude": [
+      "BASE_GRIPPER:1/P_RACK:1",
+      "BASE_GRIPPER:1/P_RACK:2"
+    ]
+  },
+  "bridge": {
+    "include": ["AUX_GRIPPER:1"],
+    "exclude": [
+      "AUX_GRIPPER:1/P_RACK:3",
+      "AUX_GRIPPER:1/P_RACK:4"
+    ]
+  }
+}

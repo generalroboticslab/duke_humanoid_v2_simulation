@@ -1,0 +1,651 @@
+<!-- Cartesian Hand v3 — imported from mini_gripper "Cartesian Hand V1 0818" grasp_suite/gripper.xml.
+     Scene decoration (floor/lights/headlight/statistic) stripped -> graft-ready hand module. -->
+<mujoco model="cartesian_hand_v3">
+  <compiler angle="radian" meshdir="meshes" autolimits="true" />
+  <option timestep="0.0005" iterations="100" integrator="implicitfast" />
+  <asset>
+    <mesh name="base_mesh" file="base.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_00_mesh" file="collision_pieces/base_00.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_01_mesh" file="collision_pieces/base_01.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_02_mesh" file="collision_pieces/base_02.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_03_mesh" file="collision_pieces/base_03.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_04_mesh" file="collision_pieces/base_04.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_05_mesh" file="collision_pieces/base_05.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_06_mesh" file="collision_pieces/base_06.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_07_mesh" file="collision_pieces/base_07.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_08_mesh" file="collision_pieces/base_08.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_09_mesh" file="collision_pieces/base_09.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_10_mesh" file="collision_pieces/base_10.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_11_mesh" file="collision_pieces/base_11.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_12_mesh" file="collision_pieces/base_12.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_13_mesh" file="collision_pieces/base_13.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_14_mesh" file="collision_pieces/base_14.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_15_mesh" file="collision_pieces/base_15.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_16_mesh" file="collision_pieces/base_16.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_17_mesh" file="collision_pieces/base_17.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_18_mesh" file="collision_pieces/base_18.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_19_mesh" file="collision_pieces/base_19.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_20_mesh" file="collision_pieces/base_20.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_21_mesh" file="collision_pieces/base_21.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_22_mesh" file="collision_pieces/base_22.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_23_mesh" file="collision_pieces/base_23.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_24_mesh" file="collision_pieces/base_24.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_25_mesh" file="collision_pieces/base_25.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_26_mesh" file="collision_pieces/base_26.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_27_mesh" file="collision_pieces/base_27.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_28_mesh" file="collision_pieces/base_28.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_29_mesh" file="collision_pieces/base_29.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_30_mesh" file="collision_pieces/base_30.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_31_mesh" file="collision_pieces/base_31.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_32_mesh" file="collision_pieces/base_32.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_33_mesh" file="collision_pieces/base_33.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_34_mesh" file="collision_pieces/base_34.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_35_mesh" file="collision_pieces/base_35.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_36_mesh" file="collision_pieces/base_36.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_37_mesh" file="collision_pieces/base_37.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_38_mesh" file="collision_pieces/base_38.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_39_mesh" file="collision_pieces/base_39.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_40_mesh" file="collision_pieces/base_40.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_41_mesh" file="collision_pieces/base_41.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_42_mesh" file="collision_pieces/base_42.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_43_mesh" file="collision_pieces/base_43.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_44_mesh" file="collision_pieces/base_44.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_45_mesh" file="collision_pieces/base_45.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_46_mesh" file="collision_pieces/base_46.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_47_mesh" file="collision_pieces/base_47.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_48_mesh" file="collision_pieces/base_48.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_49_mesh" file="collision_pieces/base_49.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_50_mesh" file="collision_pieces/base_50.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_51_mesh" file="collision_pieces/base_51.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_52_mesh" file="collision_pieces/base_52.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_53_mesh" file="collision_pieces/base_53.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_54_mesh" file="collision_pieces/base_54.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_55_mesh" file="collision_pieces/base_55.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_56_mesh" file="collision_pieces/base_56.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_57_mesh" file="collision_pieces/base_57.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_58_mesh" file="collision_pieces/base_58.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_59_mesh" file="collision_pieces/base_59.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_60_mesh" file="collision_pieces/base_60.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_61_mesh" file="collision_pieces/base_61.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_62_mesh" file="collision_pieces/base_62.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_63_mesh" file="collision_pieces/base_63.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_64_mesh" file="collision_pieces/base_64.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_65_mesh" file="collision_pieces/base_65.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_66_mesh" file="collision_pieces/base_66.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_67_mesh" file="collision_pieces/base_67.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_68_mesh" file="collision_pieces/base_68.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_69_mesh" file="collision_pieces/base_69.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_70_mesh" file="collision_pieces/base_70.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_71_mesh" file="collision_pieces/base_71.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_72_mesh" file="collision_pieces/base_72.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_73_mesh" file="collision_pieces/base_73.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_74_mesh" file="collision_pieces/base_74.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_75_mesh" file="collision_pieces/base_75.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_76_mesh" file="collision_pieces/base_76.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_77_mesh" file="collision_pieces/base_77.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_78_mesh" file="collision_pieces/base_78.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_79_mesh" file="collision_pieces/base_79.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_80_mesh" file="collision_pieces/base_80.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_81_mesh" file="collision_pieces/base_81.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_82_mesh" file="collision_pieces/base_82.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_83_mesh" file="collision_pieces/base_83.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_84_mesh" file="collision_pieces/base_84.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_85_mesh" file="collision_pieces/base_85.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_86_mesh" file="collision_pieces/base_86.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_87_mesh" file="collision_pieces/base_87.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_88_mesh" file="collision_pieces/base_88.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_89_mesh" file="collision_pieces/base_89.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_90_mesh" file="collision_pieces/base_90.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_91_mesh" file="collision_pieces/base_91.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_92_mesh" file="collision_pieces/base_92.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_93_mesh" file="collision_pieces/base_93.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_94_mesh" file="collision_pieces/base_94.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_95_mesh" file="collision_pieces/base_95.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_96_mesh" file="collision_pieces/base_96.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_97_mesh" file="collision_pieces/base_97.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_98_mesh" file="collision_pieces/base_98.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_99_mesh" file="collision_pieces/base_99.obj" scale="0.001 0.001 0.001" />
+    <mesh name="base_col_100_mesh" file="collision_pieces/base_100.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_mesh" file="bridge.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_00_mesh" file="collision_pieces/bridge_00.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_01_mesh" file="collision_pieces/bridge_01.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_02_mesh" file="collision_pieces/bridge_02.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_03_mesh" file="collision_pieces/bridge_03.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_04_mesh" file="collision_pieces/bridge_04.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_05_mesh" file="collision_pieces/bridge_05.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_06_mesh" file="collision_pieces/bridge_06.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_07_mesh" file="collision_pieces/bridge_07.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_08_mesh" file="collision_pieces/bridge_08.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_09_mesh" file="collision_pieces/bridge_09.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_10_mesh" file="collision_pieces/bridge_10.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_11_mesh" file="collision_pieces/bridge_11.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_12_mesh" file="collision_pieces/bridge_12.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_13_mesh" file="collision_pieces/bridge_13.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_14_mesh" file="collision_pieces/bridge_14.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_15_mesh" file="collision_pieces/bridge_15.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_16_mesh" file="collision_pieces/bridge_16.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_17_mesh" file="collision_pieces/bridge_17.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_18_mesh" file="collision_pieces/bridge_18.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_19_mesh" file="collision_pieces/bridge_19.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_20_mesh" file="collision_pieces/bridge_20.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_21_mesh" file="collision_pieces/bridge_21.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_22_mesh" file="collision_pieces/bridge_22.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_23_mesh" file="collision_pieces/bridge_23.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_24_mesh" file="collision_pieces/bridge_24.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_25_mesh" file="collision_pieces/bridge_25.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_26_mesh" file="collision_pieces/bridge_26.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_27_mesh" file="collision_pieces/bridge_27.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_28_mesh" file="collision_pieces/bridge_28.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_29_mesh" file="collision_pieces/bridge_29.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_30_mesh" file="collision_pieces/bridge_30.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_31_mesh" file="collision_pieces/bridge_31.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_32_mesh" file="collision_pieces/bridge_32.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_33_mesh" file="collision_pieces/bridge_33.obj" scale="0.001 0.001 0.001" />
+    <mesh name="bridge_col_34_mesh" file="collision_pieces/bridge_34.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_finger_mesh" file="left_down_finger.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_finger_col_00_mesh" file="collision_pieces/left_down_finger_00.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_finger_col_01_mesh" file="collision_pieces/left_down_finger_01.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_finger_col_02_mesh" file="collision_pieces/left_down_finger_02.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_finger_col_03_mesh" file="collision_pieces/left_down_finger_03.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_mesh" file="left_down_rack.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_00_mesh" file="collision_pieces/left_down_rack_00.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_01_mesh" file="collision_pieces/left_down_rack_01.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_02_mesh" file="collision_pieces/left_down_rack_02.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_03_mesh" file="collision_pieces/left_down_rack_03.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_04_mesh" file="collision_pieces/left_down_rack_04.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_05_mesh" file="collision_pieces/left_down_rack_05.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_06_mesh" file="collision_pieces/left_down_rack_06.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_07_mesh" file="collision_pieces/left_down_rack_07.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_08_mesh" file="collision_pieces/left_down_rack_08.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_09_mesh" file="collision_pieces/left_down_rack_09.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_10_mesh" file="collision_pieces/left_down_rack_10.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_11_mesh" file="collision_pieces/left_down_rack_11.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_12_mesh" file="collision_pieces/left_down_rack_12.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_13_mesh" file="collision_pieces/left_down_rack_13.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_14_mesh" file="collision_pieces/left_down_rack_14.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_15_mesh" file="collision_pieces/left_down_rack_15.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_16_mesh" file="collision_pieces/left_down_rack_16.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_17_mesh" file="collision_pieces/left_down_rack_17.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_18_mesh" file="collision_pieces/left_down_rack_18.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_19_mesh" file="collision_pieces/left_down_rack_19.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_20_mesh" file="collision_pieces/left_down_rack_20.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_21_mesh" file="collision_pieces/left_down_rack_21.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_22_mesh" file="collision_pieces/left_down_rack_22.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_23_mesh" file="collision_pieces/left_down_rack_23.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_24_mesh" file="collision_pieces/left_down_rack_24.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_25_mesh" file="collision_pieces/left_down_rack_25.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_26_mesh" file="collision_pieces/left_down_rack_26.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_27_mesh" file="collision_pieces/left_down_rack_27.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_28_mesh" file="collision_pieces/left_down_rack_28.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_29_mesh" file="collision_pieces/left_down_rack_29.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_30_mesh" file="collision_pieces/left_down_rack_30.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_31_mesh" file="collision_pieces/left_down_rack_31.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_32_mesh" file="collision_pieces/left_down_rack_32.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_down_rack_col_33_mesh" file="collision_pieces/left_down_rack_33.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_finger_mesh" file="left_up_finger.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_finger_col_00_mesh" file="collision_pieces/left_up_finger_00.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_finger_col_01_mesh" file="collision_pieces/left_up_finger_01.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_finger_col_02_mesh" file="collision_pieces/left_up_finger_02.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_finger_col_03_mesh" file="collision_pieces/left_up_finger_03.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_mesh" file="left_up_rack.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_00_mesh" file="collision_pieces/left_up_rack_00.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_01_mesh" file="collision_pieces/left_up_rack_01.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_02_mesh" file="collision_pieces/left_up_rack_02.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_03_mesh" file="collision_pieces/left_up_rack_03.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_04_mesh" file="collision_pieces/left_up_rack_04.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_05_mesh" file="collision_pieces/left_up_rack_05.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_06_mesh" file="collision_pieces/left_up_rack_06.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_07_mesh" file="collision_pieces/left_up_rack_07.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_08_mesh" file="collision_pieces/left_up_rack_08.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_09_mesh" file="collision_pieces/left_up_rack_09.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_10_mesh" file="collision_pieces/left_up_rack_10.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_11_mesh" file="collision_pieces/left_up_rack_11.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_12_mesh" file="collision_pieces/left_up_rack_12.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_13_mesh" file="collision_pieces/left_up_rack_13.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_14_mesh" file="collision_pieces/left_up_rack_14.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_15_mesh" file="collision_pieces/left_up_rack_15.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_16_mesh" file="collision_pieces/left_up_rack_16.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_17_mesh" file="collision_pieces/left_up_rack_17.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_18_mesh" file="collision_pieces/left_up_rack_18.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_19_mesh" file="collision_pieces/left_up_rack_19.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_20_mesh" file="collision_pieces/left_up_rack_20.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_21_mesh" file="collision_pieces/left_up_rack_21.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_22_mesh" file="collision_pieces/left_up_rack_22.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_23_mesh" file="collision_pieces/left_up_rack_23.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_24_mesh" file="collision_pieces/left_up_rack_24.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_25_mesh" file="collision_pieces/left_up_rack_25.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_26_mesh" file="collision_pieces/left_up_rack_26.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_27_mesh" file="collision_pieces/left_up_rack_27.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_28_mesh" file="collision_pieces/left_up_rack_28.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_29_mesh" file="collision_pieces/left_up_rack_29.obj" scale="0.001 0.001 0.001" />
+    <mesh name="left_up_rack_col_30_mesh" file="collision_pieces/left_up_rack_30.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_finger_mesh" file="right_down_finger.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_finger_col_00_mesh" file="collision_pieces/right_down_finger_00.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_finger_col_01_mesh" file="collision_pieces/right_down_finger_01.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_finger_col_02_mesh" file="collision_pieces/right_down_finger_02.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_finger_col_03_mesh" file="collision_pieces/right_down_finger_03.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_mesh" file="right_down_rack.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_00_mesh" file="collision_pieces/right_down_rack_00.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_01_mesh" file="collision_pieces/right_down_rack_01.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_02_mesh" file="collision_pieces/right_down_rack_02.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_03_mesh" file="collision_pieces/right_down_rack_03.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_04_mesh" file="collision_pieces/right_down_rack_04.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_05_mesh" file="collision_pieces/right_down_rack_05.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_06_mesh" file="collision_pieces/right_down_rack_06.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_07_mesh" file="collision_pieces/right_down_rack_07.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_08_mesh" file="collision_pieces/right_down_rack_08.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_09_mesh" file="collision_pieces/right_down_rack_09.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_10_mesh" file="collision_pieces/right_down_rack_10.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_11_mesh" file="collision_pieces/right_down_rack_11.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_12_mesh" file="collision_pieces/right_down_rack_12.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_13_mesh" file="collision_pieces/right_down_rack_13.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_14_mesh" file="collision_pieces/right_down_rack_14.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_15_mesh" file="collision_pieces/right_down_rack_15.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_16_mesh" file="collision_pieces/right_down_rack_16.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_17_mesh" file="collision_pieces/right_down_rack_17.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_18_mesh" file="collision_pieces/right_down_rack_18.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_19_mesh" file="collision_pieces/right_down_rack_19.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_20_mesh" file="collision_pieces/right_down_rack_20.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_21_mesh" file="collision_pieces/right_down_rack_21.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_22_mesh" file="collision_pieces/right_down_rack_22.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_23_mesh" file="collision_pieces/right_down_rack_23.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_24_mesh" file="collision_pieces/right_down_rack_24.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_25_mesh" file="collision_pieces/right_down_rack_25.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_26_mesh" file="collision_pieces/right_down_rack_26.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_27_mesh" file="collision_pieces/right_down_rack_27.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_28_mesh" file="collision_pieces/right_down_rack_28.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_29_mesh" file="collision_pieces/right_down_rack_29.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_30_mesh" file="collision_pieces/right_down_rack_30.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_down_rack_col_31_mesh" file="collision_pieces/right_down_rack_31.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_finger_mesh" file="right_up_finger.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_finger_col_00_mesh" file="collision_pieces/right_up_finger_00.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_finger_col_01_mesh" file="collision_pieces/right_up_finger_01.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_finger_col_02_mesh" file="collision_pieces/right_up_finger_02.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_finger_col_03_mesh" file="collision_pieces/right_up_finger_03.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_mesh" file="right_up_rack.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_00_mesh" file="collision_pieces/right_up_rack_00.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_01_mesh" file="collision_pieces/right_up_rack_01.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_02_mesh" file="collision_pieces/right_up_rack_02.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_03_mesh" file="collision_pieces/right_up_rack_03.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_04_mesh" file="collision_pieces/right_up_rack_04.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_05_mesh" file="collision_pieces/right_up_rack_05.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_06_mesh" file="collision_pieces/right_up_rack_06.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_07_mesh" file="collision_pieces/right_up_rack_07.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_08_mesh" file="collision_pieces/right_up_rack_08.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_09_mesh" file="collision_pieces/right_up_rack_09.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_10_mesh" file="collision_pieces/right_up_rack_10.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_11_mesh" file="collision_pieces/right_up_rack_11.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_12_mesh" file="collision_pieces/right_up_rack_12.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_13_mesh" file="collision_pieces/right_up_rack_13.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_14_mesh" file="collision_pieces/right_up_rack_14.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_15_mesh" file="collision_pieces/right_up_rack_15.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_16_mesh" file="collision_pieces/right_up_rack_16.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_17_mesh" file="collision_pieces/right_up_rack_17.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_18_mesh" file="collision_pieces/right_up_rack_18.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_19_mesh" file="collision_pieces/right_up_rack_19.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_20_mesh" file="collision_pieces/right_up_rack_20.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_21_mesh" file="collision_pieces/right_up_rack_21.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_22_mesh" file="collision_pieces/right_up_rack_22.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_23_mesh" file="collision_pieces/right_up_rack_23.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_24_mesh" file="collision_pieces/right_up_rack_24.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_25_mesh" file="collision_pieces/right_up_rack_25.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_26_mesh" file="collision_pieces/right_up_rack_26.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_27_mesh" file="collision_pieces/right_up_rack_27.obj" scale="0.001 0.001 0.001" />
+    <mesh name="right_up_rack_col_28_mesh" file="collision_pieces/right_up_rack_28.obj" scale="0.001 0.001 0.001" />
+    <material name="base_mat" rgba="0.85 0.40 0.40 1" />
+    <material name="bridge_mat" rgba="0.40 0.75 0.40 1" />
+    <material name="left_down_rack_mat" rgba="0.20 0.40 0.65 1" />
+    <material name="left_down_finger_mat" rgba="0.45 0.75 0.95 1" />
+    <material name="right_down_rack_mat" rgba="0.40 0.20 0.55 1" />
+    <material name="right_down_finger_mat" rgba="0.80 0.50 0.95 1" />
+    <material name="left_up_rack_mat" rgba="0.65 0.50 0.10 1" />
+    <material name="left_up_finger_mat" rgba="0.95 0.85 0.30 1" />
+    <material name="right_up_rack_mat" rgba="0.20 0.55 0.55 1" />
+    <material name="right_up_finger_mat" rgba="0.50 0.90 0.90 1" />
+    <texture name="grid_tex" type="2d" builtin="checker" rgb1="0.20 0.30 0.40" rgb2="0.10 0.15 0.20" width="512" height="512" />
+    <material name="grid" texture="grid_tex" texrepeat="2 2" texuniform="true" reflectance="0.2" />
+  </asset>
+  <worldbody>
+    <body name="base" pos="0 0 0">
+      <inertial mass="0.0695138" pos="-0.0235692 0.00865956 0.0152749" diaginertia="4.23609e-05 0.000136314 0.000158393" quat="0.922085 0.143966 0.32869 -0.144899" />
+      <geom name="base_visual" type="mesh" mesh="base_mesh" material="base_mat" contype="0" conaffinity="0" group="2" />
+      <geom name="base_col_00" type="mesh" mesh="base_col_00_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_01" type="mesh" mesh="base_col_01_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_02" type="mesh" mesh="base_col_02_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_03" type="mesh" mesh="base_col_03_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_04" type="mesh" mesh="base_col_04_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_05" type="mesh" mesh="base_col_05_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_06" type="mesh" mesh="base_col_06_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_07" type="mesh" mesh="base_col_07_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_08" type="mesh" mesh="base_col_08_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_09" type="mesh" mesh="base_col_09_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_10" type="mesh" mesh="base_col_10_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_11" type="mesh" mesh="base_col_11_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_12" type="mesh" mesh="base_col_12_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_13" type="mesh" mesh="base_col_13_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_14" type="mesh" mesh="base_col_14_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_15" type="mesh" mesh="base_col_15_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_16" type="mesh" mesh="base_col_16_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_17" type="mesh" mesh="base_col_17_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_18" type="mesh" mesh="base_col_18_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_19" type="mesh" mesh="base_col_19_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_20" type="mesh" mesh="base_col_20_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_21" type="mesh" mesh="base_col_21_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_22" type="mesh" mesh="base_col_22_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_23" type="mesh" mesh="base_col_23_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_24" type="mesh" mesh="base_col_24_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_25" type="mesh" mesh="base_col_25_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_26" type="mesh" mesh="base_col_26_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_27" type="mesh" mesh="base_col_27_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_28" type="mesh" mesh="base_col_28_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_29" type="mesh" mesh="base_col_29_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_30" type="mesh" mesh="base_col_30_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_31" type="mesh" mesh="base_col_31_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_32" type="mesh" mesh="base_col_32_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_33" type="mesh" mesh="base_col_33_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_34" type="mesh" mesh="base_col_34_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_35" type="mesh" mesh="base_col_35_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_36" type="mesh" mesh="base_col_36_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_37" type="mesh" mesh="base_col_37_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_38" type="mesh" mesh="base_col_38_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_39" type="mesh" mesh="base_col_39_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_40" type="mesh" mesh="base_col_40_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_41" type="mesh" mesh="base_col_41_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_42" type="mesh" mesh="base_col_42_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_43" type="mesh" mesh="base_col_43_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_44" type="mesh" mesh="base_col_44_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_45" type="mesh" mesh="base_col_45_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_46" type="mesh" mesh="base_col_46_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_47" type="mesh" mesh="base_col_47_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_48" type="mesh" mesh="base_col_48_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_49" type="mesh" mesh="base_col_49_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_50" type="mesh" mesh="base_col_50_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_51" type="mesh" mesh="base_col_51_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_52" type="mesh" mesh="base_col_52_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_53" type="mesh" mesh="base_col_53_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_54" type="mesh" mesh="base_col_54_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_55" type="mesh" mesh="base_col_55_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_56" type="mesh" mesh="base_col_56_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_57" type="mesh" mesh="base_col_57_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_58" type="mesh" mesh="base_col_58_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_59" type="mesh" mesh="base_col_59_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_60" type="mesh" mesh="base_col_60_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_61" type="mesh" mesh="base_col_61_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_62" type="mesh" mesh="base_col_62_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_63" type="mesh" mesh="base_col_63_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_64" type="mesh" mesh="base_col_64_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_65" type="mesh" mesh="base_col_65_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_66" type="mesh" mesh="base_col_66_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_67" type="mesh" mesh="base_col_67_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_68" type="mesh" mesh="base_col_68_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_69" type="mesh" mesh="base_col_69_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_70" type="mesh" mesh="base_col_70_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_71" type="mesh" mesh="base_col_71_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_72" type="mesh" mesh="base_col_72_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_73" type="mesh" mesh="base_col_73_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_74" type="mesh" mesh="base_col_74_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_75" type="mesh" mesh="base_col_75_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_76" type="mesh" mesh="base_col_76_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_77" type="mesh" mesh="base_col_77_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_78" type="mesh" mesh="base_col_78_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_79" type="mesh" mesh="base_col_79_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_80" type="mesh" mesh="base_col_80_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_81" type="mesh" mesh="base_col_81_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_82" type="mesh" mesh="base_col_82_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_83" type="mesh" mesh="base_col_83_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_84" type="mesh" mesh="base_col_84_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_85" type="mesh" mesh="base_col_85_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_86" type="mesh" mesh="base_col_86_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_87" type="mesh" mesh="base_col_87_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_88" type="mesh" mesh="base_col_88_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_89" type="mesh" mesh="base_col_89_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_90" type="mesh" mesh="base_col_90_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_91" type="mesh" mesh="base_col_91_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_92" type="mesh" mesh="base_col_92_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_93" type="mesh" mesh="base_col_93_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_94" type="mesh" mesh="base_col_94_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_95" type="mesh" mesh="base_col_95_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_96" type="mesh" mesh="base_col_96_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_97" type="mesh" mesh="base_col_97_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_98" type="mesh" mesh="base_col_98_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_99" type="mesh" mesh="base_col_99_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <geom name="base_col_100" type="mesh" mesh="base_col_100_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+      <body name="bridge" pos="0 0 0">
+        <inertial mass="0.0811808" pos="-0.0152106 -0.00949439 0.0469537" diaginertia="5.6951e-05 0.000223313 0.000256792" quat="0.589177 -0.0362555 -0.781758 -0.201024" />
+        <joint name="bridge_z" type="slide" axis="0 0 1" range="-0.027 0.03" damping="40" armature="0.05" />
+        <geom name="bridge_visual" type="mesh" mesh="bridge_mesh" material="bridge_mat" contype="0" conaffinity="0" group="2" />
+        <geom name="bridge_col_00" type="mesh" mesh="bridge_col_00_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_01" type="mesh" mesh="bridge_col_01_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_02" type="mesh" mesh="bridge_col_02_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_03" type="mesh" mesh="bridge_col_03_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_04" type="mesh" mesh="bridge_col_04_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_05" type="mesh" mesh="bridge_col_05_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_06" type="mesh" mesh="bridge_col_06_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_07" type="mesh" mesh="bridge_col_07_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_08" type="mesh" mesh="bridge_col_08_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_09" type="mesh" mesh="bridge_col_09_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_10" type="mesh" mesh="bridge_col_10_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_11" type="mesh" mesh="bridge_col_11_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_12" type="mesh" mesh="bridge_col_12_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_13" type="mesh" mesh="bridge_col_13_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_14" type="mesh" mesh="bridge_col_14_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_15" type="mesh" mesh="bridge_col_15_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_16" type="mesh" mesh="bridge_col_16_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_17" type="mesh" mesh="bridge_col_17_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_18" type="mesh" mesh="bridge_col_18_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_19" type="mesh" mesh="bridge_col_19_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_20" type="mesh" mesh="bridge_col_20_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_21" type="mesh" mesh="bridge_col_21_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_22" type="mesh" mesh="bridge_col_22_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_23" type="mesh" mesh="bridge_col_23_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_24" type="mesh" mesh="bridge_col_24_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_25" type="mesh" mesh="bridge_col_25_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_26" type="mesh" mesh="bridge_col_26_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_27" type="mesh" mesh="bridge_col_27_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_28" type="mesh" mesh="bridge_col_28_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_29" type="mesh" mesh="bridge_col_29_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_30" type="mesh" mesh="bridge_col_30_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_31" type="mesh" mesh="bridge_col_31_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_32" type="mesh" mesh="bridge_col_32_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_33" type="mesh" mesh="bridge_col_33_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="bridge_col_34" type="mesh" mesh="bridge_col_34_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <body name="left_up_rack" pos="0 0 0">
+          <inertial mass="0.036995" pos="0.087428 -0.0550683 0.0520866" diaginertia="6.96676e-06 0.000501376 0.000503989" quat="0.93538 -0.0570725 -0.223156 -0.268344" />
+          <joint name="left_up_y" type="slide" axis="0 1 0" range="-0.02 0.035" damping="12" armature="0.02" />
+          <geom name="left_up_rack_visual" type="mesh" mesh="left_up_rack_mesh" material="left_up_rack_mat" contype="0" conaffinity="0" group="2" />
+          <geom name="left_up_rack_col_00" type="mesh" mesh="left_up_rack_col_00_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_01" type="mesh" mesh="left_up_rack_col_01_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_02" type="mesh" mesh="left_up_rack_col_02_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_03" type="mesh" mesh="left_up_rack_col_03_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_04" type="mesh" mesh="left_up_rack_col_04_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_05" type="mesh" mesh="left_up_rack_col_05_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_06" type="mesh" mesh="left_up_rack_col_06_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_07" type="mesh" mesh="left_up_rack_col_07_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_08" type="mesh" mesh="left_up_rack_col_08_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_09" type="mesh" mesh="left_up_rack_col_09_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_10" type="mesh" mesh="left_up_rack_col_10_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_11" type="mesh" mesh="left_up_rack_col_11_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_12" type="mesh" mesh="left_up_rack_col_12_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_13" type="mesh" mesh="left_up_rack_col_13_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_14" type="mesh" mesh="left_up_rack_col_14_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_15" type="mesh" mesh="left_up_rack_col_15_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_16" type="mesh" mesh="left_up_rack_col_16_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_17" type="mesh" mesh="left_up_rack_col_17_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_18" type="mesh" mesh="left_up_rack_col_18_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_19" type="mesh" mesh="left_up_rack_col_19_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_20" type="mesh" mesh="left_up_rack_col_20_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_21" type="mesh" mesh="left_up_rack_col_21_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_22" type="mesh" mesh="left_up_rack_col_22_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_23" type="mesh" mesh="left_up_rack_col_23_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_24" type="mesh" mesh="left_up_rack_col_24_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_25" type="mesh" mesh="left_up_rack_col_25_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_26" type="mesh" mesh="left_up_rack_col_26_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_27" type="mesh" mesh="left_up_rack_col_27_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_28" type="mesh" mesh="left_up_rack_col_28_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_29" type="mesh" mesh="left_up_rack_col_29_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_up_rack_col_30" type="mesh" mesh="left_up_rack_col_30_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <body name="left_up_finger" pos="0 0 0">
+            <inertial mass="0.00323154" pos="0.0725586 -0.0390056 0.0509872" diaginertia="9.0173e-07 3.14832e-05 3.22223e-05" quat="0.826112 -0.448378 -0.140057 -0.311256" />
+            <joint name="left_up_finger_x" type="slide" axis="1 0 0" range="0 0.055" damping="2.5" armature="0.01" />
+            <geom name="left_up_finger_visual" type="mesh" mesh="left_up_finger_mesh" material="left_up_finger_mat" contype="0" conaffinity="0" group="2" />
+            <geom name="left_up_finger_col_00" type="mesh" mesh="left_up_finger_col_00_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+            <geom name="left_up_finger_col_01" type="mesh" mesh="left_up_finger_col_01_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+            <geom name="left_up_finger_col_02" type="mesh" mesh="left_up_finger_col_02_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+            <geom name="left_up_finger_col_03" type="mesh" mesh="left_up_finger_col_03_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          </body>
+        </body>
+        <body name="right_up_rack" pos="0 0 0">
+          <inertial mass="0.036995" pos="0.087428 0.0550683 0.052101" diaginertia="6.96911e-06 0.000501432 0.000504041" quat="0.935102 0.061235 -0.222013 0.26934" />
+          <joint name="right_up_y" type="slide" axis="0 -1 0" range="-0.02 0.035" damping="12" armature="0.02" />
+          <geom name="right_up_rack_visual" type="mesh" mesh="right_up_rack_mesh" material="right_up_rack_mat" contype="0" conaffinity="0" group="2" />
+          <geom name="right_up_rack_col_00" type="mesh" mesh="right_up_rack_col_00_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_01" type="mesh" mesh="right_up_rack_col_01_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_02" type="mesh" mesh="right_up_rack_col_02_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_03" type="mesh" mesh="right_up_rack_col_03_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_04" type="mesh" mesh="right_up_rack_col_04_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_05" type="mesh" mesh="right_up_rack_col_05_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_06" type="mesh" mesh="right_up_rack_col_06_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_07" type="mesh" mesh="right_up_rack_col_07_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_08" type="mesh" mesh="right_up_rack_col_08_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_09" type="mesh" mesh="right_up_rack_col_09_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_10" type="mesh" mesh="right_up_rack_col_10_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_11" type="mesh" mesh="right_up_rack_col_11_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_12" type="mesh" mesh="right_up_rack_col_12_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_13" type="mesh" mesh="right_up_rack_col_13_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_14" type="mesh" mesh="right_up_rack_col_14_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_15" type="mesh" mesh="right_up_rack_col_15_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_16" type="mesh" mesh="right_up_rack_col_16_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_17" type="mesh" mesh="right_up_rack_col_17_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_18" type="mesh" mesh="right_up_rack_col_18_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_19" type="mesh" mesh="right_up_rack_col_19_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_20" type="mesh" mesh="right_up_rack_col_20_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_21" type="mesh" mesh="right_up_rack_col_21_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_22" type="mesh" mesh="right_up_rack_col_22_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_23" type="mesh" mesh="right_up_rack_col_23_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_24" type="mesh" mesh="right_up_rack_col_24_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_25" type="mesh" mesh="right_up_rack_col_25_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_26" type="mesh" mesh="right_up_rack_col_26_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_27" type="mesh" mesh="right_up_rack_col_27_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_up_rack_col_28" type="mesh" mesh="right_up_rack_col_28_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <body name="right_up_finger" pos="0 0 0">
+            <inertial mass="0.00323154" pos="0.0725586 0.0390056 0.0532003" diaginertia="9.10155e-07 3.21863e-05 3.30009e-05" quat="0.823289 0.448293 -0.14877 0.314794" />
+            <joint name="right_up_finger_x" type="slide" axis="1 0 0" range="0 0.055" damping="2.5" armature="0.01" />
+            <geom name="right_up_finger_visual" type="mesh" mesh="right_up_finger_mesh" material="right_up_finger_mat" contype="0" conaffinity="0" group="2" />
+            <geom name="right_up_finger_col_00" type="mesh" mesh="right_up_finger_col_00_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+            <geom name="right_up_finger_col_01" type="mesh" mesh="right_up_finger_col_01_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+            <geom name="right_up_finger_col_02" type="mesh" mesh="right_up_finger_col_02_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+            <geom name="right_up_finger_col_03" type="mesh" mesh="right_up_finger_col_03_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          </body>
+        </body>
+      </body>
+      <body name="left_down_rack" pos="0 0 0">
+        <inertial mass="0.036995" pos="0.087428 -0.0361588 -7.1681e-06" diaginertia="6.40708e-06 0.000337181 0.000340371" quat="0.980837 0.00193905 -0.000352174 -0.194821" />
+        <joint name="left_down_y" type="slide" axis="0 1 0" range="-0.04 0.017" damping="12" armature="0.02" />
+        <geom name="left_down_rack_visual" type="mesh" mesh="left_down_rack_mesh" material="left_down_rack_mat" contype="0" conaffinity="0" group="2" />
+        <geom name="left_down_rack_col_00" type="mesh" mesh="left_down_rack_col_00_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_01" type="mesh" mesh="left_down_rack_col_01_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_02" type="mesh" mesh="left_down_rack_col_02_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_03" type="mesh" mesh="left_down_rack_col_03_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_04" type="mesh" mesh="left_down_rack_col_04_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_05" type="mesh" mesh="left_down_rack_col_05_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_06" type="mesh" mesh="left_down_rack_col_06_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_07" type="mesh" mesh="left_down_rack_col_07_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_08" type="mesh" mesh="left_down_rack_col_08_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_09" type="mesh" mesh="left_down_rack_col_09_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_10" type="mesh" mesh="left_down_rack_col_10_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_11" type="mesh" mesh="left_down_rack_col_11_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_12" type="mesh" mesh="left_down_rack_col_12_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_13" type="mesh" mesh="left_down_rack_col_13_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_14" type="mesh" mesh="left_down_rack_col_14_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_15" type="mesh" mesh="left_down_rack_col_15_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_16" type="mesh" mesh="left_down_rack_col_16_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_17" type="mesh" mesh="left_down_rack_col_17_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_18" type="mesh" mesh="left_down_rack_col_18_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_19" type="mesh" mesh="left_down_rack_col_19_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_20" type="mesh" mesh="left_down_rack_col_20_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_21" type="mesh" mesh="left_down_rack_col_21_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_22" type="mesh" mesh="left_down_rack_col_22_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_23" type="mesh" mesh="left_down_rack_col_23_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_24" type="mesh" mesh="left_down_rack_col_24_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_25" type="mesh" mesh="left_down_rack_col_25_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_26" type="mesh" mesh="left_down_rack_col_26_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_27" type="mesh" mesh="left_down_rack_col_27_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_28" type="mesh" mesh="left_down_rack_col_28_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_29" type="mesh" mesh="left_down_rack_col_29_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_30" type="mesh" mesh="left_down_rack_col_30_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_31" type="mesh" mesh="left_down_rack_col_31_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_32" type="mesh" mesh="left_down_rack_col_32_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="left_down_rack_col_33" type="mesh" mesh="left_down_rack_col_33_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <body name="left_down_finger" pos="0 0 0">
+          <inertial mass="0.00323154" pos="0.0725586 -0.0200962 -0.00110656" diaginertia="2.92597e-07 2.01226e-05 2.01748e-05" quat="-0.498583 0.858007 -0.110055 0.0559259" />
+          <joint name="left_down_finger_x" type="slide" axis="1 0 0" range="0 0.055" damping="2.5" armature="0.01" />
+          <geom name="left_down_finger_visual" type="mesh" mesh="left_down_finger_mesh" material="left_down_finger_mat" contype="0" conaffinity="0" group="2" />
+          <geom name="left_down_finger_col_00" type="mesh" mesh="left_down_finger_col_00_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_down_finger_col_01" type="mesh" mesh="left_down_finger_col_01_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_down_finger_col_02" type="mesh" mesh="left_down_finger_col_02_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="left_down_finger_col_03" type="mesh" mesh="left_down_finger_col_03_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        </body>
+      </body>
+      <body name="right_down_rack" pos="0 0 0">
+        <inertial mass="0.036995" pos="0.087428 0.0361588 7.1681e-06" diaginertia="6.40708e-06 0.000337181 0.000340371" quat="0.980837 0.00193905 0.000352174 0.194821" />
+        <joint name="right_down_y" type="slide" axis="0 -1 0" range="-0.04 0.017" damping="12" armature="0.02" />
+        <geom name="right_down_rack_visual" type="mesh" mesh="right_down_rack_mesh" material="right_down_rack_mat" contype="0" conaffinity="0" group="2" />
+        <geom name="right_down_rack_col_00" type="mesh" mesh="right_down_rack_col_00_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_01" type="mesh" mesh="right_down_rack_col_01_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_02" type="mesh" mesh="right_down_rack_col_02_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_03" type="mesh" mesh="right_down_rack_col_03_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_04" type="mesh" mesh="right_down_rack_col_04_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_05" type="mesh" mesh="right_down_rack_col_05_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_06" type="mesh" mesh="right_down_rack_col_06_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_07" type="mesh" mesh="right_down_rack_col_07_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_08" type="mesh" mesh="right_down_rack_col_08_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_09" type="mesh" mesh="right_down_rack_col_09_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_10" type="mesh" mesh="right_down_rack_col_10_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_11" type="mesh" mesh="right_down_rack_col_11_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_12" type="mesh" mesh="right_down_rack_col_12_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_13" type="mesh" mesh="right_down_rack_col_13_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_14" type="mesh" mesh="right_down_rack_col_14_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_15" type="mesh" mesh="right_down_rack_col_15_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_16" type="mesh" mesh="right_down_rack_col_16_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_17" type="mesh" mesh="right_down_rack_col_17_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_18" type="mesh" mesh="right_down_rack_col_18_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_19" type="mesh" mesh="right_down_rack_col_19_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_20" type="mesh" mesh="right_down_rack_col_20_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_21" type="mesh" mesh="right_down_rack_col_21_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_22" type="mesh" mesh="right_down_rack_col_22_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_23" type="mesh" mesh="right_down_rack_col_23_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_24" type="mesh" mesh="right_down_rack_col_24_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_25" type="mesh" mesh="right_down_rack_col_25_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_26" type="mesh" mesh="right_down_rack_col_26_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_27" type="mesh" mesh="right_down_rack_col_27_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_28" type="mesh" mesh="right_down_rack_col_28_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_29" type="mesh" mesh="right_down_rack_col_29_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_30" type="mesh" mesh="right_down_rack_col_30_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <geom name="right_down_rack_col_31" type="mesh" mesh="right_down_rack_col_31_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        <body name="right_down_finger" pos="0 0 0">
+          <inertial mass="0.00323154" pos="0.0725586 0.0200962 0.00110656" diaginertia="2.92597e-07 2.01226e-05 2.01748e-05" quat="-0.498583 0.858007 0.110055 -0.0559259" />
+          <joint name="right_down_finger_x" type="slide" axis="1 0 0" range="0 0.055" damping="2.5" armature="0.01" />
+          <geom name="right_down_finger_visual" type="mesh" mesh="right_down_finger_mesh" material="right_down_finger_mat" contype="0" conaffinity="0" group="2" />
+          <geom name="right_down_finger_col_00" type="mesh" mesh="right_down_finger_col_00_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_down_finger_col_01" type="mesh" mesh="right_down_finger_col_01_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_down_finger_col_02" type="mesh" mesh="right_down_finger_col_02_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+          <geom name="right_down_finger_col_03" type="mesh" mesh="right_down_finger_col_03_mesh" contype="1" conaffinity="0" group="3" friction="0.5 0.005 0.0001" condim="3" solref="0.005 1" />
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <equality>
+    <joint joint1="right_up_y" joint2="left_up_y" polycoef="0 1 0 0 0" solref="0.005 1" solimp="0.95 0.99 0.001" />
+    <joint joint1="right_down_y" joint2="left_down_y" polycoef="0 1 0 0 0" solref="0.005 1" solimp="0.95 0.99 0.001" />
+  </equality>
+  <actuator>
+    <!-- FEETECH HLS3915M-C001 (a.k.a. HL-3915-C001) @ 12V nominal: stall torque 14.2 kg.cm = 1.39254 N.m. We actuate SLIDE joints directly, so forcerange is the LINEAR rack-and-pinion force: module=1, pitch diameter 16mm -> pinion pitch radius r = 8mm. The parallel jaws are a COUPLED motion (one pinion reacts against two racks), so per-finger force = stall_torque/(2*r) = 1.39254/(2*0.008) = 87 N (stall/peak; continuous load is lower). No-load speed is a runtime slew limit, not an MJCF field. -->
+    <position name="m_bridge_z" joint="bridge_z" ctrllimited="true" ctrlrange="-0.027 0.03" kp="3000" kv="15" forcelimited="true" forcerange="-87 87" />
+    <position name="m_up_pair" joint="left_up_y" ctrllimited="true" ctrlrange="-0.02 0.035" kp="800" kv="8" forcelimited="true" forcerange="-87 87" />
+    <position name="m_down_pair" joint="left_down_y" ctrllimited="true" ctrlrange="-0.04 0.017" kp="800" kv="8" forcelimited="true" forcerange="-87 87" />
+    <position name="m_left_up_finger" joint="left_up_finger_x" ctrllimited="true" ctrlrange="0 0.055" kp="150" kv="1" forcelimited="true" forcerange="-87 87" />
+    <position name="m_right_up_finger" joint="right_up_finger_x" ctrllimited="true" ctrlrange="0 0.055" kp="150" kv="1" forcelimited="true" forcerange="-87 87" />
+    <position name="m_left_down_finger" joint="left_down_finger_x" ctrllimited="true" ctrlrange="0 0.055" kp="150" kv="1" forcelimited="true" forcerange="-87 87" />
+    <position name="m_right_down_finger" joint="right_down_finger_x" ctrllimited="true" ctrlrange="0 0.055" kp="150" kv="1" forcelimited="true" forcerange="-87 87" />
+  </actuator>
+</mujoco>
