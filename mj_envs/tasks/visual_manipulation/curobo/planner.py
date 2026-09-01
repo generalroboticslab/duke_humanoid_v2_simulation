@@ -935,8 +935,10 @@ def ik_feasible_assigned(robot_cfg, kin, planner, assigned, home_state, start_st
     never calls trajopt regardless), True iff any seed reaches the same goalset ``plan_assigned`` would
     target. A FAIL here is a hard proof of kinematic infeasibility (IK ignores obstacles, so it can only be
     a superset of what trajopt admits) -- never a false positive short-circuit, only ever skips a doomed
-    full IK+trajopt plan. Same collision-blind tradeoff class as the rejected reachability-MLP (MEMORY.md
-    2026-07-14), accepted here because the negative is provably hard, not learned.
+    full IK+trajopt plan. Same collision-blind tradeoff class as the rejected reachability-MLP
+    (rejected 2026-07-14: a learned negative makes the same near-margin false-positives the
+    pre-filter is meant to short-circuit), accepted here because the negative is provably hard,
+    not learned.
 
     MUST run with the optimizer on (``run_optimizer=True``, the default): in this cuRobo build,
     ``run_optimizer=False`` skips the IK solve entirely and only checks whether the raw SEED

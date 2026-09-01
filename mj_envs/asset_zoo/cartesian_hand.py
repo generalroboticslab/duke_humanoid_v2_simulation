@@ -30,7 +30,7 @@ from mj_envs.asset_zoo.hand import Hand, make_range_action_scale
 #  PATHS
 # ═══════════════════════════════════════════════════════════
 
-HAND_DIR = Path(__file__).parents[2] / "asset" / "duke_v2" / "cartesian_hand"
+HAND_DIR = Path(__file__).parents[2] / "asset" / "duke_v2" / "cold" / "cartesian_hand"
 HAND_XML = HAND_DIR / "cartesian_hand.xml"
 HAND_MESH_DIR = HAND_DIR / "meshes"
 

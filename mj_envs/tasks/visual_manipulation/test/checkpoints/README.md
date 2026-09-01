@@ -26,7 +26,7 @@ python mj_envs/run.py train --task HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4Mixe
 python mj_envs/run.py train --task HumanoidRmaVelEstArmFlashSacv2ybsk_yaw_s4SingleCam     --num_envs 4096 --seed 0 --max_iterations 15000
 ```
 
-Retraining will **not** reproduce these bytes (nondeterministic), which is the whole reason the artifacts are committed rather than merely described. `MixedArmsCam` is the promoted `v2_best` policy (`MEMORY.md`, "Current keepers"); `SingleCam` is its single-camera sibling for the camera-count ablation.
+Retraining will **not** reproduce these bytes (nondeterministic), which is the whole reason the artifacts are committed rather than merely described. `MixedArmsCam` is the promoted `v2_best` policy (the camera-actuated, two-arm whole-body policy whose visible-reachable number is 96.8% in Fig. 2); `SingleCam` is its single-camera sibling for the camera-count ablation.
 
 ## Which sweep used which
 

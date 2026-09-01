@@ -82,7 +82,7 @@ FAR_LONG_SIDE_HALF_RANGE_M = sqrt(3.0) * FAR_LONG_SIDE_STD_M
 # file (contact solver, most likely) made a margin the design explicitly tolerated no longer stable in
 # practice; 0.125 m restores a positive worst-case margin (8.4 mm) with the same half-range, so trial
 # diversity is unchanged -- only the tail that was already flagged as marginal moves to safe. Verified:
-# seed 46 clean post-fix (see `MEMORY.md` 2026-08-18). The depth distribution is shared by left_right_close
+# seed 46 clean post-fix (2026-08-18). The depth distribution is shared by left_right_close
 # AND left_right_far (extra `LATERAL_SPREAD_M` there already gave them more margin than bimanual_mixed_close
 # had); only left_right_far widens its table-long-axis (world-x) distribution.
 LATERAL_CUBE_EDGE_INSET_M = 0.125

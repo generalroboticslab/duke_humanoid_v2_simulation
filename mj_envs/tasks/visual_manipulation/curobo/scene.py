@@ -994,7 +994,8 @@ _BIMANUAL_PLAN0_MIN_ATTEMPTS = 30
 # case above. Same mechanism applies: a near-reachability-margin solve is a randomized-seed search, so a
 # fixed 10-attempt cap can report a spuriously infeasible verdict that more restarts would find (confirmed
 # 2026-07-27: `g1 left_right_close seed43`, solo/idle-GPU reruns of the IDENTICAL single-arm fallback solve
-# flip FAIL/FAIL/PASS/FAIL/FAIL with zero code/seed/load difference -- see MEMORY.md "bucket 1"). Floors it
+# flip FAIL/FAIL/PASS/FAIL/FAIL with zero code/seed/load difference -- the "bucket 1"
+# verdict-flutter symptom). Floors it
 # at the same vetted magnitude as the bimanual case (more search, not a threshold/tolerance widening).
 _SINGLE_PLAN0_MIN_ATTEMPTS = 30
 
@@ -1847,7 +1848,7 @@ def _reach_mpc_worker(robot_name: str, scenario_name: str, requests, results, st
     SIGSEGV, exit -11)."""
     _exit_when_parent_dies()
     if os.environ.get("CUROBO_DETERMINISTIC") == "1":
-        # POC gate (MEMORY.md "bucket 1"/Layer 2): forces bit-reproducible cuBLAS/cuSolver reduction order
+        # POC gate (the "bucket 1" / Layer 2 mechanism): forces bit-reproducible cuBLAS/cuSolver reduction order
         # and disables nondeterministic CUDA kernels, to test whether the documented near-margin
         # FAIL/PASS flip-flop (identical seed/host/idle-GPU/code) is CUDA kernel-scheduling nondeterminism.
         # Must be set before this fresh spawned process makes its first CUDA call (session creation below).

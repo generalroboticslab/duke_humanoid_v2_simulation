@@ -979,7 +979,8 @@ class ReachPolicy:
             # EXPERIMENTAL (2026-07-26, env-gated, off by default): WALK-only proximity taper, testing
             # the hypothesis that g1's overshoot-then-backoff is fixable by slowing an ALREADY-established
             # gait near the target, distinct from the documented cold-start dead zone. Not yet validated
-            # or made default -- see MEMORY.md.
+            # or made default; the on-disk regression record was kept for follow-up rather than
+            # promoted into the policy.
             taper_env = os.environ.get("WALK_TAPER_DIST_M")
             if taper_env:
                 mover_kwargs["taper_dist_m"] = float(taper_env)
@@ -1320,7 +1321,7 @@ class ReachPolicy:
         # spent -- that trial's first (and only) miss on the same cube name then immediately exceeds
         # _GRASP_CAPTURE_MAX_RETRIES and fails outright instead of getting its own fresh retry. Same bug
         # class as the plan0-generation leak (persistent object, not reset per trial) but in a different
-        # field; see MEMORY.md "Fixed regressions".
+        # field.
         self._grasp_capture_retries = {}
         self._retract_request_gen = None
         self._retract_plan_ticks = 0
@@ -2456,8 +2457,9 @@ class ReachPolicy:
         desk edge ahead of the object, not the desk's own fixed corner. Drives until the base-to-C planar
         distance enters the arm's reach envelope (``_REACH_RADIUS_M``) and the mover settles, then pins the
         reaching arm and hands off to EXTEND. TRIAL rationale: the scene's object distributions are built
-        relative to these anchors (MEMORY.md 2026-07-15: shelf tiers are shoulder-relative like the table,
-        far bimanual walks in to the anchor-relative centroid), so the anchor's standoff line is the stance
+        relative to these anchors (the standing policy chosen 2026-07-15: shelf tiers are
+        shoulder-relative like the table, far bimanual walks in to the anchor-relative centroid),
+        so the anchor's standoff line is the stance
         cuRobo was actually tuned to reach from -- point C keeps that standoff distance while removing the
         residual bearing to an off-anchor cube. Anchor identity resolved ONCE per target (cached in
         ``_approach_anchor_pos``/``_approach_anchor_tangent``/``_approach_anchor_half_w``, cleared by

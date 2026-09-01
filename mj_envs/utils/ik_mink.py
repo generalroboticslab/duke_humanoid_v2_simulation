@@ -306,11 +306,10 @@ class MinHeightTask:
 class NearTargetHeightTask:
     """Soft EE-height floor gated on horizontal proximity to the LIVE commanded target.
 
-    Replaces MinHeightTask's fixed root-frame threshold, which MEMORY.md logs as
-    structurally superseded: memoryless (re-measures every QP micro-iteration, no
-    persistent "stay above" state) and keyed to a fixed value that can't tell
-    "still transiting from home" (legitimately low) from "wrongly low near the
-    target" (the actual bug). This task instead reads the SAME arm's primary
+    Replaces MinHeightTask's fixed root-frame threshold: MinHeightTask was
+    memoryless (re-measures every QP micro-iteration, no persistent "stay above"
+    state) and keyed to a fixed value that can't tell "still transiting from home"
+    (legitimately low) from "wrongly low near the target" (the actual bug). This task instead reads the SAME arm's primary
     RelativeFrameTask's live target every iteration (``ref_task``) and only
     activates when within ``radius`` of that target's x/y AND below
     ``target.z + height_margin`` -- fully inert (target = current pose, zero
